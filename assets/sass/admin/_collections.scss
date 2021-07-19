@@ -1,0 +1,75 @@
+.collection {
+	table {
+		width: auto;	
+	}	
+
+	// Informations des sessions
+	&.collection-session-informations {
+		ul {
+			font-size: 1.5rem;
+			max-width: $width-tablet;
+			&:not(:last-of-type) {
+				border-bottom: 1px solid #333;
+			}
+			padding: 10px 0;
+			
+			&:first-of-type {
+				padding-top: 0;
+			}
+			
+			li {
+				display: grid;
+				grid-template-columns: 100px 1fr;
+				&:not(:last-of-type) {
+					margin-bottom: 5px;	
+				}
+				
+				
+				
+				span {
+					font-weight: bold;	
+				
+				}
+				p {
+					margin: 0;
+				}
+			}
+		}
+	
+	}
+
+	// Messages reçus
+	&.collection-message {
+	    article {
+	        padding-bottom: 20px;
+	        &:not(:first-of-type) {
+	            margin-top: 20px;    
+	        }
+	        &:not(:last-of-type) {
+	            border-bottom: 1px dotted #000;    
+	        }
+	    
+	        p {
+	           text-align: left;
+	            &.content {
+	            	text-align: justify;    
+	      	  	}
+	      	  
+	      	  	&:last-of-type {
+	      	  		margin-bottom: 0;	
+	      	  	}
+	        }
+	    
+	        header {
+	            margin-bottom: 10px;  
+	            h2 {
+	                margin: 10px 0 0;
+	                padding: 0;
+	                border: 0;
+	            } 
+	        }
+	    
+	       
+	    }
+	}
+}

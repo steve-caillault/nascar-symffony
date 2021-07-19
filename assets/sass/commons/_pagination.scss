@@ -1,0 +1,25 @@
+ul.pagination {
+	margin: 0 0 20px;
+	li {
+		display: inline-block;
+		
+		span, a {
+			border: 1px solid #000;
+			border-radius: 3px;
+			display: inline-block;
+			font-size: 1.4rem;
+			padding: 4px 8px;
+			
+		}
+	
+		span {
+			background: darken(#333, 5%); 
+			color: #fff;	
+		}	
+		a:hover {
+			text-decoration: none;
+			background: darken(#333, 10%);
+			color: #fff;	
+		} 
+	}
+}

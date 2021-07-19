@@ -1,0 +1,36 @@
+@function tint($color, $percentage) {
+  	@return mix(white, $color, $percentage);
+}
+
+@mixin scrollBehavior($value) {
+	@if($value == smooth) {
+		&:not(.without-scroll-behavior) {
+			scroll-behavior: smooth;
+			@media (prefers-reduced-motion: reduce) {
+		    	scroll-behavior: auto;
+		  	}
+		}
+	}
+}
+
+@mixin marginBottomBetweenContent() {
+	
+	margin-bottom: 10px;
+	@include tablet {
+		margin-bottom: 20px;	
+	}
+	
+}
+
+@mixin cloud($position, $height, $color) {
+
+	content: '';
+	position: absolute;
+	left: 0;
+	@if($position == bottom) {
+		bottom: -$height;
+	}
+	width: 100%;
+	height: $height;
+	background: linear-gradient(to $position, $color, transparent);	
+}

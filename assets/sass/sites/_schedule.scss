@@ -1,0 +1,44 @@
+/* Formulaire de recherche d'événements */
+form#search-event-form {
+	label {
+		width: auto;	
+	}
+	input[type=text] {
+		min-width: 270px;
+		max-width: 100%;
+	}	
+}
+
+/* Menu du filtre du type d'événement */
+nav#schedule-menu {
+	display: block;
+	@include desktop {
+		display: flex;
+	}
+	@include marginBottomBetweenContent;
+	a {
+		
+		display: block;
+		@include desktop {
+			display: inline-block;
+			
+			&:not(:first-of-type) {
+				border-left: 1px solid lighten(#000, 60%);
+			}
+		}
+		padding: 8px 14px;
+		background: lighten(#333, 20%);
+		color: #fff;
+		
+		&.selected {
+			background: #000 !important;
+			color: #fff !important;	
+		}
+		
+		&:hover {
+			text-decoration: none;
+			background: #333;
+			color: #fff;
+		}
+	}	
+}

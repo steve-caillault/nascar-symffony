@@ -1,0 +1,227 @@
+$standingColors: (
+	"playoff-qualified": (
+		"default": tint(blue, 60%),
+		"secondary": tint(blue, 75%),
+		"hover": tint(blue, 20%)
+	),
+	"qualified": (
+		"default": tint(green, 60%),
+		"secondary": tint(green, 80%),
+		"hover": tint(green, 20%)
+	),
+	"not-qualified": (
+		"default": tint(red, 65%),
+		"secondary": tint(red, 80%),
+		"hover": tint(red, 20%)
+	),
+	"advanced": (
+		"default": tint(orange, 25%),
+		"secondary": tint(orange, 50%),
+		"hover": darken(orange, 1%)
+	),
+	"champion": (
+		"default": tint(purple, 50%),
+		"secondary": tint(purple, 75%),
+		"hover": tint(purple, 20%)
+	)
+);
+
+main#standings {
+	
+	ul.legend {
+		@include marginBottomBetweenContent;
+		
+		li {
+			display: grid;
+			grid-template-columns: 40px 1fr;
+			grid-gap: 10px;
+			align-items: center;
+			
+			p {
+				display: inline-block;
+				margin: 0;
+			}
+			
+			span {
+				
+				display: inline-block;	
+				height: 20px;
+				
+				&::before, &::after {
+					display: inline-block;	
+					content: '';
+					width: 20px;
+					height: 100%;
+				}
+			}
+		
+			&:not(last-of-type) {
+				margin-bottom: 10px;
+			}
+		
+			
+			@each $colorIndex, $colors in $standingColors {
+				&.#{ $colorIndex } {
+					span::before {
+						background: map-get($colors, "default");
+					}	
+					span::after {
+						background: map-get($colors, "secondary");
+					}
+				}
+			}
+		}	
+	}	
+}
+
+div.standing {
+	
+	p.description {
+		@include marginBottomBetweenContent;
+	}
+
+	form {
+		label { 
+			display: block;
+		}	
+	}
+	
+	table {
+		
+		td {
+			p {
+				margin: 0;	
+				text-align: center; 
+			}
+		}
+		
+		td.result {
+        	padding: 0;
+    	}
+    
+    	td.sorted {
+    		font-weight: bold;	
+    	}
+    	td.with-image {
+    		
+    		background: #fff;
+    		a:hover {
+    			opacity: 0.75;
+    		}
+    	
+    		img {
+    			border-left: 1px solid #fff;
+    			max-height: 100%;
+    		}
+    	
+    		&:last-child img {
+    			border-top-right-radius: 3px;
+    	
+    		}
+    	}
+  
+		@each $colorIndex, $colors in $standingColors {
+			tr.#{$colorIndex} {
+				
+				td {
+					background: map-get($colors, "default");
+				}
+				
+				&:nth-child(odd) td {
+	    			background: map-get($colors, "secondary");
+	    		}
+	    		
+    			&:hover td { 
+    				background: map-get($colors, "hover");
+    			}
+			}
+		}
+    
+		span.sort {
+			display: inline-block;
+			vertical-align: middle;
+			
+			padding-left: 10px;
+			a {
+				display: block;
+				width: 10px; 
+				height: 6px; 
+				
+				
+				position: relative;
+				
+				&::before, &::after {
+					content: '';
+					top: 0;
+					left: 0;
+					position: absolute;
+					border-left: 6px solid transparent;
+					border-right: 6px solid transparent;
+					
+					transition: border-bottom-color 0.25s, border-top-color 0.25s;
+				}
+			
+				&::after {
+					border-left: 5px solid transparent;
+					border-right: 5px solid transparent;
+					left: 1px;
+					top: 0px;
+				}
+				
+		
+				&.asc {
+					margin-bottom: 5px;
+					&::before {
+						border-bottom: 6px solid #fff;
+					}
+					&::after {
+						border-bottom: 5px solid lighten(#000, 10%);
+					}
+					&:not(.current) {
+						&:hover {
+							&::after {
+								border-bottom-color: lighten(#000, 20%);
+							}
+						}
+					}
+					&.current {
+						&::before {
+							border-bottom-color: lighten(#000, 10%);
+						}
+						&::after {
+							border-bottom-color: #fff;
+						}
+					}
+				}
+				&.desc {
+					&::before {
+						border-top: 6px solid #fff;
+					}
+					&::after {
+						top: 1px;
+						border-top: 5px solid lighten(#000, 10%);
+					}
+					&:not(.current) {
+						&:hover {
+							&::after {
+								border-top-color: lighten(#000, 20%);
+							}
+						}
+					}
+					&.current {
+						&::before {
+							border-top-color: lighten(#000, 10%);
+						}
+						&::after {
+							border-top-color: #fff;
+						}
+					}
+				}
+		
+					
+			}	
+		}
+    
+	}
+
+}

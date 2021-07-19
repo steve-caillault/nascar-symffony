@@ -1,0 +1,64 @@
+main#home {
+	
+	section {
+		
+		&.current, &.next {
+			div.event {
+				p.status {
+					margin-bottom: 10px;	
+				}
+			}
+		}
+	
+		
+		
+		/* Evénement en cours */
+		&.current.selected div.event {
+			border-bottom-color: green;
+			border-right-color: green;
+			background: lighten(green, 73%);
+		}
+	
+		/* Prochain événement */
+		&.next.selected div.event {
+			border-bottom-color: orange;
+			border-right-color: orange;
+			background: lighten(orange, 45%);
+		}
+	
+		/* Résumé sur la page d'accueil */
+		&#last-session-summary {
+			
+			@include marginBottomBetweenContent;
+			border-bottom: 1px solid tint(#000, 70%);
+			
+			div.summary-content {
+				padding: 14px;
+				border-right: 5px solid transparent;
+			}
+		
+			&.selected {
+				border-bottom-color: red;
+				div.summary-content {
+					border-right-color: red;
+					background: lighten(red, 47%) !important;
+				}
+			}	
+			
+		
+		
+			table {
+				margin-bottom: 0;
+				tr.pagination td {
+					text-align: left;	
+				}
+			}
+		}
+		
+		
+	
+		
+	}
+}
+
+

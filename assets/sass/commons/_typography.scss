@@ -1,0 +1,161 @@
+*,
+*:before, 
+*:after {
+	box-sizing: border-box;
+	font-family: arial !important; 	
+} 
+
+
+html {
+	font-size: 10px; // 62.5%; // 10px
+	@include scrollBehavior(smooth);
+}
+
+body {
+	font-size: 1.6rem;
+}
+	
+a {
+	text-decoration: none;
+	color: #333;
+	transition: color 0.25s, background 0.25s;
+	&:hover {
+		text-decoration: underline;
+	}	
+}
+
+p {
+	font-size: 1.4rem;
+	line-height: 1.8rem;
+	margin: 0 0 10px;
+	max-width: $width-desktop;
+	text-align: justify;
+}
+
+ul {
+	li {
+		list-style-type: none;
+	}	
+}
+
+h1 {
+	padding: 10px;
+	margin: 0 0 20px;
+	
+	font-size: 2.4rem;
+	@include desktop {
+		font-size: 3rem;
+	}
+
+	color: #000;
+	background: #ddd;
+	border-left: 4px solid #000;
+}
+
+h2 {
+	margin: 0 0 20px;	
+	
+	border-bottom: 1px dotted #333;
+	display: inline-block;
+	
+	padding: 0 16px 8px;
+	font-size: 1.5rem;
+	
+	@include tablet {
+		font-size: 1.8rem;
+	}
+	
+	@include desktop {
+		padding: 0 30px 10px;
+	}
+	
+}
+
+dfn {
+	border-bottom: 1px dotted;
+	cursor: pointer;
+}
+
+div#site {
+	margin: 0 auto;
+	max-width: 100%;
+	width: 100%;
+	padding: 0 $site-padding-phone;
+	
+	@include tablet {
+		width: $width-tablet;
+		padding: 0 $site-padding-tablet;
+	}
+	
+	@include desktop {
+		
+		width: $width-desktop;
+		padding: 0 $site-padding-desktop;
+	}
+
+	@include desktop-large {
+		margin-top: 0;
+		width: $width-desktop-large;
+	}	
+
+	@include tv {
+		width: $width-tv;
+	}	
+}
+
+div#main-content {
+	position: relative;
+	
+	transition: opacity 0.25s;
+	
+	&.hide {
+		opacity: 0;
+		visibility: hidden;	
+	}
+	
+	header#content {
+		@include marginBottomBetweenContent;
+		h1 {
+			margin-bottom: 0;
+		} 
+	}
+	
+	@include desktop-large {
+		
+		&.hide {
+			opacity: 1;
+			visibility: visible;	
+		}
+		
+		display: inline-block;
+		vertical-align: top;
+		width: calc(100% - 270px);
+		
+		&.without-header {
+			padding-top: 20px;	
+		}
+		
+		/* Titre et fil d'ariane toujours visible */
+		header#content {
+			position: relative;
+			
+			z-index: 1;
+			top: 0;
+			background: #fff;
+			padding-top: 20px;
+			
+			&::after {
+				@include cloud(bottom, 20px, #fff);
+			}
+		}
+		
+	}
+	
+}
+
+@include desktop-large {
+	
+	html.javascript-enabled div#main-content header#content {
+		position: sticky;
+	}
+}

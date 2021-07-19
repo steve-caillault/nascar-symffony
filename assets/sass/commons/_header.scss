@@ -1,0 +1,200 @@
+header#main {
+	position: relative;
+	@include desktop-large {
+		position: sticky;
+	}
+}
+
+html.javascript-enabled header#main {
+	position: sticky;
+}
+
+
+
+header#main {
+	
+	
+	margin: 0 auto 10px;
+	padding-top: 10px;
+	
+	top: 0;
+	
+	@include tablet {
+		
+		padding-top: 20px;
+		margin-bottom: 20px;
+	}
+
+	background: #fff;
+	z-index: 1;
+
+	text-align: center;
+	
+	@include scrollBehavior(smooth);
+	
+	button.menus-button {
+		display: block;
+		position: absolute;
+		top: 13px;
+		@include tablet {
+			top: 23px;	
+		} 
+		left: 3px;
+		border: 1px solid transparent;
+		border-radius: 3px;
+		background: #333;
+		color: #fff;
+		padding: 5px 10px;
+		font-size: 1.4rem;
+		cursor: pointer;
+		
+		transition: background 0.25s;
+		&:hover {
+			background: darken(#333, 20%);	
+		}
+	}
+
+	nav {
+		position: absolute;
+		z-index: 1;
+		left: 0;
+		top: 110px;
+		padding-top: 10px;
+		@include tablet {
+			top: 120px;	
+			padding-top: 20px;
+		}
+		width: 100%;
+		visibility: hidden;
+ 		opacity: 0;
+ 		background: #fff;
+ 		transition: opacity 0.25s, visibility 0.5s;
+ 		
+	}
+
+	div.menus {
+ 		max-height: calc(100vh - 130px);
+ 		@include tablet {
+			max-height: calc(100vh - 160px);
+ 		}
+ 		
+ 		@include desktop-large {
+ 			max-height: initial;
+ 		}
+ 	
+ 		overflow: auto;
+ 		
+ 	}
+ 
+
+ 	
+
+	
+
+	a.home {
+		display: block;
+		height: 100px;
+	
+		background: lighten(#333, 20%);
+		border-radius: 3px;
+	
+		transition: background 0.25s;	
+		&:hover {
+			background: #333;
+		}
+	
+		&::after {
+			@include cloud(bottom, 10px, #fff);
+			@include tablet {
+				bottom: -20px;
+				height: 20px;
+			}
+			@include desktop-large {
+				display: none;
+			}
+		}
+
+	}
+
+	@include desktop-large {
+		
+		
+		
+		top: 20px;
+		padding-top: 0;
+		
+		margin: 20px 20px 0 0;
+		
+		
+		a.home { 
+			margin-bottom: 20px;
+		}
+		
+		nav {
+			/*position: static;*/
+			visibility: visible;
+ 			opacity: 1;
+ 			/*padding-top: 0;*/
+			top: 100px;
+		}
+		
+		div.menus {
+			border: 0;
+			
+			
+
+			height: calc(100vh - 160px);
+
+ 		}
+		
+		
+		width: 250px;
+		display: inline-block;
+		vertical-align: top;
+		
+		
+		
+		button.menus-button {
+			display: none;	
+		}
+	}
+	
+	
+
+	
+	
+}
+
+// Affiche le menu secondaire sur le clique du bouton
+html:not(.focus-disabled) header#main li.primary:focus-within {
+
+	button + ul.secondary {
+		height: auto;
+		overflow: visible;
+	}
+}
+	
+// Affiche le menu lors du clic sur le bouton Menu
+header#main.deploy, 
+html:not(.focus-disabled) header#main:focus-within {
+		
+	button.menus-button {
+		background: darken(#333, 20%);
+	}
+	
+	nav {
+		visibility: visible;
+		opacity: 1;
+		
+		&::after {
+			@include cloud(bottom, 10px, #fff);
+			@include tablet {
+				bottom: -20px;
+				height: 20px;
+			}
+			@include desktop-large {
+				display: none;
+			}	
+		}
+	}
+}

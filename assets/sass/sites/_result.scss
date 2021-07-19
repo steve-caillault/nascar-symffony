@@ -1,0 +1,15 @@
+div.session-messages {
+	p:not(:last-of-type) {
+		
+		border-bottom: 1px solid #fff;	
+		margin-bottom: 0;
+	}  
+}
+    
+table#result {
+    td {
+        &.time {
+            text-align: left;    
+        }    
+    }
+}

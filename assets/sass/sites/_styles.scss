@@ -1,0 +1,47 @@
+span.search {
+	color: green;
+	font-weight: bold;
+}
+	
+div.location {
+    margin-bottom: 5px;
+    img {
+        margin-right: 10px;
+    }
+    p {
+        font-size: 1.8rem; 
+        vertical-align: middle;
+        display: inline-block; 
+        margin-bottom: 0 !important;
+    }
+} 
+
+form {
+		
+	input[type=email],
+	input[type=text] {
+    	width: 270px;
+    }
+}
+
+form#change-timezone {
+	label {
+		width: auto;
+		&::after {
+			content: '';	
+		}
+		padding-right: 10px;
+	}
+}
+
+.selectable-with-border {
+	transition: border 0.25s, background 0.25s;
+	
+	border-right: 5px solid transparent;
+}
+
+.selectable-with-border.selected,
+.selected .selectable-with-border {
+	border-right-color: lighten(#000, 30%);
+	background: darken(#fff, 10%);
+}

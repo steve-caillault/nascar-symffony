@@ -1,0 +1,108 @@
+div.season-statistics {
+	display: grid;
+  	grid-template-columns: 1fr;
+  	grid-gap: 5px;
+  	
+  	@include marginBottomBetweenContent;
+  	
+  	@include tablet {
+  		grid-template-columns: repeat(2, 1fr);
+  	}
+  
+  	@include desktop {
+  		grid-template-columns: repeat(3, 1fr);
+  	}
+  	
+  	div.statistic-panel {
+  		
+  		background: darken(#fff, 20%);
+  		border-radius: 3px;
+  		
+  		transition: background 0.25s;
+  		
+  		@include phone {
+  			min-width: auto;
+  			width: 100%;
+  		}
+  	
+  		p {
+  			margin: 0;
+  			padding: 5px 10px;
+  			border-top: 2px solid #fff;
+  			font-size: 1.5rem;
+  			color: #333;	
+  		}
+  		
+		header {
+			transition: background 0.25s;
+			
+			background: lighten(#000, 25%);
+			color: #fff;
+			border-radius: 3px 3px 0 0;
+			h3 {
+				margin: 0;	
+				text-align: center;
+				padding: 5px 0;
+				font-size: 2rem;
+			}
+	  	}
+	  
+		ul {
+			
+			
+			li {
+				&:not(.pagination) {
+					display: grid;
+					grid-template-columns: 20px 1fr 40px;
+					grid-gap: 10px;
+				}
+				padding: 5px 14px;
+				border-top: 2px solid #fff;
+				
+			}
+		
+			span, a {
+				font-size: 1.5rem;	
+				transition: color 0.25s;
+			}
+			
+			span {
+				text-align: right;	
+				color: lighten(#000, 10%);
+				white-space: nowrap;
+				
+				&.position {
+					&::after {
+						content: '.';	
+					}
+				}
+				
+				&.target {
+					text-align: left;
+					
+				}
+			}
+		}
+	
+		&.without-header {
+  			border-radius: 3px;
+  			
+  			li:first-of-type {
+  				border-top: 0;
+  				border-radius: 3px 3px 0 0;
+  			}
+  		}
+  	
+  		&.selected {
+  			header {
+				background: #000;
+			}
+			background: lighten(#000, 40%);
+			p, span, a {
+				color: #fff;
+			}
+		
+  		}
+	}
+
+}

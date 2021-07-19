@@ -1,0 +1,129 @@
+$titleColors: (
+	"blue": (
+		"border": tint(blue, 20%),
+		"background": tint(blue, 90%),
+		"text": tint(blue, 20%)
+	),
+	"green": (
+		"border": green,
+		"background": lighten(green, 70%),
+		"text": green
+	),
+	"red": (
+		"border": red,
+		"background": lighten(red, 45%),
+		"text": red
+	),
+	"orange": (
+		"border": orange,
+		"background": lighten(orange, 40%),
+		"text": orange
+	)
+);
+	
+		
+h2, h3, h4, h5 {
+    margin-bottom: 5px;
+}
+    
+h2 {
+	@include marginBottomBetweenContent;
+    padding: 0;
+    
+    display: block;
+    
+   
+    font-size: 2.2rem;	
+	@include desktop {
+		font-size: 2.5rem;
+	}
+    
+	transition: color 0.25s, background 0.25s, border 0.25s;
+	
+	padding: 10px;
+	
+	
+	color: lighten(#000, 30%);
+	background: darken(#fff, 10%);
+	
+	border: 0;
+	border-left: 4px solid lighten(#000, 30%);
+	border-bottom: 1px solid tint(#000, 70%);
+	
+	// Couleurs
+	@each $colorIndex, $colors in $titleColors {
+		&.with-color-#{ $colorIndex } {
+			border-color: map-get($colors, "border") !important;
+			color: map-get($colors, "text") !important;
+			background: map-get($colors, "background") !important;
+		}
+	}
+		
+	&.with-anchor {
+		padding: 0;
+		a {
+			display: block;
+			padding: 10px;
+			text-decoration: none;
+			
+		}
+	
+		&:hover {
+			background: lighten(#000, 30%); // lighten(#333, 30%);
+			border-color: lighten(#000, 30%);
+			a {
+				color: #fff;	
+			}
+		}	
+	}
+	
+    
+}
+
+.selected h2, h2.selected {
+	&, a {
+		color: #000;
+	}
+	border-left-color: #000;
+	background: darken(#fff, 15%);
+}
+
+h3 {
+	font-size: 2rem;
+	@include desktop {
+    	font-size: 2.5rem;
+    }
+}
+
+h4 {
+	font-size: 1.8rem;
+	@include desktop {
+    	font-size: 2.2rem;
+    }
+}
+
+h5 {
+	font-size: 1.6rem;
+	@include desktop {
+   		font-size: 2rem;
+   	}
+}
+
+p.with-color {
+	max-width: 100%;
+	padding: 10px;
+	@include marginBottomBetweenContent;
+	
+	background: darken(#fff, 10%);
+	border-left: 4px solid lighten(#000, 30%);
+	color: lighten(#000, 30%);
+	
+	@each $colorIndex, $colors in $titleColors {
+		&.with-color-#{ $colorIndex } {
+			border-left-color: map-get($colors, "border") !important;
+			color: map-get($colors, "text") !important;
+			background: map-get($colors, "background") !important;
+		}
+	}
+	
+}

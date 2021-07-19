@@ -1,0 +1,191 @@
+
+	
+div#events {
+	h2 {
+		margin: 0;	
+	}
+	
+	section {
+	
+		div.events-content {
+			
+			div.event {
+				padding: 14px;
+				margin-bottom: 0;
+
+				
+				border-bottom: 1px solid tint(#000, 70%);
+				
+				
+				
+			}	
+			@include marginBottomBetweenContent;
+		}
+	
+		
+
+	}
+
+	
+}
+	
+div.event {
+	
+	margin-bottom: 10px;
+	
+    p {
+        font-size: 2rem;
+        margin-bottom: 5px;
+        line-height: normal;
+        text-align: left;
+    } 
+   
+   	span.distance {
+   		
+   		display: block;
+   		
+   		@include tablet {
+   			display: inline;
+	   		&::before {
+	   			content: ' - ';
+	   		}
+	   	}
+	}	
+
+	
+    p.date {
+        font-size: 1.8rem;
+    } 
+   	
+   	p.type, p.status {
+   		display: inline-block;
+   		border-radius: 3px;
+   		padding: 5px 10px; 
+   		font-size: 1.2rem;
+   		color: #fff;
+   	}
+   
+   	p.type {
+		background: #000;
+		text-transform: uppercase;	
+	}
+   
+    p.status {
+        
+        
+        background: #000;  
+        
+       
+        
+        
+        
+        &.completed {
+            background: red;    
+        }
+        &.in-progress {
+            background: green;
+            animation-duration: 1.5s;
+	        animation-name: blink;
+	        animation-iteration-count: infinite;
+        }
+        &.postponed {
+            background: orange;    
+        }
+    }
+   
+   	p.countdown {
+   		span.counter {
+   			display: inline-block; 
+   			width: 35px;
+   			font-size: 3rem;
+   			margin-right: 3px;
+   			text-align: right;
+   		
+   		}	
+   		span.name {
+   			font-size: 1.5rem;	
+   			margin-right: 4px;
+   			
+   			&::after {
+   				content: attr(data-name-phone);
+   				@include tablet {
+   					content: attr(data-name);
+   				}
+   			}
+   		}
+   		margin-bottom: 10px;
+   	}
+
+    ul.sessions {
+    	margin-bottom: 10px;
+    	background: lighten(#000, 60%);
+    	
+    	width: 260px;
+    
+    	border-radius: 3px;
+        li {
+        	&:first-of-type {
+        		span.name {
+        			border-top-left-radius: 3px;	
+        		}
+        		span.date {
+        			border-top-right-radius: 3px;	
+        		}
+        	}
+        	&:last-of-type {
+        		span.name {
+        			border-bottom-left-radius: 3px;	
+        		}
+        		span.date {
+        			border-bottom-right-radius: 3px;	
+        		}
+        	}
+            &:not(:last-of-type) {
+            	/*margin-bottom: 1px;*/
+            	border-bottom: 1px solid transparent;
+            }
+            .session {
+                display: block;
+                font-size: 1.2rem;
+            }  
+           
+      		span {
+      			display: inline-block;
+      			transition: background 0.25s;
+      			background: lighten(#333, 70%);	
+      			padding: 5px 10px;
+      			&.name {
+      				width: 100px;
+      				
+      				border-right: 1px solid lighten(#000, 60%);
+      			}
+      			&.date {
+      				width: 160px;
+      			}
+      		}
+      	
+      		a {
+      			span {
+      				background: lighten(#333, 20%);
+      			}	
+      		}
+           
+            a.session {
+                
+                color: #fff; 
+                &:hover {
+                    span {
+                    	background: #333;
+                    }
+                    text-decoration: none;
+                }
+            }
+           
+          
+        }
+    }
+   
+    :last-child {
+        margin-bottom: 0 !important;	
+    }
+}
