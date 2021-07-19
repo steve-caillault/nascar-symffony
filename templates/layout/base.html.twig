@@ -6,7 +6,7 @@
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
         {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
+            {{ encore_entry_link_tags('site') }}
         {% endblock %}
 
         {% block javascripts %}
@@ -14,6 +14,30 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <div id="site">
+        {% apply spaceless %}
+            {% block siteHeader %}
+            <header id="main">
+                <a href="{{ path('app_default_index') }}" title="{{ 'home.anchor.alt' | trans }}" class="home">
+                    <img src="{{ resources_url ~ 'images/logo.bf5afcc7.png' }}" alt="{{ 'home.anchor.image' | trans }}" width="250" height="100">
+                </a>
+            </header>
+
+            {% block mainMenu %}{% endblock %}
+
+            <div id="main-content">
+                {% block contentHeader %}
+                <header id="content">
+                    <h1>{% block pageTitle %}{% endblock %}</h1>
+                    {% block breadcrumb %}{% endblock %}
+                </header>
+                {% endblock %}
+
+                {% block body %}{% endblock %}
+            </div>
+
+            {% endblock %}
+        {% endapply %}
+        </div>
     </body>
 </html>

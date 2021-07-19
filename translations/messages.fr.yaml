@@ -3,3 +3,12 @@ errors:
   denied: Vous n'êtes pas autorisé à accéder à cette page.
   not_found: Cette page n'existe pas ou a été déplacé.
   default: Une erreur s'est produite.
+
+home:
+  anchor:
+    alt: Revenir à la racine du site.
+    image: Icône du site Résultats NASCAR Cup Series.
+
+admin:
+  auth: 
+    title: Connexion au panneau d'administration

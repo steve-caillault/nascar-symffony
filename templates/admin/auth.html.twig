@@ -1,10 +1,15 @@
 {% extends 'layout/admin.html.twig' %}
 
+{% set title = 'admin.auth.title' | trans %}
+
 {% block headTitle %}
-Connexion au panneau d'administration
+{{ title }}
+{% endblock %}
+
+{% block pageTitle %}
+{{ title }}
 {% endblock %}
 
 {% block body %}
-<h1>Connexion au panneau d'administration</h1>
 {{ form|raw }}
 {% endblock %}
