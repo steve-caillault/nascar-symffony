@@ -1,0 +1,18 @@
+controllers:
+    resource: ../../src/Controller/
+    type: annotation
+
+controllers_admin:
+    resource: ../../src/Controller/Admin/
+    prefix: /admin
+    type: annotation
+
+controllers_testing:
+    resource: ../../src/Controller/Testing/
+    prefix: /testing
+    type: annotation
+    condition: "'%kernel.environment%' === 'test'"
+
+kernel:
+    resource: ../../src/Kernel.php
+    type: annotation

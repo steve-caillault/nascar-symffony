@@ -1,0 +1,73 @@
+security:
+    # https://symfony.com/doc/current/security/experimental_authenticators.html
+    enable_authenticator_manager: true
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        app_user_provider: 
+            entity: 
+                class: App\Entity\User
+                property: public_id
+
+    firewalls:
+        testing:
+            pattern: ^/testing
+            security: false
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        admin:
+            lazy: true
+            pattern: ^/admin
+            provider: app_user_provider
+            entry_point: App\Security\Admin\AuthenticationEntryPoint
+
+            #guard:
+            #    authenticators:
+            #        - App\Security\Admin\Authenticator
+
+            logout:
+                path: app_admin_security_auth_logout
+
+            form_login:
+                username_parameter: id
+                password_parameter: password
+                login_path: app_admin_security_auth_login
+                check_path: app_admin_security_auth_login
+                enable_csrf: true
+                # csrf_token_generator: security.csrf.token_manager
+                default_target_path: app_admin_default_index
+                # always_use_default_target_path: true
+                # failure_path: login_failure_route_name
+
+            json_login:
+                check_path: app_admin_security_ajax_login
+                username_path: id
+                password_path: password
+            
+
+            remember_me:
+                name: 'ADMIN_REMEMBER_ME'
+                secret: '%kernel.secret%'
+                lifetime: 604800 # 1 week in seconds
+                path: /
+                remember_me_parameter: remember_me
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: ^/admin/auth/login, roles: PUBLIC_ACCESS }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/, roles: PUBLIC_ACCESS }
+
+    password_hashers:
+        App\Entity\User:
+            algorithm: 'argon2id'
+
+    # role_hierarchy:
+    #    ROLE_ADMIN: ROLE_MEMBER

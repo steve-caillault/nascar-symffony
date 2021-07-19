@@ -1,0 +1,11 @@
+<ul id="breadcrumb">
+	{%- for index, item in items -%}
+	<li>
+		{%- if item.RouteName is not empty and loop.index < loop.length -%}
+		<a href="{{ url(item.RouteName, item.RouteParameters) }}" title="{{ item.AltLabel }}">{{ item.Label }}</a>
+		{%- else -%}
+		{{ item.Label }}
+		{%- endif -%}
+	</li>
+	{%- endfor -%}
+</ul>

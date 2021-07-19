@@ -1,0 +1,25 @@
+<form class="login-form" method="post" data-ajax-url="{{ ajax_login_url }}">
+    <fieldset>
+        <div class="form-input">
+            <label for="id">Identifiant</label>
+            <input type="text" value="{{ last_username }}" name="id" id="id" autocomplete="off" required autofocus />
+            {%- if error -%}
+            <p class="error">
+                {{- 'credentials.invalid' | trans([], 'security') -}}
+            </p>
+            {%- endif -%}
+        </div>
+        <div class="form-input">
+            <label for="password">Mot de passe</label>
+            <input type="password" name="password" id="password" required />
+        </div>
+        <div class="form-input">
+            <label for="remember_me">Resté connecté</label>
+            <input type="checkbox" id="remember_me" name="remember_me" />
+        </div>
+    </fieldset>
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+    <div class="form-input form-input-submit">
+        <input type="submit" value="Envoyer" />
+    </div>
+</form>

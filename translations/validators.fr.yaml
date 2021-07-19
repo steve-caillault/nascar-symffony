@@ -1,0 +1,17 @@
+user:
+  public_id:
+    unique_entity: Un utilisateur utilise déjà cet identifiant.
+    not_blank: L'identifiant de l'utilisateur est nécessaire.
+    min: L'identifiant doit avoir au moins {{ limit }} caractères.
+    max: L'identifiant ne doit pas avoir plus de {{ limit }} caractères.
+  first_name:
+    not_blank: Le prénom de l'utilisateur est nécessaire.
+    min: Le prénom doit avoir au moins {{ limit }} caractères.
+    max: Le prénom ne doit pas avoir plus de {{ limit }} caractères.
+  last_name: 
+    not_blank: Le nom de l'utilisateur est nécessaire.
+    min: Le nom doit avoir au moins {{ limit }} caractères.
+    max: Le nom ne doit pas avoir plus de {{ limit }} caractères.
+  permissions:
+    not_blank: Les permissions sont nécessaires.
+    allowed: Les permissions de l'utilisateur sont incorrectes.
