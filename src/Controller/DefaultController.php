@@ -6,7 +6,6 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route as RouteAnnotation;
 
@@ -24,6 +23,6 @@ final class DefaultController extends AbstractController
     ]
     public function index() : Response
     {
-        return $this->render('layout/base.html.twig');
+        return $this->render('site/default.html.twig');
     }
 }

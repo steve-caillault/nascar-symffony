@@ -6,14 +6,14 @@
 
 namespace App\Controller\Admin\Security;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route as RouteAnnotation;
 /***/
-use App\Controller\Admin\AdminControllerInterface;
+use App\Controller\Admin\AdminAbstractController;
+use App\UI\Menus\Breadcrumb\BreadcrumbItem;
 
-final class AuthController extends AbstractController implements AdminControllerInterface {
+final class AuthController extends AdminAbstractController {
 
     /**
      * Connexion
@@ -44,6 +44,12 @@ final class AuthController extends AbstractController implements AdminController
             'error' => $error,
             'ajax_login_url' => $this->generateUrl('app_admin_security_ajax_login'),
         ]);
+
+        $this->getBreadcrumb()->addItem(new BreadcrumbItem(
+            'admin.login.label', 
+            'admin.login.alt', 
+            'app_admin_security_auth_login
+        '));
 
         return $this->render('admin/auth.html.twig', [
             'form' => $form,

@@ -28,8 +28,10 @@
             <div id="main-content">
                 {% block contentHeader %}
                 <header id="content">
+                    {% block breadcrumb %}
+                    {{ breadcrumb(breadcrumb) }}
+                    {% endblock %}
                     <h1>{% block pageTitle %}{% endblock %}</h1>
-                    {% block breadcrumb %}{% endblock %}
                 </header>
                 {% endblock %}
 

@@ -3,6 +3,7 @@ twig:
 
     globals:
         resources_url: '%resourcesUrl%'
+        breadcrumb: '@App\UI\Menus\Breadcrumb\Breadcrumb'
 
 when@test:
     twig:

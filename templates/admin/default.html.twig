@@ -1,6 +1,6 @@
-{% extends "layout/base.html.twig" %}
+{% extends 'layout/admin.html.twig' %}
 
-{% set title = 'error.title' | trans({ 'code': code }) %}
+{% set title = 'admin.title' | trans %}
 
 {% block headTitle %}
 {{ title }}
@@ -11,5 +11,5 @@
 {% endblock %}
 
 {% block body %}
-<p>{{ message }}</p>
+<p>{{ 'admin.index.choice' | trans }}</p>
 {% endblock %}

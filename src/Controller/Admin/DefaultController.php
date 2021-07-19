@@ -6,11 +6,10 @@
 
 namespace App\Controller\Admin;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route as RouteAnnotation;
 
-final class DefaultController extends AbstractController implements AdminControllerInterface {
+final class DefaultController extends AdminAbstractController {
 
     /**
      * Index du panneau d'administration
@@ -23,7 +22,7 @@ final class DefaultController extends AbstractController implements AdminControl
     ]
     public function index() : Response
     {
-        return new Response('Admin index');
+        return $this->render('admin/default.html.twig');
     }
 
 }
