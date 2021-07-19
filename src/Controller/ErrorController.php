@@ -78,7 +78,7 @@ final class ErrorController extends AbstractController
             );
         }
 
-        return $this->render('layout/error.html.twig', $displayingData)
+        return $this->render('commons/error.html.twig', $displayingData)
             ->setStatusCode($statusCode);
     }
 

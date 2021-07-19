@@ -69,7 +69,7 @@ final class MaintenanceSubscriber implements EventSubscriberInterface
         }
         else
         {
-            $content = $this->twig->render('layout/maintenance.html.twig');
+            $content = $this->twig->render('commons/maintenance.html.twig');
             $response = new Response($content, $responseCode);
         }
 
