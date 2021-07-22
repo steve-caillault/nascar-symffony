@@ -1,0 +1,20 @@
+{% block header %}
+<header id="main">
+    <a href="{{ path('app_default_index') }}" title="{{ 'home.anchor.alt' | trans }}" class="home">
+        <img src="{{ resources_url ~ 'images/logo.bf5afcc7.png' }}" alt="{{ 'home.anchor.image' | trans }}" width="250" height="100">
+    </a>
+    {% block site_header_menus %}
+        {% set menus = header_submenus.get() %} 
+        {% if menus | length > 0 %}
+            <button class="menus-button" type="button">{{ 'header.menu.label' | trans }}</button>
+            <nav>
+                <div class="menus">
+                    {% for menu in menus %}
+                    {{ menu }}
+                    {% endfor %}
+                </div>
+            </nav>
+        {% endif %}
+    {% endblock %}
+</header>
+{% endblock %}

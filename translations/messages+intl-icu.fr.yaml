@@ -23,3 +23,7 @@ error:
 maintenance:
   title: Maintenance
   informations: Le site est actuellement en maintenance. Vous pourrez rafraîchir cette page dans quelques minutes.
+
+header:
+  menu:
+    label: Menu

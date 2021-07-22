@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block headTitle %}{% endblock %}</title>
+        <title>{% block head_title %}{% endblock %}</title>
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
         {% block stylesheets %}
@@ -16,29 +16,27 @@
     <body>
         <div id="site">
         {% apply spaceless %}
-            {% block siteHeader %}
-            <header id="main">
-                <a href="{{ path('app_default_index') }}" title="{{ 'home.anchor.alt' | trans }}" class="home">
-                    <img src="{{ resources_url ~ 'images/logo.bf5afcc7.png' }}" alt="{{ 'home.anchor.image' | trans }}" width="250" height="100">
-                </a>
-            </header>
 
-            {% block mainMenu %}{% endblock %}
+            {% use 'ui/menus/header.html.twig' with header as site_parent_header %}
+
+            {% block site_header %}
+            {{ block('site_parent_header') }}
+            {% endblock %}
+
 
             <div id="main-content">
-                {% block contentHeader %}
+                {% block content_header %}
                 <header id="content">
                     {% block breadcrumb %}
                     {{ breadcrumb(breadcrumb) }}
                     {% endblock %}
-                    <h1>{% block pageTitle %}{% endblock %}</h1>
+                    <h1>{% block page_title %}{% endblock %}</h1>
                 </header>
                 {% endblock %}
 
                 {% block body %}{% endblock %}
             </div>
 
-            {% endblock %}
         {% endapply %}
         </div>
     </body>
