@@ -5,7 +5,7 @@ errors:
   default: Une erreur s'est produite.
 
 home:
-  pageTitle: Résultats NASCAR Cup Series
+  page_title: Résultats NASCAR Cup Series
   anchor:
     alt: Revenir à la racine du site.
     image: Icône du site Résultats NASCAR Cup Series.
