@@ -23,12 +23,11 @@
             {{ block('site_parent_header') }}
             {% endblock %}
 
-
             <div id="main-content">
                 {% block content_header %}
                 <header id="content">
                     {% block breadcrumb %}
-                    {{ breadcrumb(breadcrumb) }}
+                    {% include 'ui/menus/breadcrumb.html.twig' with { items: breadcrumb.items } only %}
                     {% endblock %}
                     <h1>{% block page_title %}{% endblock %}</h1>
                 </header>
