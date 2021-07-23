@@ -30,7 +30,7 @@ final class ContactMessage implements EntityInterface
      * @var ?string
      */
     #[
-        ORM\Column(type: 'string', length: 100, nullable: true)
+        ORM\Column(type: 'string', name: '`from`', length: 100, nullable: true)
     ]
     private ?string $from = null;
 
