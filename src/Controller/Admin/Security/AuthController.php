@@ -48,8 +48,8 @@ final class AuthController extends AdminAbstractController {
         $this->getBreadcrumb()->addItem(new BreadcrumbItem(
             'admin.login.label', 
             'admin.login.alt', 
-            'app_admin_security_auth_login
-        '));
+            'app_admin_security_auth_login'
+        ));
 
         return $this->render('admin/auth.html.twig', [
             'form' => $form,
