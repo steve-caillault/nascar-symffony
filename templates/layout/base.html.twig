@@ -8,6 +8,8 @@
         <link href="{{ favicon_path }}" rel="shortcut icon" />	
         {% endif %}
 
+        {% block meta_robots %}{% endblock %}
+
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
         {% block stylesheets %}

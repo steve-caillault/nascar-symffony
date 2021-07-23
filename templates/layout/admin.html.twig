@@ -1,5 +1,9 @@
 {% extends 'layout/base.html.twig' %}
 
+{% block meta_robots %}
+<meta name="robots" content="noindex,nofollow" />
+{% endblock %}
+
 {% block stylesheets %}
     {{ encore_entry_link_tags('admin') }}
 {% endblock %}
