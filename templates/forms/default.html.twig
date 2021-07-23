@@ -1,0 +1,18 @@
+{% form_theme form 'forms/fields.html.twig' %}
+
+{% set method = method | default('post') %}
+{% set attributes = attributes | default([]) %}
+{% set submitLabel = submitlabel | default('default.submit.label' | trans([], 'form')) %}
+
+{{ form_start(form, { attr: attributes }) }}
+    {% set inputs = form.children | filter((value, key) => key != '_token') %}
+    {% block inputs %}
+        {% for input in inputs %}
+        {{ form_row(input) }}
+        {% endfor %}
+    {% endblock %}
+
+    <div class="form-input form-input-submit">
+        <input type="submit" value="{{ submitLabel }}" />
+    </div>
+{{ form_end(form) }}

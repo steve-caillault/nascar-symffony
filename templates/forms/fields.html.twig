@@ -1,0 +1,30 @@
+{% use "form_div_layout.html.twig" %}
+
+{% block form_row %}
+    {% set form_input_classes = [ 'form-input' ] %}
+    {% set invalid = (not compound or force_error | default(false)) and not valid %}
+    {% if invalid %} {% set form_input_classes = form_input_classes | merge([ 'error' ]) %} {% endif %}
+    {% set classes = (row_attr.class | default('') ~ ' ' ~ form_input_classes | join(' ')) | trim %}
+    {% set attributes = { attr: row_attr | merge({
+        class: classes
+    }) } %}
+    <div{% with attributes %}{{ block('attributes') }}{% endwith %}>
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        {{ form_errors(form) }}
+    </div>
+{% endblock form_row %}
+
+{% block form_errors %}
+    {% if errors | length > 0 %}
+        {% for error in errors %}
+            <p class="error">{{ error.message }}</p>
+        {% endfor %}
+    {% endif %}
+{% endblock form_errors %}
+
+{% block submit_widget %}
+    <div class="form-input form-input-submit">
+        {{ parent() }}
+    </div>
+{% endblock %}
