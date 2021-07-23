@@ -17,7 +17,7 @@ trait WithMaintenanceTrait {
      */
     private function enableMaintenance() : void
     {
-        $filePath = $this->getService(ContainerBagInterface::class)->get('maintenanceFilePath');
+        $filePath = $this->getService(ContainerBagInterface::class)->get('maintenance_file_path');
         if(! file_exists($filePath))
         {
             (new Filesystem())->dumpFile($filePath, '');
@@ -30,7 +30,8 @@ trait WithMaintenanceTrait {
      */
     private function disableMaintenance() : void
     {
-        $filePath = $this->getService(ContainerBagInterface::class)->get('maintenanceFilePath');
+        $filePath = $this->getService(ContainerBagInterface::class)->get('maintenance_file_path');
+        
         if(file_exists($filePath))
         {
             unlink($filePath);

@@ -212,7 +212,7 @@ final class MaintenanceCommandTest extends CommandTestCase
      */
     private function checkingMaintenanceStatus(bool $maintenanceEnabled) : void
     {
-        $filePath = $this->getService(ContainerBagInterface::class)->get('maintenanceFilePath');
+        $filePath = $this->getService(ContainerBagInterface::class)->get('maintenance_file_path');
         $methodAssertExists = ($maintenanceEnabled) ? 'assertTrue' : 'assertFalse';
         $this->{ $methodAssertExists }(file_exists($filePath));
     }
