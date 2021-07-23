@@ -17,6 +17,7 @@ final class DefaultController extends AdminAbstractController {
      */
     #[
         RouteAnnotation(
+            path: '/',
             methods: [ 'GET', 'POST' ]
         )
     ]

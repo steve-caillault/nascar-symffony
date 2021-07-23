@@ -34,16 +34,13 @@ abstract class AdminAbstractController extends BaseAbstractController implements
     }
 
     /**
-     * Initialise le fil d'ariane
-     * @param Breadcrumb $breadcrumb
+     * Alimente le fil d'Ariane
      * @return void
-     * @required
      */
-    public function setBreadcrumb(Breadcrumb $breadcrumb)
+    protected function fillBreadcrumb() : void
     {
-        parent::setBreadcrumb($breadcrumb);
-
-        $breadcrumb->addItem(new BreadcrumbItem('admin.label', 'admin.alt', 'app_admin_default_index'));
+        parent::fillBreadcrumb();
+        $this->getBreadcrumb()->addItem(new BreadcrumbItem('admin.label', 'admin.alt', 'app_admin_default_index'));
     }
 
     /**
@@ -54,19 +51,6 @@ abstract class AdminAbstractController extends BaseAbstractController implements
     {
         parent::fillHeaderMenus();
         $this->getHeaderMenus()->add($this->user_menu);
-    }
-
-    /**
-     * Renders a view.
-     * @param string $view
-     * @param array $parameters
-     * @param Response
-     * @return Response
-     */
-    protected function render(string $view, array $parameters = [], Response $response = null) : Response
-    {
-        $this->fillHeaderMenus();
-        return parent::render($view, $parameters, $response);
     }
 
 }

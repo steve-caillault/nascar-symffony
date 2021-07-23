@@ -1,0 +1,24 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% set title = 'admin.contact_messages.title' | trans %}
+
+{% block head_title %}
+{{ title }}
+{% endblock %}
+
+{% block page_title %}
+{{ title }}
+{% endblock %}
+
+{% block body %}
+    {% if messages | length > 0 %}
+    <section class="collection collection-message">
+        {% for message in messages %}
+        {% include 'admin/messages/_article.html.twig' with { message: message } only %}
+        {% endfor %}
+    </section>
+    {{ pagination(pagination) }}
+    {% else %}
+    <p>{{ 'admin.contact_messages.empty' | trans }}</p>
+    {% endif %}
+{% endblock %}

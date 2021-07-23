@@ -9,3 +9,6 @@ admin:
   login:
     label: Connexion
     alt: Connexion au panneau d'administration
+
+  contact_messages:
+    label: Messages

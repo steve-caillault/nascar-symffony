@@ -19,6 +19,20 @@ final class ContactMessageRepository extends AbstractRepository
         parent::__construct($registry, ContactMessage::class);
     }
 
+    /**
+     * Compte le nombre de messages
+     * @return int
+     */
+    public function getTotal() : int
+    {
+        $dql = strtr('SELECT COUNT(messages.id) FROM :object messages', [
+            ':object' => ContactMessage::class,
+        ]);
+
+        $total = (int) $this->getEntityManager()->createQuery($dql)->getSingleScalarResult();
+        return $total;
+    }
+
     // /**
     //  * @return Message[] Returns an array of Message objects
     //  */

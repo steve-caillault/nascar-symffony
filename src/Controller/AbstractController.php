@@ -7,6 +7,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as SymfonyAbstractController;
+use Symfony\Component\HttpFoundation\Response;
 /***/
 use App\UI\Menus\Breadcrumb\{
     Breadcrumb, 
@@ -39,7 +40,7 @@ abstract class AbstractController extends SymfonyAbstractController
      */
     public function setBreadcrumb(Breadcrumb $breadcrumb)
     {
-        $this->breadcrumb = $breadcrumb->addItem(new BreadcrumbItem('home.label', 'home.alt', 'app_default_index'));
+        $this->breadcrumb = $breadcrumb;
     }
 
     /**
@@ -74,7 +75,16 @@ abstract class AbstractController extends SymfonyAbstractController
     }
 
     /**
-     * Remplis l'en-tête avec les menus
+     * Alimente le fil d'Ariane
+     * @return void
+     */
+    protected function fillBreadcrumb() : void
+    {
+        $this->getBreadcrumb()->addItem(new BreadcrumbItem('home.label', 'home.alt', 'app_default_index'));
+    }
+
+    /**
+     * Remplit l'en-tête avec les menus
      * @return void
      */
     protected function fillHeaderMenus() : void
@@ -83,5 +93,19 @@ abstract class AbstractController extends SymfonyAbstractController
     }
 
     /************************************************************/
+
+    /**
+     * Renders a view.
+     * @param string $view
+     * @param array $parameters
+     * @param Response
+     * @return Response
+     */
+    protected function render(string $view, array $parameters = [], Response $response = null) : Response
+    {
+        $this->fillHeaderMenus();
+        $this->fillBreadcrumb();
+        return parent::render($view, $parameters, $response);
+    }
 
 }

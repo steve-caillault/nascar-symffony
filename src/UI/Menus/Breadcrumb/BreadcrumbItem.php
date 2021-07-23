@@ -17,7 +17,7 @@ final class BreadcrumbItem {
      */
     public function __construct(
         private string $label, 
-        private string $altLabel, 
+        private string $altLabel = '', 
         private ?string $routeName = null, 
         private array $routeParameters = []
     )
