@@ -12,14 +12,12 @@ use Doctrine\ORM\{
 };
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Faker\{ 
-    Factory as FakerFactory, 
-    Generator as FakerGenerator 
-};
 /***/
 use App\Repository\EntityRepositoryInterface;
 
 abstract class BaseTestCase extends WebTestCase {
+
+    use WithFakerTrait;
 
     /**
      * Client HTTP
@@ -32,25 +30,6 @@ abstract class BaseTestCase extends WebTestCase {
      * @var ?EntityManagerInterface
      */
     private ?EntityManagerInterface $entityManager = null;
-
-    /**
-     * Objet Faker pour générer de fausse données
-     * @var FakerGenerator|false
-     */
-    private FakerGenerator|false $faker = false;
-
-    /**
-     * Retourne l'objet Faker permettant de générer de fausses données
-     * @return FakerGenerator
-     */
-    protected function getFaker() : FakerGenerator
-    {
-        if($this->faker === false)
-        {
-            $this->faker = FakerFactory::create();
-        }
-        return $this->faker;
-    }
 
     /**
      * Retourne le service correspondant à la classe en paramètre
