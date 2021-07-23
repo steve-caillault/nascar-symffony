@@ -1,6 +1,6 @@
 {% extends 'layout/admin.html.twig' %}
 
-{% set title = 'admin.contact_messages.title' | trans %}
+{% set title = 'admin.messages.title' | trans %}
 
 {% block head_title %}
 {{ title }}
@@ -19,6 +19,6 @@
     </section>
     {{ pagination(pagination) }}
     {% else %}
-    <p>{{ 'admin.contact_messages.empty' | trans }}</p>
+    <p>{{ 'admin.messages.empty' | trans }}</p>
     {% endif %}
 {% endblock %}

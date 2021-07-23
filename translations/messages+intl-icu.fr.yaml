@@ -5,10 +5,13 @@ errors:
   default: Une erreur s'est produite.
 
 home:
-  page_title: Résultats NASCAR Cup Series
+  title: Résultats NASCAR Cup Series
   anchor:
     alt: Revenir à la racine du site.
     image: Icône du site Résultats NASCAR Cup Series.
+
+contact:
+  title: Envoyer un message
 
 admin:
   title: Panneau d'administration
@@ -16,7 +19,7 @@ admin:
     title: Connexion au panneau d'administration
   index: 
     choice: Choisissez une page dans le menu.
-  contact_messages:
+  messages:
     title: Messages de contacts
     empty: Aucun message n'a été trouvé.
 

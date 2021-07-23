@@ -1,6 +1,12 @@
 header:
   label: Menu
 
+  site:
+    main:
+      contact:
+        label: Contact
+        alt_label: Envoyer un message de contact au gestionnaire du site.
+
   admin:
     modules:
       messages:

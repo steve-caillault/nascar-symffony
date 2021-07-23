@@ -4,7 +4,7 @@
  * Contrôleur d'index
  */
 
-namespace App\Controller;
+namespace App\Controller\Site;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route as RouteAnnotation;
@@ -26,4 +26,5 @@ final class DefaultController extends AbstractController
     {
         return $this->render('site/default.html.twig');
     }
+
 }

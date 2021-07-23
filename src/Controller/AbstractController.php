@@ -80,7 +80,7 @@ abstract class AbstractController extends SymfonyAbstractController
      */
     protected function fillBreadcrumb() : void
     {
-        $this->getBreadcrumb()->addItem(new BreadcrumbItem('home.label', 'home.alt', 'app_default_index'));
+        $this->getBreadcrumb()->addItem(new BreadcrumbItem('home.label', 'home.alt', 'app_site_default_index'));
     }
 
     /**

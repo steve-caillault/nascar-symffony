@@ -2,6 +2,10 @@ home:
   label: Accueil
   alt: Revenir à la page d'accueil.
 
+site:
+  contact:
+    label: Contact
+
 admin:
   label: Panneau d'administration
   alt: Page d'accueil du panneau d'administration.
@@ -10,5 +14,5 @@ admin:
     label: Connexion
     alt: Connexion au panneau d'administration
 
-  contact_messages:
+  messages:
     label: Messages
