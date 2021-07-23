@@ -6,9 +6,9 @@
 
 namespace App\Repository;
 
-use App\Entity\Log;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+/***/
+use App\Entity\Log;
 
 /**
  * @method Log|null find($id, $lockMode = null, $lockVersion = null)
@@ -16,7 +16,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
  * @method Log[]    findAll()
  * @method Log[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-final class LogRepository extends ServiceEntityRepository implements EntityRepositoryInterface
+final class LogRepository extends AbstractRepository 
 {
     /**
      * @inheritdoc

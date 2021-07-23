@@ -2,7 +2,6 @@
 
 namespace App\Repository;
 
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 /***/
 use App\Entity\User;
@@ -13,7 +12,7 @@ use App\Entity\User;
  * @method User[]    findAll()
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserRepository extends ServiceEntityRepository implements EntityRepositoryInterface
+class UserRepository extends AbstractRepository
 {
     /**
      * @inheritdoc
