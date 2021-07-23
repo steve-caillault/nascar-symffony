@@ -1,0 +1,10 @@
+header:
+  label: Menu
+
+  admin:
+    user:
+      logout:
+        label: Se déconnecter
+        alt_label: Se déconnecter du panneau d'administration.
+
+        
