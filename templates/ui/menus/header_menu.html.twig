@@ -1,0 +1,5 @@
+<ul class="lateral-menu">
+    {% for item in menu.items %}
+    {% include 'ui/menus/header_item_menu.html.twig' with { item: item } only %}
+    {% endfor %}
+</ul>

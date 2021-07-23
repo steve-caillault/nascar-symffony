@@ -6,11 +6,11 @@
     {% block site_header_menus %}
         {% set menus = header_submenus.get() %} 
         {% if menus | length > 0 %}
-            <button class="menus-button" type="button">{{ 'header.menu.label' | trans }}</button>
+            <button class="menus-button" type="button">{{ 'header.label' | trans([], 'menus') }}</button>
             <nav>
                 <div class="menus">
                     {% for menu in menus %}
-                    {{ menu }}
+                    {% include 'ui/menus/header_menu.html.twig' with { menu: menu } only %}
                     {% endfor %}
                 </div>
             </nav>

@@ -2,9 +2,9 @@ twig:
     default_path: '%kernel.project_dir%/templates'
 
     globals:
-        resources_url: '%resourcesUrl%'
+        resources_url: '%resources_url%'
         breadcrumb: '@App\UI\Menus\Breadcrumb\Breadcrumb'
-        header_submenus: '@App\UI\Menus\HeaderMenus'
+        header_submenus: '@App\UI\Menus\Header\HeaderMenus'
 
 when@test:
     twig:

@@ -6,7 +6,7 @@
 parameters:
     siteName: 'Nascar Results'
     maintenanceFilePath: '%kernel.project_dir%/.maintenance'
-    resourcesUrl: '%env(resolve:RESOURCES_URL)%'
+    resources_url: '%env(resolve:RESOURCES_URL)%'
 
 services:
     # default configuration for services in *this* file

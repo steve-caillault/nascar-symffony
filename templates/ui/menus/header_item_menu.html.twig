@@ -1,0 +1,17 @@
+
+{% set level_classes = {
+    1: 'primary', 
+    2: 'secondary', 
+    3: 'tertiary'
+} %}
+
+{% set level_class = level_classes[item.level] | default('primary') %}
+{% set root_classes = { level_class } | merge(item.classes) %}
+
+<li class="{{ root_classes | join(' ') }}">
+    {% if item.routeName is not null %}
+    <a href="{{ url(item.routeName, item.routeParameters) }}" class="" title="{{ item.altLabel }}">{{ item.label }}</a>
+    {% else %}
+    <span>{{ item.label }}</span>
+    {% endif %}
+</li>
