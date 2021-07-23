@@ -22,7 +22,8 @@ final class AjaxController extends AbstractController implements AjaxControllerI
      */
     #[
         RouteAnnotation(
-            path: '/ajax'
+            path: '/ajax',
+            methods: [ 'GET' ]
         )
     ]
     public function index(AjaxResponseService $ajaxResponseService) : Response

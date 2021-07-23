@@ -18,7 +18,8 @@ final class DefaultController extends AbstractController
      */
     #[
         RouteAnnotation(
-            path: '/'
+            path: '/',
+            methods: [ 'GET', ]
         )
     ]
     public function index() : Response
