@@ -10,7 +10,7 @@
 
 <li class="{{ root_classes | join(' ') }}">
     {% if item.routeName is not null %}
-    <a href="{{ url(item.routeName, item.routeParameters) }}" class="" title="{{ item.altLabel }}">{{ item.label }}</a>
+    <a href="{{ url(item.routeName, item.routeParameters) }}" class="{{ item.classes | join(' ') }}" title="{{ item.altLabel }}">{{ item.label }}</a>
     {% else %}
     <span>{{ item.label }}</span>
     {% endif %}

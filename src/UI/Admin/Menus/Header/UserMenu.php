@@ -7,7 +7,6 @@
 namespace App\UI\Admin\Menus\Header;
 
 use Symfony\Component\Security\Core\Security;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 /***/
 use App\UI\Menus\Header\{

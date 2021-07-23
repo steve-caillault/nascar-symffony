@@ -7,20 +7,36 @@
 namespace App\Controller\Admin;
 
 use App\Controller\AbstractController as BaseAbstractController;
-use App\UI\Menus\Breadcrumb\{
-    Breadcrumb,
-    BreadcrumbItem
+use App\UI\Menus\Breadcrumb\BreadcrumbItem;
+use App\UI\Admin\Menus\Header\{
+    UserMenu,
+    AdminMenu
 };
-use App\UI\Admin\Menus\Header\UserMenu;
-use Symfony\Component\HttpFoundation\Response;
 
 abstract class AdminAbstractController extends BaseAbstractController implements AdminControllerInterface {
+
+    /**
+     * Menu du panneau d'administration
+     * @var AdminMenu
+     */
+    private AdminMenu $admin_menu;
 
     /**
      * Menu de l'utilisateur
      * @var UserMenu
      */
-    private ?UserMenu $user_menu = null;
+    private UserMenu $user_menu;
+
+    /**
+     * Initialise le menu du panneau d'administration
+     * @param AdminMenu
+     * @return void
+     * @required
+     */
+    public function setAdminMenu(AdminMenu $adminMenu)
+    {
+        $this->admin_menu = $adminMenu;
+    }
 
     /**
      * Initialise le menu de l'utilisateur
@@ -50,7 +66,11 @@ abstract class AdminAbstractController extends BaseAbstractController implements
     protected function fillHeaderMenus() : void
     {
         parent::fillHeaderMenus();
-        $this->getHeaderMenus()->add($this->user_menu);
+        
+        $this->getHeaderMenus()
+            ->add($this->admin_menu)
+            ->add($this->user_menu)
+        ;
     }
 
 }
