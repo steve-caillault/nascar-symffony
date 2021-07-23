@@ -3,6 +3,7 @@ twig:
 
     globals:
         resources_url: '%resources_url%'
+        site_logo_path: '%site_logo_path%'
         breadcrumb: '@App\UI\Menus\Breadcrumb\Breadcrumb'
         header_submenus: '@App\UI\Menus\Header\HeaderMenus'
 
