@@ -1,0 +1,18 @@
+default:
+  submit:
+    label: Envoyer
+
+site:
+  contact:
+    fields:
+      from:
+        label: De
+        placeholder: Entrer votre nom.
+      email:
+        label: Adresse email
+      subject:
+        label: Sujet
+        placeholder: Sujet de votre message.
+      message:
+        label: Message
+        placeholder: Message à transmettre.

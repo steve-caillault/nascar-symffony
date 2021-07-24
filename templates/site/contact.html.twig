@@ -9,5 +9,13 @@
 {% endblock %}
 
 {% block body %}
-<p>@todo form</p>
+
+    {% include 'forms/default.html.twig' with {
+        form: form,
+        attributes: {
+            'id': 'contact'
+        }
+    } only %}
+
+
 {% endblock %}

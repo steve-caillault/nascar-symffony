@@ -6,16 +6,24 @@
 
 namespace App\Controller\Site;
 
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\{
+    Request,
+    Response
+};
 use Symfony\Component\Routing\Annotation\Route as RouteAnnotation;
+use Symfony\Contracts\Translation\TranslatorInterface;
 /***/
 use App\UI\Menus\Breadcrumb\BreadcrumbItem;
+use App\Form\ContactType as ContactForm;
+use App\Entity\ContactMessage;
 
 final class ContactController extends AbstractController
 {
 
     /**
      * Page de contact
+     * @param Request $request
+     * @param TranslatorInterface $translator
      * @return Response
      */
     #[
@@ -24,9 +32,38 @@ final class ContactController extends AbstractController
             methods: [ 'GET', 'POST' ]
         )
     ]
-    public function index() : Response
+    public function index(Request $request, TranslatorInterface $translator) : Response
     {
-        return $this->render('site/contact.html.twig');
+        $contactMessage = new ContactMessage();
+
+        $contactForm = $this->createForm(ContactForm::class, $contactMessage);
+        $contactForm->handleRequest($request);
+
+        if($contactForm->isSubmitted() and $contactForm->isValid())
+        {
+            $entityManager = $this->getDoctrine()->getManager();
+
+            try {
+                $entityManager->persist($contactMessage);
+                $entityManager->flush();
+            } catch(\Throwable) {
+
+            }
+
+            $success = ($contactMessage->getId() !== null);
+            $flashKey = ($success) ? 'success' : 'error';
+            $flashMessage = ($success) ? 'contact.success' : 'contact.failure';
+            $this->addFlash($flashKey, $translator->trans($flashMessage));
+
+            if($success)
+            {
+                return $this->redirectToRoute('app_site_default_index');
+            }
+        }
+
+        return $this->renderForm('site/contact.html.twig', [
+            'form' => $contactForm,
+        ]);
     }
 
     /**
