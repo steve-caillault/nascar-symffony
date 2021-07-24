@@ -25,12 +25,15 @@
         {% apply spaceless %}
 
             {% use 'ui/menus/header.html.twig' with header as site_parent_header %}
+            {% use 'ui/flashes.html.twig' with flash_message as content_flash %}
 
+            {# Header et menus latérals #}
             {% block site_header %}
             {{ block('site_parent_header') }}
             {% endblock %}
 
             <div id="main-content">
+                {# Fil d'Ariane et titre de la page #}
                 {% block content_header %}
                 <header id="content">
                     {% block breadcrumb %}
@@ -40,6 +43,12 @@
                 </header>
                 {% endblock %}
 
+                {# Messages Flash #}
+                {% block flash_message %}
+                {{ block('content_flash') }}
+                {% endblock %}
+
+                {# Contenu pricipal #}
                 {% block body %}{% endblock %}
             </div>
 

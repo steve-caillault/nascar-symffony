@@ -1,0 +1,8 @@
+{% block flash_message %}
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            {% set color = (label == 'success') ? 'green' : 'red' %}
+            <p class="with-color with-color-{{ color }}">{{ message }}</p>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}
