@@ -15,3 +15,19 @@ user:
   permissions:
     not_blank: Les permissions sont nécessaires.
     allowed: Les permissions de l'utilisateur sont incorrectes.
+
+contact:
+  from:
+    min: Le nom doit avoir au moins {{ limit }} caractères.
+    max: Le nom ne doit pas avoir plus de {{ limit }} caractères.
+  email:
+    max: L'adresse email ne doit pas avoir plus de {{ limit }} caractères.
+    email: Ce n'est pas une adresse mail valide.
+  subject:
+    min: Le sujet du message doit avoir au moins {{ limit }} caractères.
+    max: Le sujet du message ne doit pas avoir plus de {{ limit }} caractères.
+  message:
+    not_blank: Le message ne doit pas être vide.
+    min: Le message doit avoir au moins {{ limit }} caractères.
+    max: Le message ne doit pas avoir plus de {{ limit }} caractères.
+

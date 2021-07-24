@@ -4,13 +4,15 @@ namespace App\Entity;
 
 use App\Repository\ContactMessageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints;
 
 #[
     ORM\Table(name: 'contact_messages'),
     /***/
     ORM\Entity(
         repositoryClass: ContactMessageRepository::class
-    )
+    ),
+    ORM\HasLifecycleCallbacks()
 ]
 final class ContactMessage implements EntityInterface
 {
@@ -30,7 +32,14 @@ final class ContactMessage implements EntityInterface
      * @var ?string
      */
     #[
-        ORM\Column(type: 'string', name: '`from`', length: 100, nullable: true)
+        ORM\Column(type: 'string', name: '`from`', length: 100, nullable: true),
+        /***/
+        Constraints\Length(
+            min: 5,
+            max: 100,
+            minMessage: 'contact.from.min',
+            maxMessage: 'contact.from.max'
+        )
     ]
     private ?string $from = null;
 
@@ -39,7 +48,15 @@ final class ContactMessage implements EntityInterface
      * @var ?string
      */
     #[
-        ORM\Column(type: 'string', length: 100, nullable: true)
+        ORM\Column(type: 'string', length: 100, nullable: true),
+        /***/
+        Constraints\Length(
+            max: 100,
+            maxMessage: 'contact.email.max'
+        ),
+        Constraints\Email(
+            message: 'contact.email.email'
+        )
     ]
     private ?string $email = null;
 
@@ -48,7 +65,14 @@ final class ContactMessage implements EntityInterface
      * @var ?string
      */
     #[
-        ORM\Column(type: 'string', length: 100, nullable: true)
+        ORM\Column(type: 'string', length: 100, nullable: true),
+        /***/
+        Constraints\Length(
+            min: 5,
+            max: 100,
+            minMessage: 'contact.subject.min',
+            maxMessage: 'contact.subject.max'
+        )
     ]
     private ?string $subject = null;
 
@@ -57,7 +81,15 @@ final class ContactMessage implements EntityInterface
      * @var string
      */
     #[
-        ORM\Column(type: 'text', length: 10000)
+        ORM\Column(type: 'text', length: 65535),
+        /***/
+        Constraints\NotBlank(message: 'contact.message.not_blank'),
+        Constraints\Length(
+            min: 10,
+            max: 65535,
+            minMessage: 'contact.message.min',
+            maxMessage: 'contact.message.max'
+        )
     ]
     private string $message;
 
@@ -69,6 +101,20 @@ final class ContactMessage implements EntityInterface
         ORM\Column(type: 'datetime_immutable')
     ]
     private \DateTimeImmutable $createdAt;
+
+    /**
+     * Initialisation de la date de création
+     * @return void
+     */
+    #[
+        ORM\PrePersist()
+    ]
+    public function initCreatedDate() : void
+    {
+        $timezone = new \DateTimeZone('UTC');
+        $this->createdAt = new \DateTimeImmutable();
+        $this->createdAt->setTimezone($timezone);
+    }
 
     /**
      * Retourne l'identifiant
