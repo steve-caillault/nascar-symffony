@@ -43,7 +43,7 @@ final class ContactController extends AbstractController
         $canSendMessage = ($numberMessages < $limitMessages);
         if(! $canSendMessage)
         {
-            $errorMessage = $translator->trans('contact.too_much_sending');
+            $errorMessage = $translator->trans('site.contact.too_much_sending');
             $this->addFlash('error', $errorMessage);
             return $this->render('site/contact.html.twig');
         }
@@ -55,18 +55,19 @@ final class ContactController extends AbstractController
         // Traitement du formulaire
         if($contactForm->isSubmitted() and $contactForm->isValid())
         {
+            
             $entityManager = $this->getDoctrine()->getManager();
 
             try {
                 $entityManager->persist($contactMessage);
                 $entityManager->flush();
             } catch(\Throwable) {
-
+                
             }
 
             $success = ($contactMessage->getId() !== null);
             $flashKey = ($success) ? 'success' : 'error';
-            $flashMessage = ($success) ? 'contact.success' : 'contact.failure';
+            $flashMessage = ($success) ? 'site.contact.success' : 'site.contact.failure';
             $this->addFlash($flashKey, $translator->trans($flashMessage));
 
             if($success)

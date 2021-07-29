@@ -1,5 +1,10 @@
-home:
-  title: Résultats, classement et statistiques du championnat NASCAR Cup Series
+# Messages pour la gestion des balises meta
 
-contact:
-  title: Envoyer un message au gestionnaire du site Résultats NASCAR Cup Series
+site:
+  # Page d'accueil
+  home:
+    title: Résultats, classement et statistiques du championnat NASCAR Cup Series
+
+  # Page de contact
+  contact:
+    title: Envoyer un message au gestionnaire du site Résultats NASCAR Cup Series

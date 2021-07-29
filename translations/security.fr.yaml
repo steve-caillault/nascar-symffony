@@ -1,2 +1,4 @@
+# Messages pour l'authentification
+
 credentials:
   invalid: Les identifiants sont incorrects.

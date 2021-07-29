@@ -1,7 +1,7 @@
 {% block header %}
 <header id="main">
-    <a href="{{ path('app_site_default_index') }}" title="{{ 'home.anchor.alt' | trans }}" class="home">
-        <img src="{{ site_logo_path }}" alt="{{ 'home.anchor.image' | trans }}" width="250" height="100" />
+    <a href="{{ path('app_site_default_index') }}" title="{{ 'site.home.anchor.alt' | trans }}" class="home">
+        <img src="{{ site_logo_path }}" alt="{{ 'site.home.anchor.image' | trans }}" width="250" height="100" />
     </a>
     {% block site_header_menus %}
         {% set menus = header_submenus.get() %} 

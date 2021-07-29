@@ -1,17 +1,26 @@
+# Messages pour les menus
+
 header:
+  # Texte du bouton d'ouverture
   label: Menu
 
+  # Menus du site
   site:
+    # Menu principal
     main:
+      # Section Contact
       contact:
         label: Contact
         alt_label: Envoyer un message de contact au gestionnaire du site.
 
+  # Menus du panneau d'administration
   admin:
+    # Liste des modules du panneau d'administration
     modules:
       messages:
         label: Messages
         alt_label: Consulter les messages reçus.
+    # Menu de l'utilisateur connecté
     user:
       logout:
         label: Se déconnecter

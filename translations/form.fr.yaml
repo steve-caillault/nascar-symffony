@@ -1,8 +1,13 @@
+# Messages pour les formulaires
+
+# Texte du bouton de soumission par défaut
 default:
   submit:
     label: Envoyer
 
+# Formulaires du site
 site:
+  # Formulaire de contact
   contact:
     fields:
       from:

@@ -1,3 +1,6 @@
+# Messages de validation
+
+# Entité User
 user:
   public_id:
     unique_entity: Un utilisateur utilise déjà cet identifiant.
@@ -16,6 +19,7 @@ user:
     not_blank: Les permissions sont nécessaires.
     allowed: Les permissions de l'utilisateur sont incorrectes.
 
+# Entité ContactMessage
 contact:
   from:
     min: Le nom doit avoir au moins {{ limit }} caractères.

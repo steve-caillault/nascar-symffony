@@ -1,18 +1,27 @@
+# Messages pour le dil d'Ariane
+
+# Page d'accueil
 home:
   label: Accueil
   alt: Revenir à la page d'accueil.
 
+# Site 
 site:
+  # Page de contact
   contact:
     label: Contact
 
+# Panneau d'administration
 admin:
+  # Index
   label: Panneau d'administration
   alt: Page d'accueil du panneau d'administration.
 
+  # Authentification
   login:
     label: Connexion
     alt: Connexion au panneau d'administration
 
+  # Messages de contacts
   messages:
     label: Messages

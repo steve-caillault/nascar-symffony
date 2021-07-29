@@ -1,21 +1,20 @@
-errors:
-  unauthorized: Vous devez être identifié pour accéder à cette page.
-  denied: Vous n'êtes pas autorisé à accéder à cette page.
-  not_found: Cette page n'existe pas ou a été déplacé.
-  default: Une erreur s'est produite.
+# Messages pour les diffèrentes pages
 
-home:
-  title: Résultats NASCAR Cup Series
-  anchor:
-    alt: Revenir à la racine du site.
-    image: Icône du site Résultats NASCAR Cup Series.
+site:
+  # Page d'accueil
+  home:
+    title: Résultats NASCAR Cup Series
+    anchor:
+      alt: Revenir à la racine du site.
+      image: Icône du site Résultats NASCAR Cup Series.
+  # Page de contact
+  contact:
+    title: Envoyer un message
+    success: Votre message a été envoyé avec succès.
+    failure: Une erreur s'est produite lors de l'envoi de votre message.
+    too_much_sending: Vous avez envoyé trop de message.
 
-contact:
-  title: Envoyer un message
-  success: Votre message a été envoyé avec succès.
-  failure: Une erreur s'est produite lors de l'envoi de votre message.
-  too_much_sending: Vous avez envoyé trop de message.
-
+# Panneau d'administration
 admin:
   title: Panneau d'administration
   auth: 
@@ -26,9 +25,17 @@ admin:
     title: Messages de contacts
     empty: Aucun message n'a été trouvé.
 
+# Page d'erreur
 error:
   title: Erreur {code}
+  type:
+    unauthorized: Vous devez être identifié pour accéder à cette page.
+    denied: Vous n'êtes pas autorisé à accéder à cette page.
+    not_found: Cette page n'existe pas ou a été déplacé.
+    default: Une erreur s'est produite.
 
+
+# Page de maintenance
 maintenance:
   title: Maintenance
   informations: Le site est actuellement en maintenance. Vous pourrez rafraîchir cette page dans quelques minutes.

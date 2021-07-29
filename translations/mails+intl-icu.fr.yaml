@@ -1,3 +1,6 @@
+# Messages pour les mails
+
+# Mail de contact
 contact:
   subject:
     default: Nouveau message de contact

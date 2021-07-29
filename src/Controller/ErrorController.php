@@ -56,10 +56,10 @@ final class ErrorController extends AbstractController
 		}
         
         $displayingMessage = match($statusCode) {
-            401 => 'errors.unauthorized',
-            403 => 'errors.denied',
-            404 => 'errors.not_found',
-            default => 'errors.default',
+            401 => 'error.type.unauthorized',
+            403 => 'error.type.denied',
+            404 => 'error.type.not_found',
+            default => 'error.type.default',
         };
 
         // $displayingMessage = $errorMessage;
