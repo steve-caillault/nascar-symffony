@@ -112,8 +112,8 @@ final class ContactMessage implements EntityInterface
     public function initCreatedDate() : void
     {
         $timezone = new \DateTimeZone('UTC');
-        $this->createdAt = new \DateTimeImmutable();
-        $this->createdAt->setTimezone($timezone);
+        $createdDate = new \DateTimeImmutable(timezone: $timezone);
+        $this->setCreatedAt($createdDate);
     }
 
     /**

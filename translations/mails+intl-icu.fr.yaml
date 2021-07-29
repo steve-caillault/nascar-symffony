@@ -1,0 +1,7 @@
+contact:
+  subject:
+    default: Nouveau message de contact
+  message:
+    date: Reçus le {date}.
+    from: Message envoyé par {name}.
+  error: Une erreur s'est produite lors de l'envoi du message {id}.
