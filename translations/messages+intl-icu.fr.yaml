@@ -14,7 +14,7 @@ contact:
   title: Envoyer un message
   success: Votre message a été envoyé avec succès.
   failure: Une erreur s'est produite lors de l'envoi de votre message.
-
+  too_much_sending: Vous avez envoyé trop de message.
 
 admin:
   title: Panneau d'administration

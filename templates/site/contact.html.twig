@@ -10,11 +10,13 @@
 
 {% block body %}
 
-    {% include 'forms/default.html.twig' with {
-        form: form,
-        attributes: {
-            'id': 'contact'
-        }
-    } only %}
+    {% if form is defined %}
+        {% include 'forms/default.html.twig' with {
+            form: form,
+            attributes: {
+                'id': 'contact'
+            }
+        } only %}
+    {% endif %}
 
 {% endblock %}
