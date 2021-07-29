@@ -6,30 +6,19 @@
 
 namespace App\Event\Listener\Entity;
 
-use Psr\Log\LoggerInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
+use Symfony\Component\Messenger\MessageBusInterface;
 /***/
 use App\Entity\ContactMessage;
-use App\Mail\ContactMessageMail;
+use App\Messenger\Message\ContactMessageNotification;
 
 final class SendAdminContactMessageListener {
     
     /**
      * Constructeur
-     * @param LoggerInterface $logger
-     * @param TranslatorInterface $translator
-     * @param MailerInterface $mailer
-     * @param ContactMessageMail $contactMessageMail
+     * @param MessageBusInterface $messageBus
      */
-    public function __construct(
-        private LoggerInterface $logger,
-        private TranslatorInterface $translator,
-        private MailerInterface $mailer, 
-        private ContactMessageMail $contactMessageMail
-    )
+    public function __construct(private MessageBusInterface $messageBus,)
     {
 
     }
@@ -42,15 +31,8 @@ final class SendAdminContactMessageListener {
      */
     public function postPersist(ContactMessage $contactMessage, LifecycleEventArgs $event) : void
     {
-        $email = $this->contactMessageMail->getEmail($contactMessage);
-        try {
-            $this->mailer->send($email);
-        } catch(TransportExceptionInterface) {
-            $errorMessage = $this->translator->trans('contact.error', [
-                'id' => $contactMessage->getId(),
-            ], domain: 'mails');
-            $this->logger->error($errorMessage);
-        }
+        $notification = new ContactMessageNotification($contactMessage);
+        $this->messageBus->dispatch($notification);
     }
 
 }
