@@ -7,4 +7,6 @@ contact:
   message:
     date: Reçus le {date}.
     from: Message envoyé par {name}.
-  error: Une erreur s'est produite lors de l'envoi du message {id}.
+  log:
+    error: Une erreur s'est produite lors de l'envoi du message {id}.
+    success: Le message de contact {id} a été envoyé.
