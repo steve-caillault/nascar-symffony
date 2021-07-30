@@ -13,6 +13,14 @@ framework:
             # Route your messages to the transports
             App\Messenger\Message\ContactMessageNotification: async
 
+when@test:
+    framework:
+        messenger:
+            transports:
+                sync: 'sync://'
+            routing:
+                App\Messenger\Message\ContactMessageNotification: sync
+
 # @todo Pour les environnements de staging et de production, utiliser Supervisor
 # (https://symfony.com/doc/current/messenger.html#supervisor-configuration)
 # Pour l'environnement de développement : bin/console messenger:consume async -vv
