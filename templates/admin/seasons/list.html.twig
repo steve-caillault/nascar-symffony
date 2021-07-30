@@ -1,0 +1,26 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% set title = 'admin.seasons.title' | trans %}
+
+{% block head_title %}
+{{ title }}
+{% endblock %}
+
+{% block page_title %}
+{{ title }}
+{% endblock %}
+
+{% block body %}
+    {% if seasons | length > 0 %}
+    @todo Liste
+    {{ pagination(pagination) }}
+    {% else %}
+
+        {% set empty_anchor_label = 'admin.seasons.empty_anchor_label' | trans %}
+        {% set empty_anchor_alt = 'admin.seasons.empty_anchor_alt' | trans %}
+        {% set empty_anchor_url = path('app_admin_season_add_index') %}
+        {% set add_anchor = anchor(empty_anchor_label, empty_anchor_alt, empty_anchor_url) %}
+
+    <p>{{ 'admin.seasons.empty' | trans({ anchor: add_anchor }) | raw }}</p>
+    {% endif %}
+{% endblock %}

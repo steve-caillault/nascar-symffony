@@ -20,6 +20,9 @@ header:
       messages:
         label: Messages
         alt_label: Consulter les messages reçus.
+      seasons:
+        label: Saisons
+        alt_label: Gestion des saisons.
     # Menu de l'utilisateur connecté
     user:
       logout:

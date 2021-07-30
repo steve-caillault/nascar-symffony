@@ -24,6 +24,14 @@ admin:
   messages:
     title: Messages de contacts
     empty: Aucun message n'a été trouvé.
+  seasons:
+    title: Liste des saisons
+    empty: Aucune saison n'a été trouvé. Cliquez {anchor} pour en ajouter une.
+    empty_anchor_label: ici
+    empty_anchor_alt: Ajouter une saison.
+    # Ajout d'une saison
+    add:
+      title: Création d'une saison
 
 # Page d'erreur
 error:

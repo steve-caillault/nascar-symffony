@@ -25,3 +25,11 @@ admin:
   # Messages de contacts
   messages:
     label: Messages
+
+  # Saisons
+  seasons: 
+    label: Saisons
+    alt: Consulter la liste des saisons.
+    # Création d'une saison
+    add:
+      label: Création
