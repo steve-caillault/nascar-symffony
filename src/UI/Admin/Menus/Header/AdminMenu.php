@@ -42,12 +42,12 @@ final class AdminMenu extends HeaderMenu {
     }
 
     /**
-     * Retourne la requête courante
-     * @return ?Request
+     * Identifiant du menu
+     * @return string
      */
-    private function getCurrentRequest() : ?Request
+    public function getId() : string
     {
-        return $this->requestStack->getCurrentRequest();
+        return 'admin-modules-menu';
     }
 
     /**
@@ -58,7 +58,7 @@ final class AdminMenu extends HeaderMenu {
     {
         $translator = $this->translator;
 
-        $currentRequest = $this->getCurrentRequest();
+        $currentRequest = $this->requestStack->getCurrentRequest();
         $currentRequestRoute = $currentRequest?->attributes->get('_route');
         $currentUri = $currentRequest?->getRequestUri();
 

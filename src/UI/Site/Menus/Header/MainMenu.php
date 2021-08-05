@@ -39,12 +39,12 @@ final class MainMenu extends HeaderMenu {
     }
 
     /**
-     * Retourne la requête courante
-     * @return ?Request
+     * Identifiant du menu
+     * @return string
      */
-    private function getCurrentRequest() : ?Request
+    public function getId() : string
     {
-        return $this->requestStack->getCurrentRequest();
+        return 'site-main-menu';
     }
 
     /**
@@ -61,7 +61,8 @@ final class MainMenu extends HeaderMenu {
             ->setRouteName('app_site_contact_index')
         ;
 
-        $currentRequestRoute = $this->getCurrentRequest()?->attributes->get('_route');
+        $currentRequest = $this->requestStack->getCurrentRequest();
+        $currentRequestRoute = $currentRequest->attributes->get('_route');
         if($currentRequestRoute === 'app_site_contact_index')
         {
             $contactItem->addClass('selected');

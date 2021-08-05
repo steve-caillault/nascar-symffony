@@ -36,8 +36,16 @@ final class UserMenu extends HeaderMenu {
      */
     public function __construct(Security $security, private TranslatorInterface $translator)
     {
-        $user = $security->getUser();
         $this->user = $security->getUser();
+    }
+
+    /**
+     * Identifiant du menu
+     * @return string
+     */
+    public function getId() : string
+    {
+        return 'admin-user-menu';
     }
 
     /**

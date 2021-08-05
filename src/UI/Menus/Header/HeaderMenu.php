@@ -87,6 +87,12 @@ abstract class HeaderMenu
 	/* GET */
 
 	/**
+     * Identifiant du menu
+     * @return string
+     */
+    abstract public function getId() : string;
+
+	/**
 	 * Retourne les éléments du menu
 	 * @return array
 	 */
