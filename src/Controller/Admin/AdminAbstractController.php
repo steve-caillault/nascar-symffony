@@ -39,6 +39,15 @@ abstract class AdminAbstractController extends BaseAbstractController implements
     }
 
     /**
+     * Retourne le menu du panneau d'administration
+     * @return AdminMenu
+     */
+    public function getAdminMenu() : AdminMenu
+    {
+        return $this->admin_menu;
+    }
+
+    /**
      * Initialise le menu de l'utilisateur
      * @param UserMenu
      * @return void
