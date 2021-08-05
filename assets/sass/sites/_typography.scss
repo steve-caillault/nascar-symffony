@@ -1,25 +1,4 @@
-$titleColors: (
-	"blue": (
-		"border": tint(blue, 20%),
-		"background": tint(blue, 90%),
-		"text": tint(blue, 20%)
-	),
-	"green": (
-		"border": green,
-		"background": lighten(green, 70%),
-		"text": green
-	),
-	"red": (
-		"border": red,
-		"background": lighten(red, 45%),
-		"text": red
-	),
-	"orange": (
-		"border": orange,
-		"background": lighten(orange, 40%),
-		"text": orange
-	)
-);
+
 	
 		
 h2, h3, h4, h5 {
@@ -51,7 +30,7 @@ h2 {
 	border-bottom: 1px solid tint(#000, 70%);
 	
 	// Couleurs
-	@each $colorIndex, $colors in $titleColors {
+	@each $colorIndex, $colors in $colorsGroups {
 		&.with-color-#{ $colorIndex } {
 			border-color: map-get($colors, "border") !important;
 			color: map-get($colors, "text") !important;
@@ -107,23 +86,4 @@ h5 {
 	@include desktop {
    		font-size: 2rem;
    	}
-}
-
-p.with-color {
-	max-width: 100%;
-	padding: 10px;
-	@include marginBottomBetweenContent;
-	
-	background: darken(#fff, 10%);
-	border-left: 4px solid lighten(#000, 30%);
-	color: lighten(#000, 30%);
-	
-	@each $colorIndex, $colors in $titleColors {
-		&.with-color-#{ $colorIndex } {
-			border-left-color: map-get($colors, "border") !important;
-			color: map-get($colors, "text") !important;
-			background: map-get($colors, "background") !important;
-		}
-	}
-	
 }

@@ -8,6 +8,29 @@ $site-padding-desktop: 50px;
 $site-padding-tablet: 20px;
 $site-padding-phone: 10px;
 
+$colorsGroups: (
+	"blue": (
+		"border": tint(blue, 20%),
+		"background": tint(blue, 90%),
+		"text": tint(blue, 20%)
+	),
+	"green": (
+		"border": green,
+		"background": lighten(green, 70%),
+		"text": green
+	),
+	"red": (
+		"border": red,
+		"background": lighten(red, 45%),
+		"text": red
+	),
+	"orange": (
+		"border": orange,
+		"background": lighten(orange, 40%),
+		"text": orange
+	)
+);
+
 @mixin tv {
 	@media screen and (min-width: #{$width-tv}) {
 		@content;	

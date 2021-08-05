@@ -1,3 +1,22 @@
 .loading {
 	opacity: 0.5;	
 }
+
+p.with-color {
+	max-width: 100%;
+	padding: 10px;
+	@include marginBottomBetweenContent;
+	
+	background: darken(#fff, 10%);
+	border-left: 4px solid lighten(#000, 30%);
+	color: lighten(#000, 30%);
+	
+	@each $colorIndex, $colors in $colorsGroups {
+		&.with-color-#{ $colorIndex } {
+			border-left-color: map-get($colors, "border") !important;
+			color: map-get($colors, "text") !important;
+			background: map-get($colors, "background") !important;
+		}
+	}
+	
+}
