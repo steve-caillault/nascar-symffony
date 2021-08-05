@@ -34,7 +34,7 @@ final class SeasonsController extends AbstractSeasonsController {
         $offset = (max(1, $page) - 1) * $itemsPerPage;
 
         $seasons = $seasonRepository->findBy([], orderBy: [
-            'year' => 'asc',
+            'year' => 'desc',
         ], limit: $itemsPerPage, offset: $offset);
 
         $total = $seasonRepository->getTotal();

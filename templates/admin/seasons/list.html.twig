@@ -12,7 +12,35 @@
 
 {% block body %}
     {% if seasons | length > 0 %}
-    @todo Liste
+    
+    <table class="with-header">
+        <thead>
+            <tr class="head">
+                <td>Année</td>
+                <td>Modifier</td>
+                <td>Voitures</td>
+                <td>Calendrier</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for season in seasons %}
+                {% set edit_season_path = path('app_admin_season_edit_index', { 
+                    seasonYear: season.year 
+                }) %}
+                {% set edit_season_label = 'admin.seasons.list.edit.label' | trans %}
+                {% set edit_season_alt_label = 'admin.seasons.list.edit.alt_label' | trans({ 
+                    year: season.year
+                }) %}
+
+                <tr class="line">
+                    <td>{{ season.year }}</td>
+                    <td>{{ anchor(edit_season_label, edit_season_alt_label, edit_season_path) }}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     {{ pagination(pagination) }}
     {% else %}
 
