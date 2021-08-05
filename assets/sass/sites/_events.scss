@@ -59,7 +59,6 @@ div.event {
    	
    	p.type, p.status {
    		display: inline-block;
-   		border-radius: 3px;
    		padding: 5px 10px; 
    		font-size: 1.2rem;
    		color: #fff;
@@ -122,24 +121,8 @@ div.event {
     	
     	width: 260px;
     
-    	border-radius: 3px;
         li {
-        	&:first-of-type {
-        		span.name {
-        			border-top-left-radius: 3px;	
-        		}
-        		span.date {
-        			border-top-right-radius: 3px;	
-        		}
-        	}
-        	&:last-of-type {
-        		span.name {
-        			border-bottom-left-radius: 3px;	
-        		}
-        		span.date {
-        			border-bottom-right-radius: 3px;	
-        		}
-        	}
+        	
             &:not(:last-of-type) {
             	/*margin-bottom: 1px;*/
             	border-bottom: 1px solid transparent;

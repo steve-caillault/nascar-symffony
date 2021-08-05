@@ -18,11 +18,11 @@ table {
    		
 	}
 	
+	thead tr, tbody tr:not(:last-of-type) {
+		border-bottom: 2px solid #fff;	
+	}
 	
 	tr {
-		&:not(:last-of-type) {
-			border-bottom: 2px solid #fff;	
-		}
 		td {
 			
 			font-size: 1.5rem;
@@ -117,25 +117,5 @@ table {
 		
 	}	
 
-	tr:first-of-type {
-		td:first-child,
-		td:first-child.with-anchor a {
-			border-top-left-radius: 3px;
-		}	
-		td:last-of-type,
-		td:last-of-type.with-anchor a {
-			border-top-right-radius: 3px;
-		}	
-	}
-
-	tr:last-of-type {
-		td:first-child,
-		td:first-child.with-anchor a {
-			border-bottom-left-radius: 3px;
-		}	
-		td:last-of-type,
-		td:last-of-type.with-anchor a {
-			border-bottom-right-radius: 3px;
-		}	
-	}
+	
 }

@@ -113,11 +113,6 @@ div.standing {
     			border-left: 1px solid #fff;
     			max-height: 100%;
     		}
-    	
-    		&:last-child img {
-    			border-top-right-radius: 3px;
-    	
-    		}
     	}
   
 		@each $colorIndex, $colors in $standingColors {

@@ -16,7 +16,6 @@ div.season-statistics {
   	div.statistic-panel {
   		
   		background: darken(#fff, 20%);
-  		border-radius: 3px;
   		
   		transition: background 0.25s;
   		
@@ -38,7 +37,6 @@ div.season-statistics {
 			
 			background: lighten(#000, 25%);
 			color: #fff;
-			border-radius: 3px 3px 0 0;
 			h3 {
 				margin: 0;	
 				text-align: center;
@@ -85,11 +83,9 @@ div.season-statistics {
 		}
 	
 		&.without-header {
-  			border-radius: 3px;
   			
   			li:first-of-type {
   				border-top: 0;
-  				border-radius: 3px 3px 0 0;
   			}
   		}
   	
