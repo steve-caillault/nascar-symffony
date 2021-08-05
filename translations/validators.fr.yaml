@@ -35,3 +35,14 @@ contact:
     min: Le message doit avoir au moins {{ limit }} caractères.
     max: Le message ne doit pas avoir plus de {{ limit }} caractères.
 
+seasons:
+  edit:
+    year: 
+      not_exists: La saison {{ value }} existe déjà.
+      not_blank: L'année de la saison est nécessaire.
+      number: L'année doit être un nombre positif.
+      regex: L'année doit être composée de quatre chiffres.
+    state:
+      not_blank: Le statut de la saison est nécessaire.
+      choice: Le statut de la saison est incorrect.
+      not_exists_current: La saison actuelle est attribuée à la saison {{ current_year }}.

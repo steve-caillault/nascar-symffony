@@ -21,3 +21,18 @@ site:
       message:
         label: Message
         placeholder: Message à transmettre.
+
+# Formulaires du panneau d'administration
+admin:
+  seasons:
+    edit:
+      fields:
+        year:
+          label: Année
+        state:
+          label: État
+          choices: 
+            default: Sélectionner l'état
+            active: Saison activée
+            current: Saison en cours
+            disabled: Saison désactivée
