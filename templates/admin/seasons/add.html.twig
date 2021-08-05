@@ -13,5 +13,6 @@
 {% block body %}
     {% include 'forms/default.html.twig' with {
         form: form,
+        attributes: { id: 'admin-seasons-add' }
     } only %}
 {% endblock %}

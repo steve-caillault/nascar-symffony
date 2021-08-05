@@ -45,4 +45,4 @@ seasons:
     state:
       not_blank: Le statut de la saison est nécessaire.
       choice: Le statut de la saison est incorrect.
-      not_exists_current: La saison actuelle est attribuée à la saison {{ current_year }}.
+      not_exists_current: La saison actuelle est attribuée à la saison {{ year }}.

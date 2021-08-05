@@ -47,9 +47,8 @@ final class UniqueCurrentSeasonValidator extends ConstraintValidator
             return;
         }
 
-        // TODO: implement the validation here
         $this->context->buildViolation($constraint->message)
-            ->setParameter('{{ current_year }}', $currentSeason->getYear())
+            ->setParameter('{{ year }}', $currentSeason->getYear())
             ->addViolation();
     }
 }
