@@ -12,11 +12,27 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Season[]    findAll()
  * @method Season[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class SeasonRepository extends ServiceEntityRepository
+final class SeasonRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Season::class);
+    }
+
+    /**
+     * Retourne la saison en cours
+     * @return ?Season
+     */
+    public function findCurrent() : ?Season
+    {
+        $dql = strtr('SELECT seasons FROM :object seasons WHERE seasons.state = :state', [
+            ':object' => Season::class,
+        ]);
+        return $this->getEntityManager()->createQuery($dql)
+            ->setParameter('state', Season::STATE_CURRENT)
+            ->setMaxResults(1)
+            ->getOneOrNullResult()
+        ;
     }
 
     /**

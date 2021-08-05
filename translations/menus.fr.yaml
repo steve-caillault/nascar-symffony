@@ -23,6 +23,14 @@ header:
       seasons:
         label: Saisons
         alt_label: Gestion des saisons.
+    # Menu des saisons
+    seasons:
+      list: 
+        label: Liste des saisons
+        alt_label: Consulter la liste des saisons.
+      add:
+        label: Ajouter une saison
+        alt_label: Ajouter une saison.
     # Menu de l'utilisateur connecté
     user:
       logout:
