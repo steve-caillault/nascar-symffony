@@ -10,6 +10,7 @@ use Doctrine\ORM\{
     EntityManagerInterface,
     QueryBuilder
 };
+use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 /***/
@@ -94,11 +95,6 @@ abstract class BaseTestCase extends WebTestCase {
         $this->entityManager = $kernel->getContainer()
             ->get('doctrine')
             ->getManager();
-
-        // Pour pouvoir déterminer les requêtes à annuler dans static::tearDown()
-        // @todo Trouver une autre solution pour la remise à 0 : créer des problèmes lorsque l'on tente de vérifier
-        // que valeur créé dans le test existe.
-        // $this->entityManager->getConnection()->beginTransaction();
     }
 
     /**
@@ -108,7 +104,9 @@ abstract class BaseTestCase extends WebTestCase {
     {
         parent::tearDown();
 
-        // $this->entityManager->getConnection()->rollback(); // Retour à l'état initial
+        $purger = new ORMPurger($this->getEntityManager());
+        $purger->purge();
+
         $this->entityManager->close();
         $this->entityManager = null;
     }
