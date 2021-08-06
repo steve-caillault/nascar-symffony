@@ -8,6 +8,7 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as SymfonyAbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 /***/
 use App\UI\Menus\Breadcrumb\{
     Breadcrumb, 
@@ -17,6 +18,11 @@ use App\UI\Menus\Header\HeaderMenus;
 
 abstract class AbstractController extends SymfonyAbstractController
 {
+    /**
+     * Traducteur
+     * @var TranslatorInterface
+     */
+    protected TranslatorInterface $translator;
 
     /**
      * Fil d'ariane
@@ -29,6 +35,19 @@ abstract class AbstractController extends SymfonyAbstractController
      * @var HeaderMenus
      */
     private HeaderMenus $header_menus;
+
+    /************************************************************/
+
+    /**
+     * Initialise le traducteur
+     * @param TranslatorInterface $translator
+     * @return void
+     * @required
+     */
+    public function setTranslator(TranslatorInterface $translator) : void
+    {
+        $this->translator = $translator;
+    }
 
     /************************************************************/
 
@@ -80,7 +99,11 @@ abstract class AbstractController extends SymfonyAbstractController
      */
     protected function fillBreadcrumb() : void
     {
-        $this->getBreadcrumb()->addItem(new BreadcrumbItem('home.label', 'home.alt', 'app_site_default_index'));
+        $this->getBreadcrumb()->addItem(new BreadcrumbItem(
+            $this->translator->trans('home.label', domain: 'breadcrumb'),
+            $this->translator->trans('home.alt_label', domain: 'breadcrumb'),
+            'app_site_default_index'
+        ));
     }
 
     /**

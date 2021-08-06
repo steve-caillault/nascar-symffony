@@ -65,7 +65,11 @@ abstract class AdminAbstractController extends BaseAbstractController implements
     protected function fillBreadcrumb() : void
     {
         parent::fillBreadcrumb();
-        $this->getBreadcrumb()->addItem(new BreadcrumbItem('admin.label', 'admin.alt', 'app_admin_default_index'));
+        $this->getBreadcrumb()->addItem(new BreadcrumbItem(
+            $this->translator->trans('admin.label', domain: 'breadcrumb'), 
+            $this->translator->trans('admin.alt_label', domain: 'breadcrumb'),
+            'app_admin_default_index'
+        ));
     }
 
     /**
@@ -75,6 +79,11 @@ abstract class AdminAbstractController extends BaseAbstractController implements
     protected function fillHeaderMenus() : void
     {
         parent::fillHeaderMenus();
+
+        if($this->getUser() === null)
+        {
+            return;
+        }
         
         $this->getHeaderMenus()
             ->add($this->admin_menu)

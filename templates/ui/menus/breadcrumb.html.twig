@@ -3,9 +3,9 @@
 	{%- for index, item in items -%}
 	<li>
 		{%- if item.routeName is not empty and loop.index < loop.length -%}
-		<a href="{{ url(item.routeName, item.routeParameters) }}" title="{{ item.altLabel | trans([], 'breadcrumb')  }}">{{ item.label | trans([], 'breadcrumb') }}</a> 
+		<a href="{{ url(item.routeName, item.routeParameters) }}" title="{{ item.altLabel }}">{{ item.label }}</a> 
 		{%- else -%}
-		{{ item.label | trans([], 'breadcrumb') }}
+		{{ item.label }}
 		{%- endif -%}
 	</li>
 	{%- endfor -%}

@@ -41,10 +41,10 @@ final class AddController extends AbstractSeasonsController {
         if($form->isSubmitted() and $form->isValid())
         {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($season);
-
+            
             try {
                 $entityManager->flush();
+                $entityManager->persist($season);
             } catch(\Throwable) {
 
             }
@@ -76,7 +76,7 @@ final class AddController extends AbstractSeasonsController {
     {
         parent::fillBreadcrumb();
         $this->getBreadcrumb()->addItem(new BreadcrumbItem(
-            label: 'admin.seasons.add.label'
+            label: $this->translator->trans('admin.seasons.add.label', domain: 'breadcrumb')
         ));
     }
 

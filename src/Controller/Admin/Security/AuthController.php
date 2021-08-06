@@ -45,12 +45,6 @@ final class AuthController extends AdminAbstractController {
             'ajax_login_url' => $this->generateUrl('app_admin_security_ajax_login'),
         ]);
 
-        $this->getBreadcrumb()->addItem(new BreadcrumbItem(
-            'admin.login.label', 
-            'admin.login.alt', 
-            'app_admin_security_auth_login'
-        ));
-
         return $this->render('admin/auth.html.twig', [
             'form' => $form,
         ]);
@@ -69,6 +63,22 @@ final class AuthController extends AdminAbstractController {
     public function logout() : void
     {
         // Gérée par Symfony
+    }
+
+     /**
+     * Alimente le fil d'Ariane
+     * @return void
+     */
+    protected function fillBreadcrumb() : void
+    {
+        parent::fillBreadcrumb();
+        $breadcrumb = $this->getBreadcrumb();
+
+        $breadcrumb->addItem(new BreadcrumbItem(
+            $this->translator->trans('admin.login.label', domain: 'breadcrumb'),
+            $this->translator->trans('admin.login.alt', domain: 'breadcrumb'),
+            'app_admin_security_auth_login'
+        ));
     }
 
 }

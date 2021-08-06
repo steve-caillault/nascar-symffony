@@ -3,7 +3,7 @@
 # Page d'accueil
 home:
   label: Accueil
-  alt: Revenir à la page d'accueil.
+  alt_label: Revenir à la page d'accueil.
 
 # Site 
 site:
@@ -15,12 +15,12 @@ site:
 admin:
   # Index
   label: Panneau d'administration
-  alt: Page d'accueil du panneau d'administration.
+  alt_label: Page d'accueil du panneau d'administration.
 
   # Authentification
   login:
     label: Connexion
-    alt: Connexion au panneau d'administration
+    alt_label: Connexion au panneau d'administration
 
   # Messages de contacts
   messages:
@@ -29,7 +29,10 @@ admin:
   # Saisons
   seasons: 
     label: Saisons
-    alt: Consulter la liste des saisons.
+    alt_label: Consulter la liste des saisons.
     # Création d'une saison
     add:
       label: Création
+    # Edition
+    edit: 
+      alt_label: Édition de la saison {year}.

@@ -56,7 +56,9 @@ final class MessagesController extends AdminAbstractController {
     protected function fillBreadcrumb() : void
     {
         parent::fillBreadcrumb();
-        $this->getBreadcrumb()->addItem(new BreadcrumbItem('admin.messages.label'));
+        $this->getBreadcrumb()->addItem(new BreadcrumbItem(
+            $this->translator->trans('admin.messages.label', domain: 'breadcrumb')
+        ));
     }
 
 }

@@ -91,7 +91,9 @@ final class ContactController extends AbstractController
     protected function fillBreadcrumb() : void
     {
         parent::fillBreadcrumb();
-        $this->getBreadcrumb()->addItem(new BreadcrumbItem('site.contact.label'));
+        $this->getBreadcrumb()->addItem(new BreadcrumbItem(
+            $this->translator->trans('site.contact.label', domain: 'breadcrumb'),
+        ));
     }
 
 }
