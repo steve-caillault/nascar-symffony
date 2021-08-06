@@ -12,15 +12,18 @@ use Symfony\Component\HttpFoundation\{
 };
 use Symfony\Component\Routing\Annotation\Route as RouteAnnotation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Contracts\Translation\TranslatorInterface;
 /***/
 use App\Controller\Admin\AbstractSeasonsController;
 use App\Entity\Season;
+use App\Form\SeasonType;
 
 final class EditController extends AbstractSeasonsController {
 
     /**
      * Edition de la saison en paramètre
      * @param Request $request
+     * @param TranslatorInterface $translator
      * @return Response
      */
     #[
@@ -30,9 +33,49 @@ final class EditController extends AbstractSeasonsController {
         ),
         ParamConverter('season', options: [ 'mapping' => [ 'seasonYear' => 'year' ] ])
     ]
-    public function index(Request $request, Season $season) : Response
+    public function index(
+        Request $request, 
+        TranslatorInterface $translator,
+        Season $season
+    ) : Response
     {
-        return new Response(' @todo');
+        $this->setSeason($season);
+
+        $form = $this->createForm(SeasonType::class, $season);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() and $form->isValid())
+        {
+            $entityManager = $this->getDoctrine()->getManager();
+
+            // Enregistrement
+            try {
+                $entityManager->persist($season);
+                $entityManager->flush();
+                $success = true;
+                $flashMessage = 'admin.seasons.edit.success';
+            } catch(\Throwable) {
+                $success = false;
+                $flashMessage = 'admin.seasons.edit.failure';
+            }
+
+            // Message Flash
+            $flashMessage = ($success) ? 'admin.seasons.edit.success' : 'admin.seasons.edit.failure';
+            $flashKey = ($success) ? 'success' : 'error';
+            $this->addFlash($flashKey, $translator->trans($flashMessage, [
+                'year' => $season->getYear(),
+            ]));
+
+            if($success)
+            {
+                return $this->redirectToRoute('app_admin_seasons_index');
+            }
+        }
+
+        return $this->renderForm('admin/seasons/edit.html.twig', [
+            'form' => $form,
+            'season' => $season,
+        ]);
     }
 
     /**
