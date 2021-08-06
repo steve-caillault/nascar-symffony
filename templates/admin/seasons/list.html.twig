@@ -17,6 +17,7 @@
         <thead>
             <tr class="head">
                 <td>Année</td>
+                <td>Statut</td>
                 <td>Modifier</td>
                 <td>Voitures</td>
                 <td>Calendrier</td>
@@ -34,6 +35,7 @@
 
                 <tr class="line">
                     <td>{{ season.year }}</td>
+                    <td>{{ ('admin.seasons.item.state.' ~ season.state) | lower | trans | capitalize }}</td>
                     <td>{{ anchor(edit_season_label, edit_season_alt_label, edit_season_path) }}</td>
                     <td></td>
                     <td></td>

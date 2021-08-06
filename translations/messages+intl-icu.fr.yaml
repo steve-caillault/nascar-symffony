@@ -29,6 +29,11 @@ admin:
     empty: Aucune saison n'a été trouvé. Cliquez {anchor} pour en ajouter une.
     empty_anchor_label: ici
     empty_anchor_alt: Ajouter une saison.
+    item: 
+      state:
+        current: actuelle
+        active: activée
+        disabled: désactivée
     list:
       edit:
         label: Modifier
@@ -38,6 +43,11 @@ admin:
       title: Création d'une saison
       success: La saison {year} a été créée.
       failure: Une erreur s'est produite lors de la création de la saison {year}.
+    # Edition d'une saison
+    edit:
+      title: Modification de la saison {year}
+      success: La saison {year} a été mise à jour.
+      failure: Une erreur s'est produite lors de la mise à jour de la saison {year}.
 
 # Page d'erreur
 error:
