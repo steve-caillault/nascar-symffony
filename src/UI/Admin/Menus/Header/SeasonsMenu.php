@@ -38,6 +38,16 @@ final class SeasonsMenu extends HeaderMenu {
     }
 
     /**
+     * Retourne la route courante
+     * @return ?string
+     */
+    private function getCurrentRouteName() : ?string
+    {
+        $currentRequest = $this->requestStack->getCurrentRequest();
+        return $currentRequest?->attributes->get('_route');
+    }
+
+    /**
      * Modifie la saison à gérer
      * @param Season $season
      * @return self
@@ -63,33 +73,97 @@ final class SeasonsMenu extends HeaderMenu {
 	 */
 	protected function fill() : void
     {
-        $currentRequest = $this->requestStack->getCurrentRequest();
-        $currentRouteName = $currentRequest?->attributes->get('_route');
-
         // Liste des saisons
-        $listItem = (new HeaderItemMenu())
+        $this->addListItem();
+
+        // Ajout d'une saison
+        $this->addCreationItem();
+
+        if($this->season !== null)
+        {
+            $this->addSeasonsItem();
+        }
+        
+    }
+
+    /**
+     * Ajoute l'élément de la liste des saisons
+     * @return self
+     */
+    private function addListItem() : self
+    {
+        $currentRouteName = $this->getCurrentRouteName();
+
+        $item = (new HeaderItemMenu())
             ->setLabel($this->translator->trans('header.admin.seasons.list.label', domain: 'menus'))
             ->setAltLabel($this->translator->trans('header.admin.seasons.list.alt_label', domain: 'menus'))
             ->setRouteName('app_admin_seasons_index');
-        if($currentRouteName === $listItem->getRouteName())
+
+        if($currentRouteName === $item->getRouteName())
         {
-            $listItem->addClass('selected');
+            $item->addClass('selected');
         }
 
-        // Ajout d'une saison
-        $addSeasonItem = (new HeaderItemMenu())
+        return $this->addItem($item);
+    }
+
+    /**
+     * Ajoute l'élément de l'ajout d'une saison
+     * @return self
+     */
+    private function addCreationItem() : self
+    {
+        $currentRouteName = $this->getCurrentRouteName();
+
+        $item = (new HeaderItemMenu())
             ->setLabel($this->translator->trans('header.admin.seasons.add.label', domain: 'menus'))
             ->setAltLabel($this->translator->trans('header.admin.seasons.add.alt_label', domain: 'menus'))
             ->setRouteName('app_admin_season_add_index');
-        if($currentRouteName === $addSeasonItem->getRouteName())
+
+        if($currentRouteName === $item->getRouteName())
         {
-            $addSeasonItem->addClass('selected');
+            $item->addClass('selected');
         }
 
-        $this->addItems([
-            $listItem,
-            $addSeasonItem,
-        ]);
+        return $this->addItem($item);
+    }
+
+    /**
+     * Ajoute les éléments de gestion d'une saison
+     * @return self
+     */
+    private function addSeasonsItem() : self
+    {
+        $this->addEditItem();
+        return $this;
+    }
+
+    /**
+     * Ajout l'élément d'édition d'une saison
+     * @return self
+     */
+    private function addEditItem() : self
+    {
+        $currentRouteName = $this->getCurrentRouteName();
+        $season = $this->season;
+
+        $item = (new HeaderItemMenu())
+            ->setLabel($this->translator->trans('header.admin.seasons.edit.label', domain: 'menus'))
+            ->setAltLabel($this->translator->trans('header.admin.seasons.edit.alt_label', [
+                'year' => $season->getYear(),
+            ], domain: 'menus'))
+            ->setRouteName('app_admin_season_edit_index')
+            ->setRouteParameters([
+                'seasonYear' => $season->getYear(),
+            ])
+        ;
+
+        if($currentRouteName === $item->getRouteName())
+        {
+            $item->addClass('selected');
+        }
+
+        return $this->addItem($item);
     }
 
 }

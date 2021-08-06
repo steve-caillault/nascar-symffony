@@ -31,6 +31,9 @@ header:
       add:
         label: Ajouter une saison
         alt_label: Ajouter une saison.
+      edit:
+        label: Modifier la saison
+        alt_label: Modifier la saison {year}.
     # Menu de l'utilisateur connecté
     user:
       logout:
