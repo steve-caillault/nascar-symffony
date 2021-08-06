@@ -95,6 +95,19 @@ abstract class BaseTestCase extends WebTestCase {
         $this->entityManager = $kernel->getContainer()
             ->get('doctrine')
             ->getManager();
+
+        $this->cleanDatabase();
+    }
+
+    /**
+     * Nettoyage de la base de données
+     * @return void
+     */
+    private function cleanDatabase() : void
+    {
+        $purger = new ORMPurger($this->getEntityManager());
+        $purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
+        $purger->purge();
     }
 
     /**
@@ -103,9 +116,6 @@ abstract class BaseTestCase extends WebTestCase {
     protected function tearDown(): void
     {
         parent::tearDown();
-
-        $purger = new ORMPurger($this->getEntityManager());
-        $purger->purge();
 
         $this->entityManager->close();
         $this->entityManager = null;
