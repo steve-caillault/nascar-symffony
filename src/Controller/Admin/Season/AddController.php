@@ -43,8 +43,8 @@ final class AddController extends AbstractSeasonsController {
             $entityManager = $this->getDoctrine()->getManager();
             
             try {
-                $entityManager->flush();
                 $entityManager->persist($season);
+                $entityManager->flush();
             } catch(\Throwable) {
 
             }

@@ -39,24 +39,26 @@ final class EditController extends AbstractSeasonsController {
         Season $season
     ) : Response
     {
-        $this->setSeason($season);
+        // On utilise clone pour ne pas modifier les titres et menus de la page en cas de problème de validation
+        $originalSeason = clone $season;
+        $this->setSeason($originalSeason);
 
         $form = $this->createForm(SeasonType::class, $season);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() and $form->isValid())
-        {
-            $entityManager = $this->getDoctrine()->getManager();
+        $entityManager = $this->getDoctrine()->getManager();
 
+        $isValid = ($form->isSubmitted() and $form->isValid());
+        $isInvalid = ($form->isSubmitted() and ! $form->isValid());
+
+        if($isValid)
+        {
             // Enregistrement
             try {
-                $entityManager->persist($season);
                 $entityManager->flush();
                 $success = true;
-                $flashMessage = 'admin.seasons.edit.success';
-            } catch(\Throwable) {
+            } catch(\Throwable $e) {
                 $success = false;
-                $flashMessage = 'admin.seasons.edit.failure';
             }
 
             // Message Flash
@@ -71,20 +73,18 @@ final class EditController extends AbstractSeasonsController {
                 return $this->redirectToRoute('app_admin_seasons_index');
             }
         }
+        elseif($isInvalid)
+        {
+            // @todo Règler le problème lorsqu'on tente de faire un flush pour d'autre entité
+            // Si on n'appelle par clear ici, Doctrine essaiera de mettre à jour la saison 
+            $entityManager->clear(Season::class);
+        }
+
 
         return $this->renderForm('admin/seasons/edit.html.twig', [
             'form' => $form,
-            'season' => $season,
+            'season' => $originalSeason,
         ]);
-    }
-
-    /**
-     * Alimente le fil d'Ariane
-     * @return void
-     */
-    protected function fillBreadcrumb() : void
-    {
-        parent::fillBreadcrumb();
     }
 
 }

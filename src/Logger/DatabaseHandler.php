@@ -104,6 +104,6 @@ final class DatabaseHandler extends AbstractProcessingHandler
         } catch(\Exception) {
             
         }
-       
+
     }
 }

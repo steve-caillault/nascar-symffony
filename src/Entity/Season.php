@@ -20,6 +20,8 @@ use App\Validator\UniqueCurrentSeason as UniqueCurrentSeasonConstraint;
     UniqueConstraint(name: 'idx_year', columns: [ 'year' ]),
     /***/
     UniqueEntity(fields: 'year', message: 'seasons.edit.year.not_exists'),
+    /***/
+    ORM\HasLifecycleCallbacks()
 ]
 final class Season
 {
@@ -42,7 +44,7 @@ final class Season
 
     /**
      * Année de la saison
-     * @var int
+     * @var ?int
      */
     #[
         ORM\Column(type: 'smallint', options: [ 'unsigned' => true ]),
@@ -51,7 +53,7 @@ final class Season
         Constraints\Positive(message: 'seasons.edit.year.number'),
         Constraints\Regex('/^\d{4}$/', message: 'seasons.edit.year.regex')
     ]
-    private int $year;
+    private ?int $year;
 
     /**
      * Etat de la saison
@@ -84,9 +86,9 @@ final class Season
 
     /**
      * Retourne l'année de la saison
-     * @return int
+     * @return ?int
      */
-    public function getYear() : int
+    public function getYear() : ?int
     {
         return $this->year;
     }
@@ -102,10 +104,10 @@ final class Season
 
     /**
      * Modifie l'année
-     * @param int $year
+     * @param ?int $year
      * @return self
      */
-    public function setYear(int $year) : self
+    public function setYear(?int $year) : self
     {
         $this->year = $year;
         return $this;

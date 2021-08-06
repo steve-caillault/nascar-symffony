@@ -18,7 +18,7 @@ final class SendAdminContactMessageListener {
      * Constructeur
      * @param MessageBusInterface $messageBus
      */
-    public function __construct(private MessageBusInterface $messageBus,)
+    public function __construct(private MessageBusInterface $messageBus)
     {
 
     }
