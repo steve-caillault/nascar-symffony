@@ -51,18 +51,35 @@ final class AdminMenu extends HeaderMenu {
     }
 
     /**
+     * 
+     */
+    private function getCurrentRequest()
+    {
+        $currentRequest = $this->requestStack->getCurrentRequest();
+        $currentRequestRoute = $currentRequest?->attributes->get('_route');
+    }
+
+    /**
 	 * Alimente le menu avec les éléments du menu
 	 * @return void
 	 */
 	protected function fill() : void
     {
-        $translator = $this->translator;
+        $this->addMessagesItem();
+        $this->addCountriesItem();
+        $this->addSeasonsItem();
+    }
 
+    /**
+     * Ajoute l'élément des messages
+     * @return self
+     */
+    private function addMessagesItem() : self
+    {
+        $translator = $this->translator;
         $currentRequest = $this->requestStack->getCurrentRequest();
         $currentRequestRoute = $currentRequest?->attributes->get('_route');
-        $currentUri = $currentRequest?->getRequestUri();
 
-        // Ancre des messages
         $messageItem = (new HeaderItemMenu())
             ->setLabel($translator->trans('header.admin.modules.messages.label', [], domain: 'menus'))
             ->setAltLabel($translator->trans('header.admin.modules.messages.alt_label', [], domain: 'menus'))
@@ -72,6 +89,43 @@ final class AdminMenu extends HeaderMenu {
         {
             $messageItem->addClass('selected');
         }
+
+        return $this->addItem($messageItem);
+    }
+
+    /**
+     * Ajoute l'élément des pays
+     * @return self
+     */
+    private function addCountriesItem() : self
+    {
+        $translator = $this->translator;
+
+        $currentRequest = $this->requestStack->getCurrentRequest();
+        $currentRequestRoute = $currentRequest?->attributes->get('_route');
+
+        $messageItem = (new HeaderItemMenu())
+            ->setLabel($translator->trans('header.admin.modules.countries.label', [], domain: 'menus'))
+            ->setAltLabel($translator->trans('header.admin.modules.countries.alt_label', [], domain: 'menus'))
+            ->setRouteName('app_admin_countries_list_index')
+        ;
+        if($currentRequestRoute === 'app_admin_countries_list_index')
+        {
+            $messageItem->addClass('selected');
+        }
+
+        return $this->addItem($messageItem);
+    }
+
+    /**
+     * Ajoute l'élément des saisons
+     * @return self
+     */
+    private function addSeasonsItem() : self
+    {
+        $translator = $this->translator;
+        $currentRequest = $this->requestStack->getCurrentRequest();
+        $currentUri = $currentRequest?->getRequestUri();
 
         // Ancre des saisons
         $seasonsItem = (new HeaderItemMenu())
@@ -85,10 +139,7 @@ final class AdminMenu extends HeaderMenu {
             $seasonsItem->addClass('selected');
         }
 
-        $this->addItems([ 
-            $messageItem,
-            $seasonsItem,
-        ]);
+        return $this->addItem($seasonsItem);
     }
 
 }

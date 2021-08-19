@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Menu de la section Saisons
+ * Menu de la section Pays
  */
 
 namespace App\UI\Admin\Menus\Header;
@@ -11,16 +11,16 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 /***/
 use App\UI\Menus\Header\HeaderMenu;
-use App\Entity\Season;
+use App\Entity\Country;
 use App\UI\Menus\Header\HeaderItemMenu;
 
-final class SeasonsMenu extends HeaderMenu {
+final class CountriesMenu extends HeaderMenu {
 
     /**
-     * Saison gérée
-     * @var ?Season
+     * Country géré
+     * @var ?Country
      */
-    private ?Season $season = null;
+    private ?Country $country = null;
 
     /**
      * Constructeur
@@ -48,13 +48,13 @@ final class SeasonsMenu extends HeaderMenu {
     }
 
     /**
-     * Modifie la saison à gérer
-     * @param Season $season
+     * Modifie le pays à gérer
+     * @param Country $country
      * @return self
      */
-    public function setSeason(Season $season) : self
+    public function setCountry(Country $country) : self
     {
-        $this->season = $season;
+        $this->country = $country;
         return $this;
     }
 
@@ -64,7 +64,7 @@ final class SeasonsMenu extends HeaderMenu {
      */
     public function getId() : string
     {
-        return 'admin-seasons-menu';
+        return 'admin-countries-menu';
     }
 
     /**
@@ -73,21 +73,21 @@ final class SeasonsMenu extends HeaderMenu {
 	 */
 	protected function fill() : void
     {
-        // Liste des saisons
+        // Liste des pays
         $this->addListItem();
 
-        // Ajout d'une saison
+        // Ajout d'un pays
         $this->addCreationItem();
 
-        if($this->season !== null)
+        if($this->country !== null)
         {
-            $this->addSeasonItem();
+            $this->addCountryItem();
         }
         
     }
 
     /**
-     * Ajoute l'élément de la liste des saisons
+     * Ajoute l'élément de la liste des pays
      * @return self
      */
     private function addListItem() : self
@@ -95,9 +95,9 @@ final class SeasonsMenu extends HeaderMenu {
         $currentRouteName = $this->getCurrentRouteName();
 
         $item = (new HeaderItemMenu())
-            ->setLabel($this->translator->trans('header.admin.seasons.list.label', domain: 'menus'))
-            ->setAltLabel($this->translator->trans('header.admin.seasons.list.alt_label', domain: 'menus'))
-            ->setRouteName('app_admin_seasons_index');
+            ->setLabel($this->translator->trans('header.admin.countries.list.label', domain: 'menus'))
+            ->setAltLabel($this->translator->trans('header.admin.countries.list.alt_label', domain: 'menus'))
+            ->setRouteName('app_admin_countries_list_index');
 
         if($currentRouteName === $item->getRouteName())
         {
@@ -108,7 +108,7 @@ final class SeasonsMenu extends HeaderMenu {
     }
 
     /**
-     * Ajoute l'élément de l'ajout d'une saison
+     * Ajoute l'élément de l'ajout d'un pays
      * @return self
      */
     private function addCreationItem() : self
@@ -116,9 +116,9 @@ final class SeasonsMenu extends HeaderMenu {
         $currentRouteName = $this->getCurrentRouteName();
 
         $item = (new HeaderItemMenu())
-            ->setLabel($this->translator->trans('header.admin.seasons.add.label', domain: 'menus'))
-            ->setAltLabel($this->translator->trans('header.admin.seasons.add.alt_label', domain: 'menus'))
-            ->setRouteName('app_admin_season_add_index');
+            ->setLabel($this->translator->trans('header.admin.countries.add.label', domain: 'menus'))
+            ->setAltLabel($this->translator->trans('header.admin.countries.add.alt_label', domain: 'menus'))
+            ->setRouteName('app_admin_countries_add_index');
 
         if($currentRouteName === $item->getRouteName())
         {
@@ -129,32 +129,32 @@ final class SeasonsMenu extends HeaderMenu {
     }
 
     /**
-     * Ajoute les éléments de gestion d'une saison
+     * Ajoute les éléments de gestion d'un pays
      * @return self
      */
-    private function addSeasonItem() : self
+    private function addCountryItem() : self
     {
         $this->addEditItem();
         return $this;
     }
 
     /**
-     * Ajout l'élément d'édition d'une saison
+     * Ajout l'élément d'édition d'un pays
      * @return self
      */
     private function addEditItem() : self
     {
         $currentRouteName = $this->getCurrentRouteName();
-        $season = $this->season;
+        $country = $this->country;
 
         $item = (new HeaderItemMenu())
-            ->setLabel($this->translator->trans('header.admin.seasons.edit.label', domain: 'menus'))
-            ->setAltLabel($this->translator->trans('header.admin.seasons.edit.alt_label', [
-                'year' => $season->getYear(),
+            ->setLabel($this->translator->trans('header.admin.countries.edit.label', domain: 'menus'))
+            ->setAltLabel($this->translator->trans('header.admin.countries.edit.alt_label', [
+                'name' => $country->getName(),
             ], domain: 'menus'))
-            ->setRouteName('app_admin_season_edit_index')
+            ->setRouteName('app_admin_countries_edit_index')
             ->setRouteParameters([
-                'seasonYear' => $season->getYear(),
+                'countryCode' => $country->getCode(),
             ])
         ;
 

@@ -20,6 +20,9 @@ header:
       messages:
         label: Messages
         alt_label: Consulter les messages reçus.
+      countries: 
+        label: Pays
+        alt_label: Gestion des pays.
       seasons:
         label: Saisons
         alt_label: Gestion des saisons.
@@ -34,6 +37,18 @@ header:
       edit:
         label: Modifier la saison
         alt_label: Modifier la saison {year}.
+    # Menu des pays
+    countries:
+      list:
+        label: Liste des pays
+        alt_label: Consulter la liste des pays.
+      add:
+        label: Ajouter un pays
+        alt_label: Ajouter un pays.
+      edit:
+        label: Modifier le pays
+        alt_label: Modifier le pays {name}.
+
     # Menu de l'utilisateur connecté
     user:
       logout:
