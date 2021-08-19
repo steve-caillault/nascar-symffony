@@ -1,0 +1,52 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% set title = 'admin.countries.title' | trans %}
+
+{% block head_title %}
+{{ title }}
+{% endblock %}
+
+{% block page_title %}
+{{ title }}
+{% endblock %}
+
+{% block body %}
+    {% if countries | length > 0 %}
+    
+    <table>
+        <tbody>
+            {% for country in countries %}
+                {% set edit_country_path = path('app_admin_countries_edit_index', { 
+                    countryCode: country.code | lower
+                }) %}
+                {% set edit_country_label = country.name %}
+                {% set edit_country_alt_label = 'admin.countries.list.edit.alt_label' | trans({ 
+                    name: country.name
+                }) %}
+                {% set edit_country_image_alt_label = 'admin.countries.list.edit.image.alt_label' | trans({
+                    name: country.name
+                }) %}
+            
+                <tr class="line">
+                    <td>{{ country.code }}</td>
+                    <td class="with-image">
+                        {% if country.image is not null %}
+                        {% set country_image_url = resources_url ~ 'images/countries/small/' ~ country.image %}
+                        <img src="{{ country_image_url }}" alt="{{ '' }}" width="42" height="30" />
+                        {% endif %}
+                    </td>
+                    <td>{{ anchor(country.name, edit_country_alt_label, edit_country_path) }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+
+        {% set empty_anchor_label = 'admin.countries.empty_anchor_label' | trans %}
+        {% set empty_anchor_alt = 'admin.countries.empty_anchor_alt' | trans %}
+        {% set empty_anchor_url = path('app_admin_countries_add_index') %}
+        {% set add_anchor = anchor(empty_anchor_label, empty_anchor_alt, empty_anchor_url) %}
+
+    <p>{{ 'admin.countries.empty' | trans({ anchor: add_anchor }) | raw }}</p>
+    {% endif %}
+{% endblock %}

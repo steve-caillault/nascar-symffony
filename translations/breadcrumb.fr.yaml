@@ -26,6 +26,12 @@ admin:
   messages:
     label: Messages
 
+  # Pays
+  countries:
+    label: Pays
+    alt_label: Consulter la liste des pays.
+    edit:
+      alt_label: Édition du pays {name}.
   # Saisons
   seasons: 
     label: Saisons
