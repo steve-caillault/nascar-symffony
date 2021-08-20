@@ -1,22 +1,15 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\Country;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Filesystem\Filesystem;
 use Intervention\Image\ImageManager;
 /***/
+use App\Service\OldUploadedFilesService;
 use App\Entity\Country;
 
 final class UploadCountryFlagService {
-
-    private const DIRECTORY = 'images/countries/';
-
-    /**
-     * Répertoire où sont stockées les images
-     * @var string
-     */
-    private string $directory;
 
     /**
      * Gestionnaire de fichier
@@ -29,18 +22,16 @@ final class UploadCountryFlagService {
      * @param string $resourcesPath
      */
     public function __construct(
-        private string $resourcesPath, 
+        private CountryFlagService $countryFlagService,
         private OldUploadedFilesService $oldUploadedFilesService
     )
     {
-        $this->directory = $resourcesPath . self::DIRECTORY;
         $this->fileSystem = new Filesystem();
     }
 
-    
-
     /**
-     * Cré la version original
+     * Tentative de création de l'image et de ses versions
+     * Si la tentative réussie, la méthode retourne le nom du fichier de l'image originale
      * @param UploadedFile $uploadedFile
      * @param Country $country
      * @return ?string Fichier de l'image créée
@@ -56,7 +47,7 @@ final class UploadCountryFlagService {
 
         $extension = strtolower($uploadedFile->guessExtension());
         $fileName = hash('crc32', rand() . time() . rand()) . '.' . $extension;
-        $directoryDest = $this->directory . 'original/';
+        $directoryDest = $this->countryFlagService->getVersionDirectory(CountryFlagService::VERSION_ORIGINAL);
 
         try {
             $uploadedFile->move($directoryDest, $fileName);
@@ -99,21 +90,21 @@ final class UploadCountryFlagService {
             $constraint->aspectRatio();
         });
 
-        $directory = $this->directory . 'small/';
+        $directoryDest = $this->countryFlagService->getVersionDirectory(CountryFlagService::VERSION_SMALL);
 
         // Ancien fichier à supprimer
         $previousFile = $country->getImage();
-        $previousFilePath = ($previousFile !== null) ? ($directory . $previousFile) : null;
+        $previousFilePath = ($previousFile !== null) ? ($directoryDest . $previousFile) : null;
         if($previousFilePath !== null)
         {
             $this->oldUploadedFilesService->addFileToDelete($previousFilePath);
         }
         
         // Cré le répertoire s'il n'existe pas
-        $this->fileSystem->mkdir($directory);
+        $this->fileSystem->mkdir($directoryDest);
 
         // Enregistrement du fichier
-        $destinationFile = $directory . $imageInterventionVersion->basename;
+        $destinationFile = $directoryDest . $imageInterventionVersion->basename;
 
         try {
             $imageInterventionVersion->save($destinationFile);

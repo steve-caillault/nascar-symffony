@@ -16,7 +16,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use App\Entity\Country;
 use App\Form\CountryType;
 use App\UI\Menus\Breadcrumb\BreadcrumbItem;
-use App\Service\UploadCountryFlagService;
+use App\Service\Country\UploadCountryFlagService;
 
 final class AddController extends AbstractCountryController {
 
