@@ -24,16 +24,23 @@ admin:
   messages:
     title: Messages de contacts
     empty: Aucun message n'a été trouvé.
+    
   countries:
     title: Liste des pays
     empty: Aucun pays n'a été trouvé. Cliquez {anchor} pour en ajouter un.
     empty_anchor_label: ici
     empty_anchor_alt: Ajouter un pays.
+    # Liste des pays
     list:
       edit:
         alt_label: Modifier le pays {name}.
       image:
         alt_label: Drapeau du pays {name}.
+    # Ajout d'un pays
+    add:
+      title: Création d'un pays
+      success: Le pays {name} a été créé.
+      failure: Une erreur s'est produite lors de la création du pays {name}.
 
   seasons:
     title: Liste des saisons
