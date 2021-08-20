@@ -71,10 +71,10 @@ final class Country
 
     /**
      * Modifie le code ISO du pays
-     * @param string $code
+     * @param ?string $code
      * @return self
      */
-    public function setCode(string $code) : self
+    public function setCode(?string $code) : self
     {
         $this->code = strtoupper($code);
         return $this;
@@ -91,10 +91,10 @@ final class Country
 
     /**
      * Modifie le nom du pays
-     * @param string $name
+     * @param ?string $name
      * @return self
      */
-    public function setName(string $name) : self
+    public function setName(?string $name) : self
     {
         $this->name = $name;
         return $this;

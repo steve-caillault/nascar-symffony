@@ -41,6 +41,11 @@ admin:
       title: Création d'un pays
       success: Le pays {name} a été créé.
       failure: Une erreur s'est produite lors de la création du pays {name}.
+    # Edition d'un pays
+    edit:
+      title: Modification du pays {name}
+      success: Le pays {name} a été mis à jour.
+      failure: Une erreur s'est produite lors de la mise à jour du pays {name}.
 
   seasons:
     title: Liste des saisons
