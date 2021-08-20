@@ -111,10 +111,10 @@ final class Country
 
     /**
      * Modifie le nom du fichier de l'image
-     * @param string $image
+     * @param ?string $image
      * @return self
      */
-    public function setImage(string $image) : self
+    public function setImage(?string $image) : self
     {
         $this->image = $image;
         return $this;
