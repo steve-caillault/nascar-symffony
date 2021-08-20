@@ -28,3 +28,10 @@
         {{ parent() }}
     </div>
 {% endblock %}
+
+{% block image_widget %}
+    {% if form.vars.image_url is not null %}
+    <img src="{{ form.vars.image_url }}" alt="{{ form.vars.alt_label_image }}" />
+    {% endif %}
+    {{ form_widget(form) }}
+{% endblock %}
