@@ -11,15 +11,32 @@ use Symfony\Component\Form\{
     FormBuilderInterface
 };
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Contracts\Translation\TranslatorInterface;
 /***/
 use App\Entity\Country;
+use App\Form\Input\ImageType;
+use App\Service\Country\CountryFlagService;
 
 final class CountryType extends AbstractType
 {
+    /**
+     * Constructeur
+     * @param TranslatorInterface $translator
+     * @param CountryFlagService $countryFlagService
+     */
+    public function __construct(
+        private TranslatorInterface $translator,
+        private CountryFlagService $countryFlagService
+    )
+    {
+
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $country = $builder->getData();
+
         $builder
             ->add('code', options: [
                 'attr' => [
@@ -31,9 +48,13 @@ final class CountryType extends AbstractType
                     'autocomplete' => 'off',
                 ],
             ])
-            ->add('image', FileType::class, [
+            ->add('image', ImageType::class, [
                 'mapped' => false,
                 'required' => false,
+                'image_url' => $this->countryFlagService->getImageUrl($country),
+                'alt_label_image' => $this->translator->trans('admin.countries.edit.fields.image.alt_label', [
+                    'name' => $country->getName()
+                ], domain: 'form'),
                 'constraints' => [
                     new Image([
                         'maxSize' => '1M',

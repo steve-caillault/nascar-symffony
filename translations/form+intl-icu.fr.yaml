@@ -34,6 +34,7 @@ admin:
           label: Nom
         image:
           label: Drapeau
+          alt_label: Drapeau du pays {name}.
   seasons:
     # Edition d'une saison
     edit:
