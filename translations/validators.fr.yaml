@@ -35,6 +35,21 @@ contact:
     min: Le message doit avoir au moins {{ limit }} caractères.
     max: Le message ne doit pas avoir plus de {{ limit }} caractères.
 
+countries:
+  edit:
+    code:
+      not_blank: Le code ISO du pays est nécessaire.
+      not_exists: Le pays {{ value }} existe déjà.
+      length: Le code ISO du pays doit être formé de deux lettres.
+      alpha: Le code ISO doit être composé de deux lettres.
+    name:
+      not_blank: Le nom du pays est nécessaire.
+      min: Le nom du pays doit avoir au moins {{ limit }} caractères.
+      max: Le nom du pays ne doit pas avoir plus de {{ limit }} caractères.
+    image:
+      mime: L'image du drapeau doit être de type JPEG ou PNG.
+      size: L'image du drapeau ne doit pas dépasser {{ limit }} {{ suffix }}.
+
 seasons:
   edit:
     year: 

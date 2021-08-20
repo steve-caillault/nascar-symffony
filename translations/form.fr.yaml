@@ -24,7 +24,18 @@ site:
 
 # Formulaires du panneau d'administration
 admin:
+  countries:
+    # Edition d'un pays
+    edit:
+      fields:
+        code:
+          label: Code ISO
+        name: 
+          label: Nom
+        image:
+          label: Drapeau
   seasons:
+    # Edition d'une saison
     edit:
       fields:
         year:
