@@ -106,6 +106,12 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.5"
     },
+    "guzzlehttp/psr7": {
+        "version": "2.0.0"
+    },
+    "intervention/image": {
+        "version": "2.6.1"
+    },
     "laminas/laminas-code": {
         "version": "4.4.0"
     },
@@ -174,8 +180,17 @@
     "psr/event-dispatcher": {
         "version": "1.0.0"
     },
+    "psr/http-factory": {
+        "version": "1.0.1"
+    },
+    "psr/http-message": {
+        "version": "1.0.1"
+    },
     "psr/log": {
         "version": "1.1.4"
+    },
+    "ralouphie/getallheaders": {
+        "version": "3.0.3"
     },
     "sebastian/cli-parser": {
         "version": "1.0.1"
