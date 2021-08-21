@@ -22,7 +22,7 @@ abstract class AbstractManageCountry extends BaseTestCase {
      * Retourne le nombre de pays
      * @return int
      */
-    private function countCountries() : int
+    protected function countCountries() : int
     {
         $dql = strtr('SELECT COUNT(countries.code) FROM :object countries', [
             ':object' => Country::class,
@@ -40,14 +40,16 @@ abstract class AbstractManageCountry extends BaseTestCase {
      * @param string $code
      * @param string $name
      * @param ?string $image
-     * @return void
+     * @return Country
      */
-    protected function createCountry(string $code, string $name, ?string $image = null) : void
+    protected function createCountry(string $code, string $name, ?string $image = null) : Country
     {
         $country = (new Country())->setCode($code)->setName($name)->setImage($image);
         $entityManager = $this->getEntityManager();
         $entityManager->persist($country);
         $entityManager->flush();
+
+        return $country;
     }
 
     /**
@@ -121,13 +123,12 @@ abstract class AbstractManageCountry extends BaseTestCase {
     /**
      * Vérification du succès de la création d'un pays
      * @param array Paramètres du formulaire
+     * @param ?Country $country Pays en cas d'édition
      * @dataProvider successProvider
      * @return void
      */
-    public function testSuccess(array $params) : void
+    public function testSuccess(array $params, ?Country $country = null) : void
     {
-        $countCountriesBeforeCalling = $this->countCountries();
-
         $response = $this->attemptManageCountry($params);
 
         // Vérification du message Flash
@@ -158,24 +159,25 @@ abstract class AbstractManageCountry extends BaseTestCase {
         $this->assertEquals($expectedData, $resultData);
 
         $params['image'] ??= null;
+        $withImage = ($country?->getImage() !== null or $params['image'] !== null);
         // Vérifie que les images existes
-        if($params['image'] !== null)
+        if($withImage)
         {
             $this->assertNotNull($managedCountry->getImage());
-            $resourcePath = $this->getService(ContainerBagInterface::class)->get('resources_path');
-            $originalFilePath = $resourcePath . 'images/countries/original/' . $managedCountry->getImage();
-            $smallFilePath = $resourcePath . 'images/countries/small/' . $managedCountry->getImage();
-            $this->assertFileExists($originalFilePath);
-            $this->assertFileExists($smallFilePath);
+            if($params['image']) // S'il s'agit d'une édition, on ne test pas car il faudrait générer le fichier
+            {
+                $resourcePath = $this->getService(ContainerBagInterface::class)->get('resources_path');
+                $originalFilePath = $resourcePath . 'images/countries/original/' . $managedCountry->getImage();
+                $smallFilePath = $resourcePath . 'images/countries/small/' . $managedCountry->getImage();
+                $this->assertFileExists($originalFilePath);
+                $this->assertFileExists($smallFilePath);
+            }
         }
         // Vérifie que l'image n'a pas été affecté
         else
         {
             $this->assertNull($managedCountry->getImage());
         }
-
-        // Vérifie que le nombre de pays a augmenté
-        $this->assertEquals($countCountriesBeforeCalling + 1, $this->countCountries());
     }
 
     /**
@@ -211,30 +213,10 @@ abstract class AbstractManageCountry extends BaseTestCase {
      * @param array $params Paramètres pour le formulaire
      * @dataProvider failureValidationProvider
      * @param array $errorsExpected 
-     * @param bool $imageExtensionError Vrai s'il faut générer un fichier qui générera une erreur sur l'extension
-     * @param bool $imageSizeToBigError Vrai s'il faut générer un fichier qui générera une erreur sur la taille du fichier
      * @return void
      */
-    public function testValidationFailure(
-        array $params, 
-        array $errorsExpected, 
-        bool $imageExtensionError = false,
-        bool $imageSizeToBigError = false
-    ) : void
+    public function testValidationFailure(array $params, array $errorsExpected) : void
     {
-
-        $imagesPath = $this->getService(ContainerBagInterface::class)->get('resources_path');
-
-        // On est obligé d'affecter ici le fichier car dataProvider est appelé avant les tests
-        if($imageExtensionError)
-        {
-            $params['image'] = new UploadedFile($imagesPath . 'not-an-image.sql', 'not-an-image.sql', 'plain/txt', test: true);
-        }
-        elseif($imageSizeToBigError)
-        {
-            $params['image'] = new UploadedFile($imagesPath . 'too-big.png', 'too-big.png', 'image/png', test: true);
-        }
-
         $this->createCountry('FR', 'France');
 
         $countCountriesBeforeCalling = $this->countCountries();
@@ -258,6 +240,50 @@ abstract class AbstractManageCountry extends BaseTestCase {
             $error = $response->filter($fieldSelector)->closest('div.form-input')->filter('p.error')->text();
             $this->assertEquals($messageExpected, $error);
         }
+    }
+
+    /**
+     * Test de l'erreur d'extension sur le fichier de l'image
+     * @return void
+     */
+    public function testIncorrectFlagExtension() : void
+    {
+        $imagesPath = $this->getService(ContainerBagInterface::class)->get('resources_path');
+        $image = new UploadedFile($imagesPath . 'not-an-image.sql', 'not-an-image.sql', 'plain/txt', test: true);
+        
+        $params = [
+            'code' => 'GB',
+            'name' => $this->getFaker()->country(),
+            'image' => $image,
+        ];
+        
+        $errorsExpected = [
+            'image' => 'L\'image du drapeau doit être de type JPEG ou PNG.',
+        ];
+
+        $this->testValidationFailure($params, $errorsExpected);
+    }
+
+    /**
+     * Test de l'erreur d'un fichier trop volumineux pour le fichier de l'image
+     * @return void
+     */
+    public function testFlagFileTooBig() : void
+    {
+        $imagesPath = $this->getService(ContainerBagInterface::class)->get('resources_path');
+        $image = new UploadedFile($imagesPath . 'too-big.png', 'too-big.png', 'image/png', test: true);
+
+        $params = [
+            'code' => 'DE',
+            'name' => $this->getFaker()->country(),
+            'image' => $image,
+        ]; 
+        
+        $errorsExpected = [
+            'image' => 'L\'image du drapeau ne doit pas dépasser 1 MB.',
+        ];
+
+        $this->testValidationFailure($params, $errorsExpected);
     }
 
     /**
@@ -322,27 +348,6 @@ abstract class AbstractManageCountry extends BaseTestCase {
                 ], [
                     'name' => 'Le nom du pays ne doit pas avoir plus de 100 caractères.',
                 ],
-            ],
-            'image_extension_incorrect' => [
-                // Test si l'extension de l'image est correcte
-                [
-                    'code' => 'GB',
-                    'name' => $faker->country(),
-                ], [
-                    'image' => 'L\'image du drapeau doit être de type JPEG ou PNG.',
-                ],
-                true
-            ],
-            'image_size_too_big' => [
-                // Test si le poids de l'image est trop grand
-                [
-                    'code' => 'DE',
-                    'name' => $faker->country(),
-                ], [
-                    'image' => 'L\'image du drapeau ne doit pas dépasser 1 MB.',
-                ],
-                false,
-                true
             ],
         );
     }

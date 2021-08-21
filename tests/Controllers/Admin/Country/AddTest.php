@@ -6,6 +6,8 @@
 
 namespace App\Tests\Controllers\Admin\Country;
 
+use App\Entity\Country;
+
 final class AddTest extends AbstractManageCountry {
 
      /**
@@ -33,6 +35,23 @@ final class AddTest extends AbstractManageCountry {
     protected function getFailureExpectedPageTitle() : string
     {
         return 'Création d\'un pays';
+    }
+
+    /**
+     * Vérification du succès de la création d'un pays
+     * @param array Paramètres du formulaire
+     * @param ?Country $country Pays en cas d'édition
+     * @dataProvider successProvider
+     * @return void
+     */
+    public function testSuccess(array $params, ?Country $country = null) : void
+    {
+        $countCountriesBeforeCalling = $this->countCountries();
+
+        parent::testSuccess($params, $country);
+
+        // Vérifie que le nombre de pays a augmenté
+        $this->assertEquals($countCountriesBeforeCalling + 1, $this->countCountries());
     }
 
     /*****************************************************************************/

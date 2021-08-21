@@ -47,6 +47,8 @@ final class OldUploadedFilesService {
         } catch(\Exception) {
             
         }
+
+        $this->filesToDelete = [];
     }
 
 }
