@@ -37,6 +37,15 @@ abstract class AbstractCountryController extends AdminAbstractController {
     }
 
     /**
+     * Retourne le menu des pays
+     * @return CountriesMenu
+     */
+    protected function getCountriesMenu() : CountriesMenu
+    {
+        return $this->countries_menu;
+    }
+
+    /**
      * Modifie le pays à gérer
      * @param Country $country
      * @return self
@@ -45,6 +54,15 @@ abstract class AbstractCountryController extends AdminAbstractController {
     {
         $this->country = $country;
         return $this;
+    }
+
+    /**
+     * Retourne le pays à gérer
+     * @return ?Country
+     */
+    protected function getCountry() : ?Country
+    {
+        return $this->country;
     }
 
     /**
@@ -83,12 +101,12 @@ abstract class AbstractCountryController extends AdminAbstractController {
         {
             $breadcrumb->addItem(new BreadcrumbItem(
                 label: $this->country->getName(),
-                altLabel: $this->translator->trans('admin.country.edit.alt_label', [
+                altLabel: $this->translator->trans('admin.countries.edit.alt_label', [
                     'name' => $this->country->getName(),
                 ], domain: 'breadcrumb'),
-                routeName: 'app_admin_country_edit_index',
+                routeName: 'app_admin_countries_edit_index',
                 routeParameters: [
-                    'countryCode' => $this->country->getCode(),
+                    'countryCode' => strtolower($this->country->getCode()),
                 ],
             ));
         }
