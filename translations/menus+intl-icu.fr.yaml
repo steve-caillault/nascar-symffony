@@ -48,6 +48,17 @@ header:
       edit:
         label: Modifier le pays
         alt_label: Modifier le pays {name}.
+      # Etats d'un pays
+      states:
+        list:
+         label: Liste des états
+         alt_label: Consulter la liste des états du pays {name}.
+        add:
+          label: Ajouter un état
+          alt_label: Ajouter un état au pays {name}.
+        edit:
+          label: Modifier l'état
+          alt_label: Modifier l'état {name}.
 
     # Menu de l'utilisateur connecté
     user:
