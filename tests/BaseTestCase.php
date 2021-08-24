@@ -6,6 +6,7 @@
 
 namespace App\Tests;
 
+use Doctrine\DBAL\Driver\AbstractMySQLDriver;
 use Doctrine\ORM\{
     EntityManagerInterface,
     QueryBuilder
@@ -107,7 +108,21 @@ abstract class BaseTestCase extends WebTestCase {
     {
         $purger = new ORMPurger($this->getEntityManager());
         $purger->setPurgeMode(ORMPurger::PURGE_MODE_TRUNCATE);
+
+        $connection = $purger->getObjectManager()->getConnection();
+
+        $isMySQL = ($connection->getDriver() instanceof AbstractMySQLDriver);
+        if($isMySQL)
+        {
+            $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 0;');
+        }
+
         $purger->purge();
+
+        if($isMySQL)
+        {
+            $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 1;');
+        }
     }
 
     /**
