@@ -15,8 +15,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Contracts\Translation\TranslatorInterface;
 /***/
 use App\Entity\Country;
-use App\Form\CountryType;
-use App\Service\Country\UploadCountryFlagService;
+use App\Form\Country\CountryType;
+use App\Service\State\UploadStateFlagService;
 
 final class EditController extends AbstractCountryController {
 
@@ -25,7 +25,7 @@ final class EditController extends AbstractCountryController {
      * @param Request $request
      * @param TranslatorInterface $translator
      * @param Country $country
-     * @param UploadCountryFlagService $uploadService
+     * @param UploadStateFlagService $uploadService
      * @return Response
      */
     #[
@@ -42,7 +42,7 @@ final class EditController extends AbstractCountryController {
         Request $request, 
         TranslatorInterface $translator,
         Country $country,
-        UploadCountryFlagService $uploadService
+        UploadStateFlagService $uploadService
     ) : Response
     {
         $originalCountry = clone $country;

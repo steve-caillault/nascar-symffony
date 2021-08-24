@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Service\Country;
+namespace App\Service\State;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Filesystem\Filesystem;
 use Intervention\Image\ImageManager;
 /***/
 use App\Service\OldUploadedFilesService;
-use App\Entity\Country;
+use App\Entity\AbstractStateEntity as State;
 
-final class UploadCountryFlagService {
+final class UploadStateFlagService {
 
     /**
      * Gestionnaire de fichier
@@ -22,7 +22,7 @@ final class UploadCountryFlagService {
      * @param string $resourcesPath
      */
     public function __construct(
-        private CountryFlagService $countryFlagService,
+        private FlagServiceFactory $flagServiceFactory,
         private OldUploadedFilesService $oldUploadedFilesService
     )
     {
@@ -30,13 +30,23 @@ final class UploadCountryFlagService {
     }
 
     /**
+     * Retourne le service de gestion du drapeau en fonction de l'état
+     * @param State $state
+     * @return AbstractFlagService
+     */
+    private function getFlagService(State $state) : AbstractFlagService
+    {
+        return $this->flagServiceFactory->get($state);
+    }
+
+    /**
      * Tentative de création de l'image et de ses versions
      * Si la tentative réussie, la méthode retourne le nom du fichier de l'image originale
      * @param UploadedFile $uploadedFile
-     * @param Country $country
+     * @param State $country
      * @return ?string Fichier de l'image créée
      */
-    public function attempt(UploadedFile $uploadedFile, Country $country) : ?string
+    public function attempt(UploadedFile $uploadedFile, State $state) : ?string
     {
         $realpath = $uploadedFile->getRealPath();
 
@@ -47,11 +57,11 @@ final class UploadCountryFlagService {
 
         $extension = strtolower($uploadedFile->guessExtension());
         $fileName = hash('crc32', rand() . time() . rand()) . '.' . $extension;
-        $directoryDest = $this->countryFlagService->getVersionDirectory(CountryFlagService::VERSION_ORIGINAL);
+        $directoryDest = $this->getFlagService($state)->getVersionDirectory(AbstractFlagService::VERSION_ORIGINAL);
 
         try {
             $uploadedFile->move($directoryDest, $fileName);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return null;
         }
 
@@ -59,13 +69,13 @@ final class UploadCountryFlagService {
         $originalFullPath = ($this->fileSystem->exists($expectedFullPath)) ? $expectedFullPath : null;
 
         // Création des versions
-        if($originalFullPath === null or ! $this->createVersions($originalFullPath, $country))
+        if($originalFullPath === null or ! $this->createVersions($originalFullPath, $state))
         {
             return null;
         }
 
         // Détermine l'ancienne version du fichier à supprimer
-        $previousFile = $country->getImage();
+        $previousFile = $state->getImage();
         $previousFilePath = ($previousFile !== null) ? ($directoryDest . $previousFile) : null;
         if($previousFilePath !== null)
         {
@@ -78,10 +88,10 @@ final class UploadCountryFlagService {
     /**
      * Création des diffèrentes versions de l'image
      * @param string $originalPath Chemin d'accès vers l'image $originale
-     * @param Country $country
+     * @param State $state
      * @return bool Vrai si toutes les versions ont été créées
      */
-    private function createVersions(string $originalPath, Country $country) : bool
+    private function createVersions(string $originalPath, State $state) : bool
     {
         $imageManager = new ImageManager;
         $imageInterventionVersion = $imageManager->make($originalPath);
@@ -90,10 +100,10 @@ final class UploadCountryFlagService {
             $constraint->aspectRatio();
         });
 
-        $directoryDest = $this->countryFlagService->getVersionDirectory(CountryFlagService::VERSION_SMALL);
+        $directoryDest = $this->getFlagService($state)->getVersionDirectory(AbstractFlagService::VERSION_SMALL);
 
         // Ancien fichier à supprimer
-        $previousFile = $country->getImage();
+        $previousFile = $state->getImage();
         $previousFilePath = ($previousFile !== null) ? ($directoryDest . $previousFile) : null;
         if($previousFilePath !== null)
         {

@@ -1,20 +1,19 @@
 <?php
 
 /**
- * Service pour la gestion de l'image d'un pays
+ * Service pour la gestion de l'image d'un pays ou d'un état
  */
 
-namespace App\Service\Country;
+namespace App\Service\State;
 
-use App\Entity\Country;
+use App\Entity\AbstractStateEntity as State;
 
-final class CountryFlagService {
+abstract class AbstractFlagService {
 
     public const 
         VERSION_ORIGINAL = 'ORIGINAL',
         VERSION_SMALL = 'SMALL'
     ;
-    private const DIRECTORY = 'images/countries/';
 
     /**
      * Constructeur
@@ -25,6 +24,12 @@ final class CountryFlagService {
     {
 
     }
+
+    /**
+     * Retourne le répertoire où sont stockées les images
+     * @return string
+     */
+    abstract protected function getDirectory() : string;
 
     /**
      * Retourne le répertoire de la version où sont stockées les images
@@ -40,7 +45,7 @@ final class CountryFlagService {
             throw new \Exception('Incorrect image version.', 500);
         }
 
-        $relativeDirectory = self::DIRECTORY .  strtolower($version) . '/';
+        $relativeDirectory = $this->getDirectory() .  strtolower($version) . '/';
         $directory = $relativeDirectory;
 
         if($absolute)
@@ -52,13 +57,13 @@ final class CountryFlagService {
     }
 
     /**
-     * Retourne l'URL de l'image du pays
-     * @param Country country
+     * Retourne l'URL de l'image du drapeau
+     * @param State $state
      * @return ?string
      */
-    public function getImageUrl(Country $country) : ?string
+    public function getImageUrl(State $state) : ?string
     {
-        $filename = $country->getImage();
+        $filename = $state->getImage();
         if($filename === null)
         {
             return null;

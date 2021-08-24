@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Gestion du formulaire d'un pays
+ * Gestion du formulaire d'un pays ou d'un état
  */
 
-namespace App\Form;
+namespace App\Form\Country;
 
 use Symfony\Component\Form\{
     AbstractType,
@@ -14,20 +14,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Contracts\Translation\TranslatorInterface;
 /***/
-use App\Entity\Country;
 use App\Form\Input\ImageType;
-use App\Service\Country\CountryFlagService;
+use App\Service\State\FlagServiceFactory;
 
-final class CountryType extends AbstractType
+abstract class AbstractStateType extends AbstractType
 {
     /**
      * Constructeur
      * @param TranslatorInterface $translator
-     * @param CountryFlagService $countryFlagService
+     * @param FlagServiceFactory $flagServiceFactory
      */
     public function __construct(
         private TranslatorInterface $translator,
-        private CountryFlagService $countryFlagService
+        private FlagServiceFactory $flagServiceFactory
     )
     {
 
@@ -35,7 +34,7 @@ final class CountryType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $country = $builder->getData();
+        $state = $builder->getData();
 
         $builder
             ->add('code', options: [
@@ -51,17 +50,18 @@ final class CountryType extends AbstractType
             ->add('image', ImageType::class, [
                 'mapped' => false,
                 'required' => false,
-                'image_url' => $this->countryFlagService->getImageUrl($country),
-                'alt_label_image' => $this->translator->trans('admin.countries.edit.fields.image.alt_label', [
-                    'name' => $country->getName()
+                'image_url' => $this->flagServiceFactory->get($state)->getImageUrl($state),
+                'alt_label_image' => $this->translator->trans('admin.states.edit.fields.image.alt_label', [
+                    'name' => $state->getName(),
+                    'state_type' => strtolower($state->getStateType()),
                 ], domain: 'form'),
                 'constraints' => [
                     new Image([
                         'maxSize' => '1M',
                         'mimeTypes' => [ 'image/jpeg', 'image/jpg', 'image/png' ],
-                        'mimeTypesMessage' => 'countries.edit.image.mime',
-                        'uploadIniSizeErrorMessage' => 'countries.edit.image.size',
-                        'maxSizeMessage' => 'countries.edit.image.size',
+                        'mimeTypesMessage' => 'states.edit.image.mime',
+                        'uploadIniSizeErrorMessage' => 'states.edit.image.size',
+                        'maxSizeMessage' => 'states.edit.image.size',
                     ]),
                 ],
             ])
@@ -71,9 +71,8 @@ final class CountryType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Country::class,
             'translation_domain' => 'form',
-            'label_format' => 'admin.countries.edit.fields.%name%.label',
+            'label_format' => 'admin.states.edit.fields.%name%.label',
             'attr' => [
                 'novalidate' => 'novalidate',
             ],

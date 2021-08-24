@@ -14,9 +14,9 @@ use Symfony\Component\Routing\Annotation\Route as RouteAnnotation;
 use Symfony\Contracts\Translation\TranslatorInterface;
 /***/
 use App\Entity\Country;
-use App\Form\CountryType;
+use App\Form\Country\CountryType;
 use App\UI\Menus\Breadcrumb\BreadcrumbItem;
-use App\Service\Country\UploadCountryFlagService;
+use App\Service\State\UploadStateFlagService;
 
 final class AddController extends AbstractCountryController {
 
@@ -24,7 +24,7 @@ final class AddController extends AbstractCountryController {
      * Ajout d'un pays
      * @param Request $request
      * @param TranslatorInterface $translator
-     * @param UploadCountryFlagService $uploadService
+     * @param UploadStateFlagService $uploadService
      * @return Response
      */
     #[
@@ -36,7 +36,7 @@ final class AddController extends AbstractCountryController {
     public function index(
         Request $request, 
         TranslatorInterface $translator,
-        UploadCountryFlagService $uploadService
+        UploadStateFlagService $uploadService
     ) : Response
     {
         $country = new Country();
