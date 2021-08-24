@@ -2,9 +2,13 @@
 
 namespace App\Repository;
 
-use App\Entity\CountryState;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+/***/
+use App\Entity\{
+    Country,
+    CountryState
+};
 
 /**
  * @method CountryState|null find($id, $lockMode = null, $lockVersion = null)
@@ -12,10 +16,26 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method CountryState[]    findAll()
  * @method CountryState[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CountryStateRepository extends ServiceEntityRepository
+final class CountryStateRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, CountryState::class);
+    }
+
+    /**
+     * Retourne le nombre total d'état du pays en paramètre
+     * @param Country $country
+     * @return int
+     */
+    public function getTotalFrom(Country $country) : int
+    {
+        $dql = strtr('SELECT COUNT(countries_states.code) FROM :object countries_states WHERE countries_states.country = :country', [
+            ':object' => CountryState::class,
+        ]);
+        $total = (int) $this->getEntityManager()->createQuery($dql)
+            ->setParameter('country', $country)
+            ->getSingleScalarResult();
+        return $total;
     }
 }

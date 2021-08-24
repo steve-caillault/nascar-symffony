@@ -1,0 +1,10 @@
+<tr class="line">
+    <td>{{ state.code }}</td>
+    <td class="with-image">
+        {% if state.image is not null %}
+        {% set image_url = resources_url ~ images_directory ~ state.image %}
+        <img src="{{ image_url }}" alt="{{ edit_image_alt_label }}" width="42" height="30" />
+        {% endif %}
+    </td>
+    <td>{{ anchor(state.name, edit_alt_label, edit_path) }}</td>
+</tr>

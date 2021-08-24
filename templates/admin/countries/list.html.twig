@@ -12,31 +12,26 @@
 
 {% block body %}
     {% if countries | length > 0 %}
-    
     <table>
         <tbody>
             {% for country in countries %}
-                {% set edit_country_path = path('app_admin_countries_edit_index', { 
+                {% set edit_path = path('app_admin_countries_edit_index', { 
                     countryCode: country.code | lower
                 }) %}
-                {% set edit_country_label = country.name %}
-                {% set edit_country_alt_label = 'admin.countries.list.edit.alt_label' | trans({ 
+                {% set edit_alt_label = 'admin.countries.list.edit.alt_label' | trans({ 
                     name: country.name
                 }) %}
-                {% set edit_country_image_alt_label = 'admin.countries.list.edit.image.alt_label' | trans({
+                {% set edit_image_alt_label = 'admin.countries.list.image.alt_label' | trans({
                     name: country.name
                 }) %}
-            
-                <tr class="line">
-                    <td>{{ country.code }}</td>
-                    <td class="with-image">
-                        {% if country.image is not null %}
-                        {% set country_image_url = resources_url ~ 'images/countries/small/' ~ country.image %}
-                        <img src="{{ country_image_url }}" alt="{{ '' }}" width="42" height="30" />
-                        {% endif %}
-                    </td>
-                    <td>{{ anchor(country.name, edit_country_alt_label, edit_country_path) }}</td>
-                </tr>
+
+                {% include 'admin/countries/_list_item.html.twig' with { 
+                    state: country,
+                    edit_alt_label: edit_alt_label,
+                    edit_path: edit_path,
+                    edit_image_alt_label: edit_image_alt_label,
+                    images_directory: 'images/countries/small/'
+                } only %}
             {% endfor %}
         </tbody>
     </table>
