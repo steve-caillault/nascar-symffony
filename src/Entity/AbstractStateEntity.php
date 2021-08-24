@@ -8,22 +8,41 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping\MappedSuperclass;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Constraints;
+
+use App\Validator\Country\{
+    StateCode as StateCodeValidation,
+    StateName as StateNameValidation
+};
 
 #[
     MappedSuperclass()
 ]
 abstract class AbstractStateEntity
 {
+    public const 
+        TYPE_COUNTRY = 'COUNTRY',
+        TYPE_STATE = 'STATE'
+    ;
+
     /**
      * Code ISO
      * @var ?string
      */
+    #[
+        ORM\Id,
+        ORM\Column(type: 'string', length: 2),
+    ]
     protected ?string $code = null;
 
     /**
      * Nom
      * @var string
      */
+    #[
+        ORM\Column(type: 'string', length: 100),
+    ]
     protected ?string $name = null;
 
     /**
@@ -94,4 +113,42 @@ abstract class AbstractStateEntity
         $this->image = $image;
         return $this;
     }
+
+    /**
+     * Validation du code et du nom
+     * On utilise un callback pour pouvoir préciser le préfixe des messages de Validation
+     * Cela n'est pas possible avec les annotations
+     * @param ExecutionContextInterface $context
+     * @return void
+     */
+    #[
+        Constraints\Callback()
+    ]
+    public function isFieldsValid(ExecutionContextInterface $context) : void
+    {
+        $constraints = [
+            'code' => $this->getCodeValidation(),
+            'name' => new StateNameValidation(),
+        ];
+        $errors = $context->getValidator()->validate($this, $constraints);
+        foreach($errors as $error)
+        {
+            $context    
+                ->buildViolation($error->getMessage())
+                ->atPath($error->getPropertyPath())
+                ->addViolation();
+        }
+    }
+
+    /**
+     * Retourne le type d'état
+     * @return string
+     */
+    abstract public function getStateType() : string;
+
+    /**
+     * Retourne la validation du code
+     * @return StateCodeValidation
+     */
+    abstract protected function getCodeValidation() : StateCodeValidation;
 }

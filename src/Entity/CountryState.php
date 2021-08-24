@@ -7,52 +7,30 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /***/
 use App\Repository\CountryStateRepository;
+use App\Validator\Country\CountryStateCode as CountryStateCodeValidation;
 
 #[
     ORM\Entity(repositoryClass: CountryStateRepository::class),
     ORM\Table(name: 'countries_states'),
     ORM\Index(name: 'fk_country', columns: [ 'country_code' ]),
     /***/
-    UniqueEntity(fields: 'code', message: 'countries_states.edit.code.not_exists')
+    UniqueEntity(fields: 'code', message: 'states.edit.code.not_exists.state')
 ]
 final class CountryState extends AbstractStateEntity
 {
+
     /**
-     * Code ISO de l'état
+     * Code ISO
      * @var ?string
      */
     #[
         ORM\Id,
-        ORM\Column(type: 'string', length: 2),
+        ORM\Column(type: 'string', length: 3),
     ]
-    /**
-     * @Constraints\Sequentially({
-     *      @Constraints\NotBlank(message="countries_states.edit.code.not_blank"),
-     *      @Constraints\Type("alpha", message="countries_states.edit.code.alpha"),
-     *      @Constraints\Length(2, exactMessage="countries_states.edit.code.length")
-     * })
-     */
     protected ?string $code = null;
-
-    /**
-     * Nom du pays
-     * @var string
-     */
-    #[
-        ORM\Column(type: 'string', length: 100),
-        Constraints\NotBlank(message: 'countries_states.edit.name.not_blank'),
-        Constraints\Length(
-            min: 3, 
-            max: 100, 
-            minMessage: 'countries_states.edit.name.min', 
-            maxMessage: 'countries_states.edit.name.max'
-        )
-    ]
-    protected ?string $name = null;
 
     /**
      * Pays de l'état
@@ -83,4 +61,23 @@ final class CountryState extends AbstractStateEntity
         $this->country = $country;
         return $this;
     }
+
+    /**
+     * Retourne le type d'état
+     * @return string
+     */
+    public function getStateType() : string
+    {
+        return self::TYPE_STATE;
+    }
+
+    /**
+     * Retourne la validation du code
+     * @return CountryStateCodeValidation
+     */
+    protected function getCodeValidation() : CountryStateCodeValidation
+    {
+        return new CountryStateCodeValidation();
+    }
+
 }

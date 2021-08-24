@@ -300,8 +300,8 @@ abstract class AbstractManageCountry extends BaseTestCase {
                     'code' => '',
                     'name' => '',
                 ], [
-                    'code' => 'Le code ISO du pays est nécessaire.',
-                    'name' => 'Le nom du pays est nécessaire.',
+                    'code' => 'Le code ISO est nécessaire.',
+                    'name' => 'Le nom est nécessaire.',
                 ],
             ],
             'country_already_exists' => [
@@ -319,7 +319,7 @@ abstract class AbstractManageCountry extends BaseTestCase {
                     'code' => 'frr',
                     'name' => $faker->country(),
                 ], [
-                    'code' => 'Le code ISO du pays doit être formé de deux lettres.',
+                    'code' => 'Le code ISO doit être formé de deux lettres.',
                 ],
             ],
             'iso_code_not_letters' => [
@@ -328,7 +328,7 @@ abstract class AbstractManageCountry extends BaseTestCase {
                     'code' => '12',
                     'name' => $faker->country(),
                 ], [
-                    'code' => 'Le code ISO doit être composé de deux lettres.',
+                    'code' => 'Le code ISO ne doit contenir que des lettres.',
                 ]
             ],
             'name_too_short' => [
@@ -337,7 +337,7 @@ abstract class AbstractManageCountry extends BaseTestCase {
                     'code' => 'US',
                     'name' => 'US',
                 ], [
-                    'name' => 'Le nom du pays doit avoir au moins 3 caractères.',
+                    'name' => 'Le nom doit avoir au moins 3 caractères.',
                 ]
             ],
             'name_too_long' => [
@@ -346,7 +346,7 @@ abstract class AbstractManageCountry extends BaseTestCase {
                     'code' => 'RU',
                     'name' => $faker->text(),
                 ], [
-                    'name' => 'Le nom du pays ne doit pas avoir plus de 100 caractères.',
+                    'name' => 'Le nom ne doit pas avoir plus de 100 caractères.',
                 ],
             ],
         );

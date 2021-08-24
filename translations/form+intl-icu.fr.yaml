@@ -24,8 +24,8 @@ site:
 
 # Formulaires du panneau d'administration
 admin:
-  countries:
-    # Edition d'un pays
+  states:
+    # Edition d'un pays ou d'un état
     edit:
       fields:
         code:
@@ -34,7 +34,12 @@ admin:
           label: Nom
         image:
           label: Drapeau
-          alt_label: Drapeau du pays {name}.
+          alt_label: >- 
+            {state_type, select,
+              country {Drapeau du pays {name}.}
+              state {Drapeau de l'état {name}.}
+              other {Drapeau de {name}.}
+            }
   seasons:
     # Edition d'une saison
     edit:
