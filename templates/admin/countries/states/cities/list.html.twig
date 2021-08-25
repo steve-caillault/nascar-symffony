@@ -1,0 +1,51 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% set title = 'admin.countries.states.cities.title' | trans({
+    name: countryState.name
+}) %}
+
+{% block head_title %}
+{{ title }}
+{% endblock %}
+
+{% block page_title %}
+{{ title }}
+{% endblock %}
+
+{% block body %}
+    {% if cities | length > 0 %}
+    <table class="with-header">
+        <thead>
+            <tr class="head">
+                <td>{{ 'admin.countries.states.cities.list.fields.name' | trans }}</td>
+            </tr>
+        </thead>
+        <tbody>
+        {% for city in cities %}
+            {% set edit_path = path('app_admin_countries_states_cities_edit_index', { 
+                countryCode: country.code | lower,
+                countryStateCode: countryState.code | lower,
+                cityId: city.id
+            }) %}
+            {% set edit_alt_label = 'admin.countries.states.cities.list.edit.alt_label' | trans({ 
+                name: city.name
+            }) %}
+
+            <tr class="line">
+                <td>{{ anchor(city.name, edit_alt_label, edit_path) }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        {% set empty_anchor_label = 'admin.countries.states.cities.empty_anchor_label' | trans %}
+        {% set empty_anchor_alt = 'admin.countries.states.cities.empty_anchor_alt' | trans %}
+        {% set empty_anchor_url = path('app_admin_countries_states_cities_add_index', {
+            countryCode: country.code | lower,
+            countryStateCode: countryState.code | lower
+        }) %}
+        {% set add_anchor = anchor(empty_anchor_label, empty_anchor_alt, empty_anchor_url) %}
+
+        <p>{{ 'admin.countries.states.cities.empty' | trans({ anchor: add_anchor }) | raw }}</p>
+    {% endif %}
+{% endblock %}
