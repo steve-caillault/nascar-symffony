@@ -84,7 +84,7 @@ abstract class AbstractStateController extends AbstractCountryController {
                 ], domain: 'breadcrumb'),
                 routeName: 'app_admin_countries_states_edit_index',
                 routeParameters: [
-                    'countryStateCode' => $this->country_state->getCode(),
+                    'countryStateCode' => strtolower($this->country_state->getCode()),
                     'countryCode' => $countryCode,
                 ],
             ));

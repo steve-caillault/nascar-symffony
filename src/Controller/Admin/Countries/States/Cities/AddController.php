@@ -21,6 +21,7 @@ use App\Entity\{
     City
 };
 use App\UI\Menus\Breadcrumb\BreadcrumbItem;
+use App\Form\Country\CityType;
 
 final class AddController extends AbstractCityController {
 
@@ -63,8 +64,39 @@ final class AddController extends AbstractCityController {
         $city = new City();
         $city->setState($countryState);
 
-        return $this->renderForm('layout/base.html.twig', [
+        $form = $this->createForm(CityType::class, $city);
+        $form->handleRequest($request);
 
+        if($form->isSubmitted() and $form->isValid())
+        {
+            $entityManager = $this->getDoctrine()->getManager();
+
+            try {
+                $entityManager->persist($city);
+                $entityManager->flush();
+            } catch(\Exception) {}
+
+            $success = ($city->getId() !== null);
+            $flashKey = ($success) ? 'success' : 'error';
+            $flashMessage = ($success) ? 'admin.countries.states.cities.add.success' : 'admin.countries.states.cities.add.failure';
+            $this->addFlash($flashKey, $translator->trans($flashMessage, [
+                'stateName' => $countryState->getName(),
+                'cityName' => $city->getName(),
+            ]));
+
+            // Redirection
+            if($success)
+            {
+                return $this->redirectToRoute('app_admin_countries_states_cities_list_index', [
+                    'countryCode' => strtolower($country->getCode()),
+                    'countryStateCode' => strtolower($countryState->getCode()),
+                ]);
+            }
+        }
+
+        return $this->renderForm('admin/countries/states/cities/add.html.twig', [
+            'form' => $form,
+            'countryState' => $countryState,
         ]);
     }
 
