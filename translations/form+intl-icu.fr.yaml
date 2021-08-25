@@ -40,6 +40,16 @@ admin:
               state {Drapeau de l'état {name}.}
               other {Drapeau de {name}.}
             }
+    # Edition d'une ville
+    cities:
+      edit:
+        fields:
+          name:
+            label: Nom de la ville
+          latitude:
+            label: Latitude
+          longitude:
+            label: Longitude
   seasons:
     # Edition d'une saison
     edit:
