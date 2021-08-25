@@ -104,8 +104,9 @@ abstract class AbstractManageCountryState extends AbstractManageState {
      */
     public function testValidationFailure(array $params, array $errorsExpected) : void
     {
-        $country = $this->createCountry('FR', 'France');
-        $this->createCountryState($country, 'FR', 'France');
+        $country = $this->createCountry('FR', 'France', 'fr.png');
+        $this->createCountryState($country, 'FR', 'France', 'fr.png');
+        $this->createCountryState($country, 'FRS', 'France State', 'frs.png');
         parent::testValidationFailure($params, $errorsExpected);
     }
 
@@ -121,10 +122,10 @@ abstract class AbstractManageCountryState extends AbstractManageState {
         // Test d'un état déjà existant
         $data['entity_already_exists'] = [
             [
-                'code' => 'fr',
+                'code' => 'frs',
                 'name' => $faker->country(),
             ], [
-                'code' => 'L\'état "FR" existe déjà.',
+                'code' => 'L\'état "FRS" existe déjà.',
             ],
         ];
         // Test si le code ISO est trop court

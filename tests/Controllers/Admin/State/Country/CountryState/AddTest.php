@@ -49,8 +49,13 @@ final class AddTest extends AbstractManageCountryState {
 
         parent::testSuccess($params);
 
-        // Vérifie que le nombre de pays a augmenté
+        // Vérifie que le nombre d'état a augmenté
         $this->assertEquals($countBeforeCalling + 1, $this->countStates());
+
+        // Vérifie le code du pays de l'état
+        $countryStateManaged = $this->getStateByCode($params['code']);
+        $this->assertNotNull($countryStateManaged);
+        $this->assertEquals('FR', $countryStateManaged->getCountry()->getCode());
     }
 
     /*****************************************************************************/

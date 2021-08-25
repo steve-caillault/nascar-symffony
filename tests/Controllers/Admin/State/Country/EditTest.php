@@ -57,17 +57,16 @@ final class EditTest extends AbstractManageCountry {
     /**
      * Vérification du succès de l'édition d'un pays
      * @param array Paramètres du formulaire
-     * @param ?Country $country Pays en cas d'édition
      * @dataProvider successProvider
      * @return void
      */
-    public function testSuccess(array $params, ?Country $country = null) : void
+    public function testSuccess(array $params) : void
     {
         $country = $this->createCountry('gb', 'Royaume-Uni', 'gb.png');
 
         $countCountriesBeforeCalling = $this->countStates();
 
-        parent::testSuccess($params, $country);
+        parent::testSuccess($params);
 
         // Vérifie que le nombre de pays n'a pas augmenté
         $this->assertEquals($countCountriesBeforeCalling, $this->countStates());
