@@ -36,6 +36,8 @@ admin:
     states:
       label: États
       alt_label: Consulter la liste des états du pays {name}.
+      add:
+        label: Création
   # Saisons
   seasons: 
     label: Saisons

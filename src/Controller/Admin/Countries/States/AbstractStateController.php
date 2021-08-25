@@ -57,7 +57,9 @@ abstract class AbstractStateController extends AbstractCountryController {
         
         $breadcrumb->addItem(new BreadcrumbItem(
             label: $this->translator->trans('admin.countries.states.label', domain: 'breadcrumb'),
-            altLabel: $this->translator->trans('admin.countries.states.alt_label', domain: 'breadcrumb'),
+            altLabel: $this->translator->trans('admin.countries.states.alt_label', [
+                'name' => $this->getCountry()->getName(),
+            ], domain: 'breadcrumb'),
             routeName: 'app_admin_countries_states_list_index',
             routeParameters: [
                 'countryCode' => $countryCode,

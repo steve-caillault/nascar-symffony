@@ -8,6 +8,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints;
 /***/
 use App\Repository\CountryStateRepository;
 use App\Validator\Country\CountryStateCode as CountryStateCodeValidation;
@@ -34,13 +35,15 @@ final class CountryState extends AbstractStateEntity
 
     /**
      * Pays de l'état
-     * @var Country
+     * @var ?Country
      */
     #[
         ORM\ManyToOne(Country::class),
-        ORM\JoinColumn('country_code', referencedColumnName: 'code', nullable: false )
+        ORM\JoinColumn('country_code', referencedColumnName: 'code', nullable: false),
+        /***/
+        Constraints\NotBlank(message: 'states.edit.country.not_blank')
     ]
-    private ?string $country = null;
+    private ?Country $country = null;
 
     /**
      * Retourne le pays

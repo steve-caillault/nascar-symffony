@@ -42,7 +42,10 @@ states:
       not_exists: 
         country: Le pays {{ value }} existe déjà.
         state: L'état {{ value }} existe déjà.
-      length: Le code ISO doit être formé de deux lettres.
+      length: 
+        exactly: Le code ISO doit être formé de deux lettres.
+        min: le code ISO doit avoir au moins {{ limit }} caractères.
+        max: le code ISO ne doit pas avoir plus de {{ limit }} caractères.
       alpha: Le code ISO ne doit contenir que des lettres.
     name:
       not_blank: Le nom est nécessaire.
@@ -51,6 +54,10 @@ states:
     image:
       mime: L'image du drapeau doit être de type JPEG ou PNG.
       size: L'image du drapeau ne doit pas dépasser {{ limit }} {{ suffix }}.
+    country: 
+      not_blank: Le pays doit être renseigné.
+
+
 
 seasons:
   edit:
