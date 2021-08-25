@@ -59,6 +59,17 @@ header:
         edit:
           label: Modifier l'état
           alt_label: Modifier l'état {name}.
+        # Villes d'un pays
+        cities:
+          list:
+            label: Liste des villes
+            alt_label: Consulter la liste des villes de l'état {name}.
+          add: 
+            label: Ajouter une ville
+            alt_label: Ajouter une ville à l'état {name}.
+          edit: 
+            label: Modifier la ville
+            alt_label: Modifier la ville {name}.
 
     # Menu de l'utilisateur connecté
     user:

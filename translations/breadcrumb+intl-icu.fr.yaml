@@ -38,6 +38,14 @@ admin:
       alt_label: Consulter la liste des états du pays {name}.
       add:
         label: Création
+      edit:
+        alt_label: Édition de l'état {name}.
+      # Villes d'un état
+      cities:
+        label: Villes
+        alt_label: Consulter la liste des villes de l'état {name}.
+        add: 
+          label: Création
   # Saisons
   seasons: 
     label: Saisons

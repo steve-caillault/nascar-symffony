@@ -13,7 +13,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use App\UI\Menus\Header\HeaderMenu;
 use App\Entity\{
     Country,
-    CountryState
+    CountryState,
+    City
 };
 use App\UI\Menus\Header\HeaderItemMenu;
 
@@ -30,6 +31,12 @@ final class CountriesMenu extends HeaderMenu {
      * @var ?CountryState
      */
     private ?CountryState $countryState = null;
+
+    /**
+     * Ville gérée
+     * @var ?City
+     */
+    private ?City $city = null;
 
     /**
      * Constructeur
@@ -69,12 +76,23 @@ final class CountriesMenu extends HeaderMenu {
 
     /**
      * Modifie l'état à gérer
-     * @param CountryState
+     * @param CountryState $countryState
      * @return self
      */
     public function setCountryState(CountryState $countryState) : self
     {
         $this->countryState = $countryState;
+        return $this;
+    }
+
+    /**
+     * Modifie la ville à gérer
+     * @param City $city
+     * @return self
+     */
+    public function setCity(City $city) : self
+    {
+        $this->city = $city;
         return $this;
     }
 
@@ -173,6 +191,12 @@ final class CountriesMenu extends HeaderMenu {
     private function addCountryStateItems() : self
     {
         $this->addEditStateItem();
+        $this->addCitiesListItem();
+        $this->addCityCreationItem();
+        if($this->city !== null)
+        {
+            $this->addEditCityItem();
+        }
         return $this;
     }
 
@@ -212,6 +236,7 @@ final class CountriesMenu extends HeaderMenu {
     {
         $currentRouteName = $this->getCurrentRouteName();
         $countryState = $this->countryState;
+        $country = $this->country;
 
         $item = (new HeaderItemMenu())
             ->setLabel($this->translator->trans('header.admin.countries.states.edit.label', domain: 'menus'))
@@ -220,8 +245,8 @@ final class CountriesMenu extends HeaderMenu {
             ], domain: 'menus'))
             ->setRouteName('app_admin_countries_states_edit_index')
             ->setRouteParameters([
-                'countryStateCode' => $countryState->getCode(),
-                'countryCode' => strtolower($countryState->getCountry()->getCode()),
+                'countryStateCode' => strtolower($countryState->getCode()),
+                'countryCode' => strtolower($country->getCode()),
             ])
         ;
 
@@ -286,4 +311,87 @@ final class CountriesMenu extends HeaderMenu {
         return $this->addItem($item);
     }
 
+    /**
+     * Ajoute l'élément de la liste des villes de l'état
+     * @return self
+     */
+    private function addCitiesListItem() : self
+    {
+        $currentRouteName = $this->getCurrentRouteName();
+
+        $item = (new HeaderItemMenu())
+            ->setLabel($this->translator->trans('header.admin.countries.states.cities.list.label', domain: 'menus'))
+            ->setAltLabel($this->translator->trans('header.admin.countries.states.cities.list.alt_label', [
+                'name' => $this->countryState->getName(),
+            ], domain: 'menus'))
+            ->setRouteName('app_admin_countries_states_cities_list_index')
+            ->setRouteParameters([
+                'countryCode' => strtolower($this->country->getCode()),
+                'countryStateCode' => strtolower($this->countryState->getCode()),
+            ])
+        ;
+
+        if($currentRouteName === $item->getRouteName())
+        {
+            $item->addClass('selected');
+        }
+
+        return $this->addItem($item);
+    }
+
+    /**
+     * Ajoute l'élément de création d'une ville
+     * @return self
+     */
+    private function addCityCreationItem() : self
+    {
+        $currentRouteName = $this->getCurrentRouteName();
+
+        $item = (new HeaderItemMenu())
+            ->setLabel($this->translator->trans('header.admin.countries.states.cities.add.label', domain: 'menus'))
+            ->setAltLabel($this->translator->trans('header.admin.countries.states.cities.add.alt_label', [
+                'name' => $this->countryState->getName(),
+            ], domain: 'menus'))
+            ->setRouteName('app_admin_countries_states_cities_add_index')
+            ->setRouteParameters([
+                'countryCode' => strtolower($this->country->getCode()),
+                'countryStateCode' => strtolower($this->countryState->getCode()),
+            ]);
+
+        if($currentRouteName === $item->getRouteName())
+        {
+            $item->addClass('selected');
+        }
+
+        return $this->addItem($item);
+    }
+
+    /**
+     * Ajoute l'élément de l'édition d'une ville
+     * @return self
+     */
+    private function addEditCityItem() : self
+    {
+        $currentRouteName = $this->getCurrentRouteName();
+
+        $item = (new HeaderItemMenu())
+            ->setLabel($this->translator->trans('header.admin.countries.states.cities.edit.label', domain: 'menus'))
+            ->setAltLabel($this->translator->trans('header.admin.countries.states.cities.edit.alt_label', [
+                'name' => $this->city->getName(),
+            ], domain: 'menus'))
+            ->setRouteName('app_admin_countries_states_cities_edit_index')
+            ->setRouteParameters([
+                'countryStateCode' => strtolower($this->countryState->getCode()),
+                'countryCode' => strtolower($this->country->getCode()),
+                'cityId' => $this->city->getId(),
+            ])
+        ;
+
+        if($currentRouteName === $item->getRouteName())
+        {
+            $item->addClass('selected');
+        }
+
+        return $this->addItem($item);
+    }
 }

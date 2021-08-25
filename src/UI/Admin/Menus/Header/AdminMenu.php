@@ -102,14 +102,15 @@ final class AdminMenu extends HeaderMenu {
         $translator = $this->translator;
 
         $currentRequest = $this->requestStack->getCurrentRequest();
-        $currentRequestRoute = $currentRequest?->attributes->get('_route');
+        $currentUri = $currentRequest?->getRequestUri();
+        $countriesUri = $this->urlGenerator->generate('app_admin_countries_list_index');
 
         $messageItem = (new HeaderItemMenu())
             ->setLabel($translator->trans('header.admin.modules.countries.label', [], domain: 'menus'))
             ->setAltLabel($translator->trans('header.admin.modules.countries.alt_label', [], domain: 'menus'))
             ->setRouteName('app_admin_countries_list_index')
         ;
-        if($currentRequestRoute === 'app_admin_countries_list_index')
+        if(str_contains($currentUri, $countriesUri))
         {
             $messageItem->addClass('selected');
         }
