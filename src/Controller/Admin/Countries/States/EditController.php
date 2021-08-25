@@ -15,7 +15,6 @@ use Symfony\Component\Routing\Annotation\Route as RouteAnnotation;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Contracts\Translation\TranslatorInterface;
 /***/
-use App\Controller\Admin\Countries\States\AbstractStateController;
 use App\Entity\{
     CountryState,
     Country

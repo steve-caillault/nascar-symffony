@@ -30,6 +30,15 @@ abstract class AbstractStateController extends AbstractCountryController {
     }
 
     /**
+     * Retourne l'état à gérer
+     * @return ?CountryState
+     */
+    protected function getCountryState() : ?CountryState
+    {
+        return $this->country_state;
+    }
+
+    /**
      * Remplis l'en-tête avec les menus
      * @return void
      */
@@ -70,7 +79,7 @@ abstract class AbstractStateController extends AbstractCountryController {
         {
             $breadcrumb->addItem(new BreadcrumbItem(
                 label: $this->country_state->getName(),
-                altLabel: $this->translator->trans('admin.country.states.edit.alt_label', [
+                altLabel: $this->translator->trans('admin.countries.states.edit.alt_label', [
                     'name' => $this->country_state->getName(),
                 ], domain: 'breadcrumb'),
                 routeName: 'app_admin_countries_states_edit_index',
