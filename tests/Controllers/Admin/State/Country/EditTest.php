@@ -4,7 +4,7 @@
  * Tests du contrôleur d'édition d'un pays
  */
 
-namespace App\Tests\Controllers\Admin\Country;
+namespace App\Tests\Controllers\Admin\State\Country;
 
 use App\Entity\Country;
 
@@ -14,7 +14,7 @@ final class EditTest extends AbstractManageCountry {
      * Retourne l'URI de la page de gestion d'un pays
      * @return string
      */
-    protected function manageCountryUri() : string
+    protected function manageStateUri() : string
     {
         return '/admin/countries/gb/edit';
     }
@@ -45,7 +45,7 @@ final class EditTest extends AbstractManageCountry {
      */
     public function testCountryNotExists() : void
     {
-        $this->attemptManageCountry([]);
+        $this->attemptManageState([]);
 
         $expectedTitle = 'Erreur 404';
         
@@ -65,12 +65,12 @@ final class EditTest extends AbstractManageCountry {
     {
         $country = $this->createCountry('gb', 'Royaume-Uni', 'gb.png');
 
-        $countCountriesBeforeCalling = $this->countCountries();
+        $countCountriesBeforeCalling = $this->countStates();
 
         parent::testSuccess($params, $country);
 
         // Vérifie que le nombre de pays n'a pas augmenté
-        $this->assertEquals($countCountriesBeforeCalling, $this->countCountries());
+        $this->assertEquals($countCountriesBeforeCalling, $this->countStates());
     }
 
     /**

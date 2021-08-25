@@ -19,7 +19,7 @@ trait WithUserCreating {
      * @param string $permission Permission à utiliser
      * @return User
      */
-    private function userToLogged(string $permission = User::PERMISSION_ADMIN) : User
+    protected function userToLogged(string $permission = User::PERMISSION_ADMIN) : User
     {
         $generatorUser = $this->getGeneratingUser($permission);
         $generatorUser->next();

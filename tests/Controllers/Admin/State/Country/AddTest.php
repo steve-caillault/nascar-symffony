@@ -4,9 +4,7 @@
  * Tests du contrôleur d'ajout d'un pays
  */
 
-namespace App\Tests\Controllers\Admin\Country;
-
-use App\Entity\Country;
+namespace App\Tests\Controllers\Admin\State\Country;
 
 final class AddTest extends AbstractManageCountry {
 
@@ -14,7 +12,7 @@ final class AddTest extends AbstractManageCountry {
      * Retourne l'URI de la page de gestion d'un pays
      * @return string
      */
-    protected function manageCountryUri() : string
+    protected function manageStateUri() : string
     {
         return '/admin/countries/add';
     }
@@ -40,18 +38,17 @@ final class AddTest extends AbstractManageCountry {
     /**
      * Vérification du succès de la création d'un pays
      * @param array Paramètres du formulaire
-     * @param ?Country $country Pays en cas d'édition
      * @dataProvider successProvider
      * @return void
      */
-    public function testSuccess(array $params, ?Country $country = null) : void
+    public function testSuccess(array $params) : void
     {
-        $countCountriesBeforeCalling = $this->countCountries();
+        $countCountriesBeforeCalling = $this->countStates();
 
-        parent::testSuccess($params, $country);
+        parent::testSuccess($params);
 
         // Vérifie que le nombre de pays a augmenté
-        $this->assertEquals($countCountriesBeforeCalling + 1, $this->countCountries());
+        $this->assertEquals($countCountriesBeforeCalling + 1, $this->countStates());
     }
 
     /*****************************************************************************/
