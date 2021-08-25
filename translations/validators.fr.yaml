@@ -44,8 +44,8 @@ states:
         state: L'état {{ value }} existe déjà.
       length: 
         exactly: Le code ISO doit être formé de deux lettres.
-        min: le code ISO doit avoir au moins {{ limit }} caractères.
-        max: le code ISO ne doit pas avoir plus de {{ limit }} caractères.
+        min: Le code ISO doit avoir au moins {{ limit }} caractères.
+        max: Le code ISO ne doit pas avoir plus de {{ limit }} caractères.
       alpha: Le code ISO ne doit contenir que des lettres.
     name:
       not_blank: Le nom est nécessaire.

@@ -18,7 +18,7 @@ use App\Validator\Country\CountryCode as CountryCodeValidation;
     /***/
     UniqueEntity(fields: 'code', message: 'states.edit.code.not_exists.country')
 ]
-final class Country extends AbstractStateEntity
+/*final*/ class Country extends AbstractStateEntity
 {
      /**
      * Retourne le type d'état

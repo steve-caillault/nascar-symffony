@@ -24,7 +24,7 @@ final class ListController extends AbstractStateController {
      */
     #[
         RouteAnnotation(
-            path: '/countries/{countryCode}/{page}',
+            path: '/countries/{countryCode}/states/{page}',
             methods: [ 'GET', ],
             requirements: [ 
                 'countryCode' => '[a-z]{2}',
