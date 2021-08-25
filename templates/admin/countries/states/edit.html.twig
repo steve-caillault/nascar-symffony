@@ -1,0 +1,20 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% set title = 'admin.countries.states.edit.title' | trans({
+    name: countryState.name
+}) %}
+
+{% block head_title %}
+{{ title }}
+{% endblock %}
+
+{% block page_title %}
+{{ title }}
+{% endblock %}
+
+{% block body %}
+    {% include 'forms/default.html.twig' with {
+        form: form,
+        attributes: { id: 'admin-countries-states-edit' }
+    } only %}
+{% endblock %}

@@ -61,8 +61,8 @@ final class AddController extends AbstractStateController {
             $flagFile = $form->get('image')->getData();
             if($flagFile !== null)
             {
-                $countryImage = $uploadService->attempt($flagFile, $countryState);
-                $countryState->setImage($countryImage);
+                $flagImage = $uploadService->attempt($flagFile, $countryState);
+                $countryState->setImage($flagImage);
             }
 
             // Enregistrement
