@@ -334,7 +334,7 @@ abstract class AbstractManageState extends BaseTestCase {
                 // Test si le nom est trop long
                 [
                     'code' => 'RU',
-                    'name' => $faker->text(),
+                    'name' => $faker->realTextBetween(101, 200),
                 ], [
                     'name' => 'Le nom ne doit pas avoir plus de 100 caractères.',
                 ],

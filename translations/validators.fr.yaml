@@ -62,7 +62,7 @@ cities:
   edit: 
     name:
       not_blank: Le nom de la ville est nécessaire.
-      min: Le nom doit aboir au moins {{ limit }} caractères.
+      min: Le nom doit avoir au moins {{ limit }} caractères.
       max: Le nom ne doit pas avoir plus de {{ limit }} caractères.
     state:
       not_blank: L'état de la ville est nécessaire.

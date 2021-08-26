@@ -6,13 +6,15 @@
 
 namespace App\Tests\Controllers\Admin\State\Country\CountryState;
 
-use App\Tests\Controllers\Admin\State\AbstractManageState;
-use App\Entity\{
-    Country, 
-    CountryState
+use App\Tests\Controllers\Admin\State\{
+    AbstractManageState,
+    WithCountryStateCreation
 };
+use App\Entity\CountryState;
 
 abstract class AbstractManageCountryState extends AbstractManageState {
+
+    use WithCountryStateCreation;
 
     /**
      * Retourne le nom du formulaire. Utilisez pour sélectionner le formulaire avec le Crawler.
@@ -48,34 +50,6 @@ abstract class AbstractManageCountryState extends AbstractManageState {
     protected function getImagesDirectory() : string
     {
         return 'images/states/';
-    }
-
-    /**
-     * Création d'un état
-     * @param Country $country
-     * @param string $code
-     * @param string $name
-     * @param ?string $image
-     * @return CountryState
-     */
-    protected function createCountryState(
-        Country $country, 
-        string $code, 
-        string $name, 
-        ?string $image = null
-    ) : CountryState
-    {
-        $countryState = (new CountryState())
-            ->setCountry($country)
-            ->setCode($code)
-            ->setName($name)
-            ->setImage($image)
-        ;
-        $entityManager = $this->getEntityManager();
-        $entityManager->persist($countryState);
-        $entityManager->flush();
-
-        return $countryState;
     }
 
     /*****************************************************************************/
