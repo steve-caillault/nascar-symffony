@@ -47,7 +47,19 @@ services:
                 event: 'postPersist'
                 entity: 'App\Entity\ContactMessage'
 
-    #
+    # Ajout de l'ancien identifiant public d'un pilote
+    App\Event\Listener\Entity\PilotListener:
+        tags:
+            -  
+                name: 'doctrine.orm.entity_listener'
+                event: 'preUpdate'
+                entity: 'App\Entity\Pilot'
+            -
+                name: 'doctrine.orm.entity_listener'
+                event: 'postUpdate'
+                entity: 'App\Entity\Pilot'
+
+    # Suppression des anciens fichiers uploadés
     App\Event\Listener\DeleteOldUploadedFilesListener:
         tags:
             - name: 'doctrine.event_subscriber'
