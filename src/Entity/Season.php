@@ -7,7 +7,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\UniqueConstraint;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /***/
@@ -17,7 +16,7 @@ use App\Validator\UniqueCurrentSeason as UniqueCurrentSeasonConstraint;
 #[
     ORM\Entity(SeasonRepository::class),
     ORM\Table('seasons'),
-    UniqueConstraint(name: 'idx_year', columns: [ 'year' ]),
+    ORM\UniqueConstraint(name: 'idx_year', columns: [ 'year' ]),
     /***/
     UniqueEntity(fields: 'year', message: 'seasons.edit.year.not_exists'),
     /***/
