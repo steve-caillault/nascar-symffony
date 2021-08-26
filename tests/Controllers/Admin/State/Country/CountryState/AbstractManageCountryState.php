@@ -60,6 +60,8 @@ abstract class AbstractManageCountryState extends AbstractManageState {
      */
     public function testCountryNotExists() : void
     {
+        $countBeforeCalling = $this->countStates();
+
         $this->attemptManageState([]);
 
         $expectedTitle = 'Erreur 404';
@@ -67,6 +69,8 @@ abstract class AbstractManageCountryState extends AbstractManageState {
         $this->assertResponseStatusCodeSame(404);
         $this->assertSelectorTextContains('h1', $expectedTitle);
         $this->assertPageTitleSame($expectedTitle);
+
+        $this->assertEquals($countBeforeCalling, $this->countStates());
     }
 
     /**

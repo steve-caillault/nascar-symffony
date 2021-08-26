@@ -82,4 +82,46 @@ final class EditTest extends AbstractManageCountryState {
 
     /*****************************************************************************/
 
+    /**
+     * Appel lorsque l'adresse de l'appel n'existe pas
+     * @return void
+     */
+    private function checkNotFoundCountryStateCalling() : void
+    {
+        $this->attemptManageState([]);
+
+        $expectedTitle = 'Erreur 404';
+        
+        $this->assertResponseStatusCodeSame(404);
+        $this->assertSelectorTextContains('h1', $expectedTitle);
+        $this->assertPageTitleSame($expectedTitle);
+    }
+
+    /**
+     * Test pour un état qui n'existe pas
+     * @return void
+     */
+    public function testCountryStateNotExists() : void
+    {
+        $this->createCountry('fr', 'France', 'fr.png');
+        $this->checkNotFoundCountryStateCalling();
+    }
+
+    /**
+     * Test pour un état qui n'appartient pas au pays
+     * @return void
+     */
+    public function testCountryStateNotyBelongCountry() : void
+    {
+        $this->createCountry('fr', 'France', 'fr.png');
+        $belgiumCountry = $this->createCountry('be', 'Belgique', 'be.png');
+
+        // Aberration, mais nécessaire pour le test
+        $this->createCountryState($belgiumCountry, 'FR', 'France');
+
+        $this->checkNotFoundCountryStateCalling();
+    }
+
+    /*****************************************************************************/
+
 }
