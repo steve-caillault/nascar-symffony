@@ -39,7 +39,7 @@ use App\Validator\Country\CountryStateCode as CountryStateCodeValidation;
      */
     #[
         ORM\ManyToOne(Country::class),
-        ORM\JoinColumn('country_code', referencedColumnName: 'code', nullable: false),
+        ORM\JoinColumn('country_code', referencedColumnName: 'code', nullable: false, onDelete: 'CASCADE'),
         /***/
         Constraints\NotBlank(message: 'states.edit.country.not_blank')
     ]

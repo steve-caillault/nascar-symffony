@@ -16,7 +16,7 @@ use App\Repository\CityRepository;
     ORM\Table('cities'),
     ORM\Index(name: 'fk_state', columns: [ 'state' ]),
 ]
-final class City
+/*final*/ class City
 {
 
     /**
@@ -48,7 +48,7 @@ final class City
      */
     #[
         ORM\ManyToOne(CountryState::class),
-        ORM\JoinColumn('state', referencedColumnName: 'code', nullable: false),
+        ORM\JoinColumn('state', referencedColumnName: 'code', nullable: false, onDelete: 'CASCADE'),
         /***/
         Constraints\NotBlank(message: 'cities.edit.state.not_blank')
     ]
