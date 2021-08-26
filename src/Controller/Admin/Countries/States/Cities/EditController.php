@@ -21,6 +21,7 @@ use App\Entity\{
     City
 };
 use App\UI\Menus\Breadcrumb\BreadcrumbItem;
+use App\Form\Country\CityType;
 
 final class EditController extends AbstractCityController {
 
@@ -72,9 +73,47 @@ final class EditController extends AbstractCityController {
         $this->setCountryState($countryState);
         $this->setCity($originalCity);
 
+        $form = $this->createForm(CityType::class, $city);
+        $form->handleRequest($request);
 
-        return $this->renderForm('layout/base.html.twig', [
+        $isValid = ($form->isSubmitted() and $form->isValid());
+        $isInvalid = ($form->isSubmitted() and ! $form->isValid());
 
+        $entityManager = $this->getDoctrine()->getManager();
+
+        if($isValid)
+        {
+            try {
+                $entityManager->flush();
+                $success = true;
+            } catch(\Exception) {
+                $success = false;
+            }
+
+            // Message Flash
+            $flashKey = ($success) ? 'success' : 'error';
+            $flashMessage = ($success) ? 'admin.countries.states.cities.edit.success' : 'admin.countries.states.cities.edit.failure';
+            $this->addFlash($flashKey, $translator->trans($flashMessage, [
+                'name' => $city->getName(),
+            ]));
+
+            // Redirection
+            if($success)
+            {
+                return $this->redirectToRoute('app_admin_countries_states_cities_list_index', [
+                    'countryCode' => strtolower($country->getCode()),
+                    'countryStateCode' => strtolower($countryState->getCode()),
+                ]);
+            }
+        }
+        elseif($isInvalid)
+        {
+            $entityManager->clear(City::class);
+        }
+
+        return $this->renderForm('admin/countries/states/cities/edit.html.twig', [
+            'form' => $form,
+            'city' => $originalCity,
         ]);
     }
 
