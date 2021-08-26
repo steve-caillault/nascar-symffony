@@ -54,6 +54,25 @@ final class AddTest extends AbstractManageCity {
         $this->assertEquals($countBeforeCalling + 1, $this->countCities());
     }
 
+    /**
+     * Vérification des erreurs lors de la gestion d'une ville
+     * @param array $params Paramètres pour le formulaire
+     * @dataProvider failureValidationProvider
+     * @param array $errorsExpected 
+     * @return void
+     */
+    public function testValidationFailure(array $params, array $errorsExpected) : void
+    {
+        $faker = $this->getFaker();
+
+        $usCountry = $this->createCountry('US', 'États-Unis d\'Amérique');
+        $iowaState = $this->createCountryState($usCountry, 'IA', 'Iowa');
+
+        $this->createCity($iowaState, $faker->city(), $faker->latitude(), $faker->longitude());
+
+        parent::testValidationFailure($params, $errorsExpected);
+    }
+
     /*****************************************************************************/
 
 }

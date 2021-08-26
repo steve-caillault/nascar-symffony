@@ -53,7 +53,7 @@ abstract class AbstractManageCity extends BaseTestCase {
      * Retourne la ville en fonction du nom en paramètre
      * @return ?City
      */
-    private function getCityByName(string $name) : ?City
+    protected function getCityByName(string $name) : ?City
     {
         $dql = strtr('SELECT cities FROM :object cities WHERE cities.name = :name', [
             ':object' => City::class,
@@ -226,19 +226,9 @@ abstract class AbstractManageCity extends BaseTestCase {
      */
     public function testValidationFailure(array $params, array $errorsExpected) : void
     {
-        $faker = $this->getFaker();
-
-        $usCountry = $this->createCountry('US', 'États-Unis d\'Amérique');
-        $iowaState = $this->createCountryState($usCountry, 'IA', 'Iowa');
-
-        
-        $this->createCity($iowaState, $faker->city(), $faker->latitude(), $faker->longitude());
-
         $latestCity = $this->getLatestCity();
 
         $response = $this->attemptManageCity($params);
-
-        $this->getCityByName($params['name']);
 
         $titleExpected = $this->getFailureExpectedPageTitle();
 
@@ -328,7 +318,7 @@ abstract class AbstractManageCity extends BaseTestCase {
      * Appel lorsque l'adresse de l'appel n'existe pas
      * @return void
      */
-    private function checkNotFoundCityCalling() : void
+    protected function checkNotFoundCityCalling() : void
     {
         $latestCity = $this->getLatestCity();
 

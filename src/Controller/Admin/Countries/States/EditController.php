@@ -109,7 +109,6 @@ final class EditController extends AbstractStateController {
         }
         elseif($isInvalid)
         {
-            $entityManager->clear(Country::class);
             $entityManager->clear(CountryState::class);
         }
 
