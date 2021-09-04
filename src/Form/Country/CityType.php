@@ -11,11 +11,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 /***/
 use App\Entity\City;
+use App\Form\AbstractEntityType;
 
-final class CityType extends AbstractType
+final class CityType extends AbstractEntityType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        parent::buildForm($builder, $options);
         $builder
             ->add('name')
             ->add('latitude', options: [
@@ -29,14 +31,10 @@ final class CityType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
+        parent::configureOptions($resolver);
         $resolver->setDefaults([
-            'translation_domain' => 'form',
             'data_class' => City::class,
             'label_format' => 'admin.states.cities.edit.fields.%name%.label',
-            'attr' => [
-                'novalidate' => 'novalidate',
-                'autocomplete' => 'off',
-            ],
         ]);
     }
 }

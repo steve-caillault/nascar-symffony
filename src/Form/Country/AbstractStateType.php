@@ -14,10 +14,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Contracts\Translation\TranslatorInterface;
 /***/
+use App\Form\AbstractEntityType;
 use App\Form\Input\ImageType;
 use App\Service\State\FlagServiceFactory;
 
-abstract class AbstractStateType extends AbstractType
+abstract class AbstractStateType extends AbstractEntityType
 {
     /**
      * Constructeur
@@ -26,7 +27,7 @@ abstract class AbstractStateType extends AbstractType
      */
     public function __construct(
         private TranslatorInterface $translator,
-        private FlagServiceFactory $flagServiceFactory
+        private FlagServiceFactory $flagServiceFactory,
     )
     {
 
@@ -34,19 +35,12 @@ abstract class AbstractStateType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        parent::buildForm($builder, $options);
         $state = $builder->getData();
-
+        
         $builder
-            ->add('code', options: [
-                'attr' => [
-                    'autocomplete' => 'off',
-                ],
-            ])
-            ->add('name', options: [
-                'attr' => [
-                    'autocomplete' => 'off',
-                ],
-            ])
+            ->add('code')
+            ->add('name')
             ->add('image', ImageType::class, [
                 'mapped' => false,
                 'required' => false,
@@ -70,12 +64,9 @@ abstract class AbstractStateType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
+        parent::configureOptions($resolver);
         $resolver->setDefaults([
-            'translation_domain' => 'form',
             'label_format' => 'admin.states.edit.fields.%name%.label',
-            'attr' => [
-                'novalidate' => 'novalidate',
-            ],
         ]);
     }
 }
