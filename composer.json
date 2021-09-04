@@ -12,6 +12,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.1",
         "doctrine/orm": "^2.9",
         "intervention/image": "^2.6",
+        "oro/doctrine-extensions": "^2.0",
         "sensio/framework-extra-bundle": "^6.1",
         "symfony/apache-pack": "^1.0",
         "symfony/console": "5.3.*",
