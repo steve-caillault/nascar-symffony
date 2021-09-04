@@ -96,7 +96,7 @@ final class PaginationService {
             }
         }
 
-        return $this->twig->render('ui/pagination.html.twig', [
+        return $this->twig->render('ui/pagination/paging.html.twig', [
             'elements' => $elements,
             'current' => $currentPage,
         ]);

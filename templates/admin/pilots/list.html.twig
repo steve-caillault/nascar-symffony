@@ -21,6 +21,12 @@
         submitLabel: searchingSubmitLabel
     } only %}
     {% if pilots | length > 0 %}
+
+    {# Nombre de résultats #}
+    {% include 'ui/pagination/details.html.twig' with {
+        pagination: pagination
+    } %}
+
     <table>
         <thead>
             <tr class="head">

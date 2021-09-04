@@ -1,0 +1,12 @@
+{# Nombre de résultats #}
+<p>
+    {{ 'searching.results.total' | trans({
+        total: pagination.totalItems
+    }) }}
+    {{ 'searching.results.pages' | trans({
+        pages: pagination.totalPages
+    }) }}
+    {{ 'searching.results.items_per_page' | trans({
+        number: pagination.itemsPerPage
+    }) }}
+</p>

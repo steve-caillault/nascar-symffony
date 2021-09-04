@@ -1,5 +1,21 @@
 # Messages pour les diffèrentes pages
 
+searching:
+  results:
+    total: >-
+      {total, plural,
+        one {1 résultat trouvé, }
+        other {# résultats trouvés, }
+      }
+    pages: >-
+      {pages, plural,
+        one {1 page, }
+        other {# pages, }
+      }
+    
+    
+    items_per_page: '{number} éléments par page.'
+
 site:
   # Page d'accueil
   home:
