@@ -52,7 +52,7 @@ final class ListController extends AbstractStateController {
         ], offset: $offset);
 
         $total = $countryStateRepository->getTotalFrom($country);
-        $pagination = new Pagination($itemsPerPage, );
+        $pagination = new Pagination($itemsPerPage, $total);
 
         return $this->render('admin/countries/states/list.html.twig', [
             'countriesStates' => $countriesStates,

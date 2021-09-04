@@ -1,0 +1,57 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% set title = 'admin.pilots.title' | trans %}
+
+{% block head_title %}
+{{ title }}
+{% endblock %}
+
+{% block page_title %}
+{{ title }}
+{% endblock %}
+
+{% block body %}
+    {% if pilots | length > 0 %}
+    <table>
+        <thead>
+            <tr class="head">
+                <td>{{ 'admin.pilots.list.fields.name' | trans }}</td>
+                <td>{{ 'admin.pilots.list.fields.birth_city' | trans }}</td>
+                <td>{{ 'admin.pilots.list.fields.birthdate' | trans }}</td>
+            </tr>
+
+        </thead>
+        <tbody>
+            {% for pilot in pilots %}
+                {% set edit_path = path('app_admin_pilots_edit_index', { 
+                    pilotPublicId: pilot.publicId | lower
+                }) %}
+                {% set edit_alt_label = 'admin.pilots.list.edit.alt_label' | trans({ 
+                    name: pilot.fullName
+                }) %}
+
+            <tr class="line">
+                <td>{{ anchor(pilot.fullName, edit_alt_label, edit_path) }}</td>
+                <td>{{ pilot.birthCity.name }}</td>
+                <td>{{ pilot.birthDate | date('d/m/Y') }}</td>
+            </tr>
+                
+            {% endfor %}
+        </tbody>
+    </table>
+    {{ pagination(pagination) }}
+    {% else %}
+
+        {% set empty_anchor_label = 'admin.pilots.empty_anchor_label' | trans %}
+        {% set empty_anchor_alt = 'admin.pilots.empty_anchor_alt' | trans %}
+        {% set empty_anchor_url = path('app_admin_pilots_add_index') %}
+        {% set add_anchor = anchor(empty_anchor_label, empty_anchor_alt, empty_anchor_url) %}
+        {% set with_searching = searching is not null ? 1 : 0 %}
+
+        <p>{{ 'admin.pilots.empty' | trans({ 
+            anchor: add_anchor,
+            with_searching: with_searching
+        }) | raw }}</p>
+        
+    {% endif %}
+{% endblock %}

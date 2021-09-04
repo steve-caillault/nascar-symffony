@@ -216,4 +216,17 @@ class Pilot implements EntityInterface
         $this->birth_city = $city;
         return $this;
     }
+
+    /**
+     * Retourne le nom complet
+     * @return string
+     */
+    public function getFullName() : string
+    {
+        $values = array_filter([
+            $this->getFirstName(), $this->getLastName(),
+        ], fn($value) => $value !== null);
+        
+        return trim(implode(' ', $values));
+    }
 }

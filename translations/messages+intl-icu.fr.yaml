@@ -87,8 +87,24 @@ admin:
           title: Modification de la ville {name}
           success: La ville {name} a été mise à jour.
           failure: Une erreur s'est produite lors de la mise à jour de la ville {name}.
-        
-
+  pilots:
+    # Liste des pilotes
+    title: Liste des pilotes     
+    empty: >- 
+      {with_searching, select,
+        0 {Aucun pilote n'a été trouvé. Cliquez {anchor} pour en ajouter un.}
+        1 {Aucun pilote n'a été trouvé pour votre recherche.}
+        other {Aucun pilote n'a été trouvé.}
+      }
+    empty_anchor_label: ici
+    empty_anchor_alt: Ajouter un pilote.
+    list: 
+      fields:
+        name: Nom
+        birth_city: Ville de naissance
+        birthdate: Date de naissance
+      edit:
+        alt_label: Modifier le pilote {name}.
   seasons:
     # Liste des saisons
     title: Liste des saisons

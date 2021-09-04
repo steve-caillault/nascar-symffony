@@ -46,6 +46,12 @@ admin:
         alt_label: Consulter la liste des villes de l'état {name}.
         add: 
           label: Création
+  # Pilotes
+  pilots:
+    label: Pilotes
+    alt_label: Consulter la liste des pilotes.
+    edit:
+      alt_label: Édition du pilote {name}.
   # Saisons
   seasons: 
     label: Saisons

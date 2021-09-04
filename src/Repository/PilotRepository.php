@@ -6,6 +6,8 @@ use App\Entity\Pilot;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+use Doctrine\ORM\QueryBuilder;
+
 /**
  * @method Pilot|null find($id, $lockMode = null, $lockVersion = null)
  * @method Pilot|null findOneBy(array $criteria, array $orderBy = null)
@@ -17,6 +19,67 @@ class PilotRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Pilot::class);
+    }
+
+    /**
+     * Retourne le query builder pour la recherche d'un pilote
+     * @param ?string $searching
+     * @return QueryBuilder
+     */
+    private function getQueryBuilderForSearching(?string $searching) : QueryBuilder
+    {
+        $alias = 'p';
+        $fields = [ 'first_name', 'last_name', ];
+        $query = $this->createQueryBuilder('p', 'p.id');
+
+        $fullNameField = strtr('CONCAT_WS(\' \', :fields)', [
+            ':fields' => implode(', ', array_map(fn($field) => $alias . '.' . $field, $fields))
+        ]);
+
+        $query->addSelect($fullNameField . ' AS HIDDEN fullname');
+
+        if($searching !== null)
+        {
+            $query->andWhere($query->expr()->orX(
+                $query->expr()->like('p.first_name', ':searching'),
+                $query->expr()->like('p.last_name', ':searching'),
+                $query->expr()->like($fullNameField, ':searching'),
+            ));
+
+            $query->setParameter('searching', '%' . $searching . '%');
+        }
+
+        return $query; 
+        $query->orderBy('fullname', 'desc');
+    }
+
+    /**
+     * Requête de recherche d'un pilote
+     * @param ?string $searching
+     * @param int $limit
+     * @param int $offset
+     */
+    public function findBySearching(?string $searching = null, int $limit = 20, int $offset = 0)
+    {
+        return $this->getQueryBuilderForSearching($searching)
+            ->orderBy('fullname', 'desc')
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Compte le nombre d'élément d'une recherche de pilotes
+     * @param ?string $searching
+     * @return int
+     */
+    public function getTotalBySearching(?string $searching) : int
+    {
+        return $this->getQueryBuilderForSearching($searching)
+            ->select('COUNT(p.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 
     // /**
