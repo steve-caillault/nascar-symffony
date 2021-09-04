@@ -62,6 +62,8 @@ class PilotRepository extends ServiceEntityRepository
     public function findBySearching(?string $searching = null, int $limit = 20, int $offset = 0)
     {
         return $this->getQueryBuilderForSearching($searching)
+            ->join('p.birth_city', 'cities')
+            ->addSelect('cities')
             ->orderBy('fullname', 'desc')
             ->setMaxResults($limit)
             ->setFirstResult($offset)
