@@ -5,6 +5,11 @@ default:
   submit:
     label: Envoyer
 
+# Formulaire de recherche
+searching:
+  submit:
+    label: Rechercher
+
 # Formulaires du site
 site:
   # Formulaire de contact
@@ -24,6 +29,11 @@ site:
 
 # Formulaires du panneau d'administration
 admin:
+  searching:
+    # Recherche de pilotes
+    pilots:
+      placeholders:
+        searching: Rechercher un pilote
   states:
     # Edition d'un pays ou d'un état
     edit:

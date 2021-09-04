@@ -11,6 +11,15 @@
 {% endblock %}
 
 {% block body %}
+    {% set searchingSubmitLabel = 'searching.submit.label' | trans([], 'form') %}
+    {% include 'forms/default.html.twig' with {
+        form: searchingForm,
+        attributes: { 
+            id: 'admin-pilots-searching',
+            class: 'inline search-form'
+        },
+        submitLabel: searchingSubmitLabel
+    } only %}
     {% if pilots | length > 0 %}
     <table>
         <thead>

@@ -58,6 +58,7 @@ states:
     country: 
       not_blank: Le pays doit être renseigné.
 
+# Entité City
 cities:
   edit: 
     name:
@@ -73,6 +74,28 @@ cities:
       not_blank: La longitude est nécessaire.
       float: La longitude doit être un nombre décimal.
 
+# Entité Pilot
+pilots:
+  edit:
+    public_id:
+      not_blank: L'identifiant public du pilote est nécessaire.
+      not_exists: Un pilote utilise déjà cet identifiant.
+      min: L'identifiant public du pilote doit avoir au moins {{ limit }} caractères.
+      max: L'identifiant public du pilote ne doit pas avoir plus de {{ limit }} caractères.
+    first_name:
+      not_blank: Le prénom du pilote est nécessaire.
+      min: Le prénom du pilote doit avoir au moins {{ limit }} caractères.
+      max: Le prénom du pilote ne doit pas avoir plus de {{ limit }} caractères.
+    last_name:
+      not_blank: Le nom du pilote est nécessaire.
+      min: Le nom du pilote doit avoir au moins {{ limit }} caractères.
+      max: Le nom du pilote ne doit pas avoir plus de {{ limit }} caractères.
+    birthdate:
+      not_blank: La date de naissance du pilote est nécessaire.
+      date: La date de naissance est incorrecte.
+    birth_city:
+      not_blank: La ville de naissance du pilote est nécessaire.
+       
 # Entité Season
 seasons:
   edit:
@@ -85,3 +108,10 @@ seasons:
       not_blank: Le statut de la saison est nécessaire.
       choice: Le statut de la saison est incorrect.
       not_exists_current: La saison actuelle est attribuée à la saison {{ year }}.
+
+# Recherche
+searching:
+  searching:
+    not_blank: La recherche est nécessaire.
+    min: La recherche doit avoir au moins {{ limit }} caractères.
+    max: La recherche ne doit pas avoir plus de {{ limit }} caractères.
