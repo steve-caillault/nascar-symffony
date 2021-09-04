@@ -23,6 +23,9 @@ header:
       countries: 
         label: Pays
         alt_label: Gestion des pays.
+      pilots:
+        label: Pilotes
+        alt_label: Gestion des pilotes.
       seasons:
         label: Saisons
         alt_label: Gestion des saisons.
@@ -70,7 +73,17 @@ header:
           edit: 
             label: Modifier la ville
             alt_label: Modifier la ville {name}.
-
+    # Menu des pilotes
+    pilots:
+      list:
+        label: Liste des pilotes
+        alt_label: Consulter la liste des pilotes.
+      add:
+        label: Ajouter un pilote
+        alt_label: Ajouter un pilote.
+      edit:
+        label: Modifier le pilote
+        alt_label: Modifier le pilote {name}.
     # Menu de l'utilisateur connecté
     user:
       logout:

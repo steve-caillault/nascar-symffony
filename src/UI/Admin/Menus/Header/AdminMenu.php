@@ -67,6 +67,7 @@ final class AdminMenu extends HeaderMenu {
     {
         $this->addMessagesItem();
         $this->addCountriesItem();
+        $this->addPilotsItem();
         $this->addSeasonsItem();
     }
 
@@ -111,6 +112,31 @@ final class AdminMenu extends HeaderMenu {
             ->setRouteName('app_admin_countries_list_index')
         ;
         if(str_contains($currentUri, $countriesUri))
+        {
+            $messageItem->addClass('selected');
+        }
+
+        return $this->addItem($messageItem);
+    }
+
+    /**
+     * Ajoute l'élément des pilotes 
+     * @return self
+     */
+    private function addPilotsItem() : self
+    {
+        $translator = $this->translator;
+
+        $currentRequest = $this->requestStack->getCurrentRequest();
+        $currentUri = $currentRequest?->getRequestUri();
+        $pilotsUri = $this->urlGenerator->generate('app_admin_pilots_list_index');
+
+        $messageItem = (new HeaderItemMenu())
+            ->setLabel($translator->trans('header.admin.modules.pilots.label', [], domain: 'menus'))
+            ->setAltLabel($translator->trans('header.admin.modules.pilots.alt_label', [], domain: 'menus'))
+            ->setRouteName('app_admin_pilots_list_index')
+        ;
+        if(str_contains($currentUri, $pilotsUri))
         {
             $messageItem->addClass('selected');
         }
