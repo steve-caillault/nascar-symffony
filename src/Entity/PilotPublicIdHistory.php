@@ -15,7 +15,7 @@ use App\Repository\PilotPublicIdRepository;
     ORM\Entity(PilotPublicIdRepository::class),
     ORM\Table('pilots_public_ids')
 ]
-final class PilotPublicIdHistory
+final class PilotPublicIdHistory implements EntityInterface
 {
     /**
      * Pilote

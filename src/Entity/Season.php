@@ -22,7 +22,7 @@ use App\Validator\UniqueCurrentSeason as UniqueCurrentSeasonConstraint;
     /***/
     ORM\HasLifecycleCallbacks()
 ]
-final class Season
+final class Season implements EntityInterface
 {
     public const 
         STATE_CURRENT = 'CURRENT',
@@ -52,7 +52,7 @@ final class Season
         Constraints\Positive(message: 'seasons.edit.year.number'),
         Constraints\Regex('/^\d{4}$/', message: 'seasons.edit.year.regex')
     ]
-    private ?int $year;
+    private ?int $year = null;
 
     /**
      * Etat de la saison
@@ -72,7 +72,7 @@ final class Season
             @UniqueCurrentSeasonConstraint(message="seasons.edit.state.not_exists_current")
      * })
      */
-    private string $state;
+    private ?string $state = null;
 
     /**
      * Retourne l'identifiant de la saison
@@ -94,9 +94,9 @@ final class Season
 
     /**
      * Retourne l'état de la saison
-     * @return string
+     * @return ?string
      */
-    public function getState() : string
+    public function getState() : ?string
     {
         return $this->state;
     }
@@ -114,10 +114,10 @@ final class Season
 
     /**
      * Modifie l'état
-     * @param string $state
+     * @param ?string $state
      * @return self
      */
-    public function setState(string $state) : self
+    public function setState(?string $state) : self
     {
         $this->state = $state;
         return $this;

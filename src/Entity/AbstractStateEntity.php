@@ -19,7 +19,7 @@ use App\Validator\Country\{
 #[
     MappedSuperclass()
 ]
-abstract class AbstractStateEntity
+abstract class AbstractStateEntity implements EntityInterface
 {
     public const 
         TYPE_COUNTRY = 'COUNTRY',

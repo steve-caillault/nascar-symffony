@@ -16,7 +16,7 @@ use App\Repository\CityRepository;
     ORM\Table('cities'),
     ORM\Index(name: 'fk_state', columns: [ 'state' ]),
 ]
-/*final*/ class City
+/*final*/ class City implements EntityInterface
 {
 
     /**
