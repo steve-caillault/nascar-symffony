@@ -1,8 +1,17 @@
 {% form_theme form 'forms/fields.html.twig' %}
 
 {% set method = method | default('post') %}
+{% set isValid = form.vars.valid %}
 {% set attributes = attributes | default([]) %}
-{% set submitLabel = submitlabel | default('default.submit.label' | trans([], 'form')) %}
+
+{% if isValid == false %}
+    {% set attributesClasses = (attributes.class | default('') ~ ' errors') | trim %}
+    {% set attributes = attributes | merge({
+        class: attributesClasses
+    }) %}
+{% endif %}
+
+{% set submitLabel = submitLabel | default('default.submit.label' | trans([], 'form')) %}
 
 {{ form_start(form, { attr: attributes }) }}
     {% set inputs = form.children | filter((value, key) => key != '_token') %}
