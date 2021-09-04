@@ -49,8 +49,7 @@ class PilotRepository extends ServiceEntityRepository
             $query->setParameter('searching', '%' . $searching . '%');
         }
 
-        return $query; 
-        $query->orderBy('fullname', 'desc');
+        return $query;
     }
 
     /**
@@ -64,7 +63,7 @@ class PilotRepository extends ServiceEntityRepository
         return $this->getQueryBuilderForSearching($searching)
             ->join('p.birth_city', 'cities')
             ->addSelect('cities')
-            ->orderBy('fullname', 'desc')
+            ->orderBy('fullname', 'asc')
             ->setMaxResults($limit)
             ->setFirstResult($offset)
             ->getQuery()
