@@ -51,13 +51,7 @@ final class EditController extends AbstractCountryController {
         $form = $this->createForm(CountryType::class, $country);
         $form->handleRequest($request);
 
-        $submitted = $form->isSubmitted();
-        $isValid = ($submitted and $form->isValid());
-        $isInvalid = ($submitted and ! $form->isValid());
-
-        $entityManager = $this->getDoctrine()->getManager();
-
-        if($isValid)
+        if($form->isSubmitted() and $form->isValid())
         {
             // Gestion de l'image
             $flagFile = $form->get('image')->getData();
@@ -68,7 +62,7 @@ final class EditController extends AbstractCountryController {
             }
 
             try {
-                $entityManager->flush();
+                $this->getDoctrine()->getManager()->flush();
                 $success = true;
             } catch(\Exception) {
                 $success = false;
@@ -86,11 +80,6 @@ final class EditController extends AbstractCountryController {
             {
                 return $this->redirectToRoute('app_admin_countries_list_index');
             }
-        }
-        elseif($isInvalid)
-        {
-            // @see https://github.com/steve-caillault/nascar-symfony/issues/2
-            $entityManager->clear(Country::class);
         }
 
         return $this->renderForm('admin/countries/edit.html.twig', [

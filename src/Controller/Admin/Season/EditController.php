@@ -46,16 +46,11 @@ final class EditController extends AbstractSeasonsController {
         $form = $this->createForm(SeasonType::class, $season);
         $form->handleRequest($request);
 
-        $entityManager = $this->getDoctrine()->getManager();
-
-        $isValid = ($form->isSubmitted() and $form->isValid());
-        $isInvalid = ($form->isSubmitted() and ! $form->isValid());
-
-        if($isValid)
+        if($form->isSubmitted() and $form->isValid())
         {
             // Enregistrement
             try {
-                $entityManager->flush();
+                $this->getDoctrine()->getManager()->flush();
                 $success = true;
             } catch(\Throwable $e) {
                 $success = false;
@@ -73,13 +68,6 @@ final class EditController extends AbstractSeasonsController {
                 return $this->redirectToRoute('app_admin_seasons_index');
             }
         }
-        elseif($isInvalid)
-        {
-            // @todo Règler le problème lorsqu'on tente de faire un flush pour d'autre entité
-            // Si on n'appelle par clear ici, Doctrine essaiera de mettre à jour la saison 
-            $entityManager->clear(Season::class);
-        }
-
 
         return $this->renderForm('admin/seasons/edit.html.twig', [
             'form' => $form,

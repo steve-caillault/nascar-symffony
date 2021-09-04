@@ -76,15 +76,10 @@ final class EditController extends AbstractCityController {
         $form = $this->createForm(CityType::class, $city);
         $form->handleRequest($request);
 
-        $isValid = ($form->isSubmitted() and $form->isValid());
-        $isInvalid = ($form->isSubmitted() and ! $form->isValid());
-
-        $entityManager = $this->getDoctrine()->getManager();
-
-        if($isValid)
+        if($form->isSubmitted() and $form->isValid())
         {
             try {
-                $entityManager->flush();
+                $this->getDoctrine()->getManager()->flush();
                 $success = true;
             } catch(\Exception) {
                 $success = false;
@@ -105,10 +100,6 @@ final class EditController extends AbstractCityController {
                     'countryStateCode' => strtolower($countryState->getCode()),
                 ]);
             }
-        }
-        elseif($isInvalid)
-        {
-            $entityManager->clear(City::class);
         }
 
         return $this->renderForm('admin/countries/states/cities/edit.html.twig', [

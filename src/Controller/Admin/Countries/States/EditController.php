@@ -69,13 +69,8 @@ final class EditController extends AbstractStateController {
 
         $form = $this->createForm(CountryStateType::class, $countryState);
         $form->handleRequest($request);
-
-        $isValid = ($form->isSubmitted() and $form->isValid());
-        $isInvalid = ($form->isSubmitted() and ! $form->isValid());
-
-        $entityManager = $this->getDoctrine()->getManager();
-
-        if($isValid)
+        
+        if($form->isSubmitted() and $form->isValid())
         {
             // Gestion de l'image
             $flagFile = $form->get('image')->getData();
@@ -86,7 +81,7 @@ final class EditController extends AbstractStateController {
             }
 
             try {
-                $entityManager->flush();
+                $this->getDoctrine()->getManager()->flush();
                 $success = true;
             } catch(\Exception) {
                 $success = false;
@@ -106,10 +101,6 @@ final class EditController extends AbstractStateController {
                     'countryCode' => strtolower($country->getCode()),
                 ]);
             }
-        }
-        elseif($isInvalid)
-        {
-            $entityManager->clear(CountryState::class);
         }
 
         return $this->renderForm('admin/countries/states/edit.html.twig', [
