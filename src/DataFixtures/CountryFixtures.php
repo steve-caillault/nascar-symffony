@@ -35,6 +35,11 @@ final class CountryFixtures extends Fixture implements FixtureGroupInterface
                 'image' => 'ca.png',
             ],
             [
+                'code' => 'GB',
+                'name' => 'Royaume-Uni',
+                'image' => 'gb.png',
+            ],
+            [
                 'code' => 'FR',
                 'name' => 'France',
                 'image' => 'fr.png',
@@ -64,6 +69,9 @@ final class CountryFixtures extends Fixture implements FixtureGroupInterface
             ;
 
             $manager->persist($country);
+
+            $countryKey = 'COUNTRY_' . $country->getCode();
+            $this->addReference($countryKey, $country);
         }
 
         $manager->flush();
@@ -77,6 +85,6 @@ final class CountryFixtures extends Fixture implements FixtureGroupInterface
      */
     public static function getGroups() : array
     {
-        return [ 'countries' ];
+        return [ 'countries', 'pilots' ];
     }
 }
