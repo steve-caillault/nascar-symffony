@@ -14,6 +14,7 @@ use Doctrine\ORM\{
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 /***/
 use App\Repository\EntityRepositoryInterface;
 
@@ -32,6 +33,16 @@ abstract class BaseTestCase extends WebTestCase {
      * @var ?EntityManagerInterface
      */
     private ?EntityManagerInterface $entityManager = null;
+
+    /**
+     * Exécute les fixtures dont les noms des classes sont en paramètre
+     * @param array $classes
+     * @return void
+     */
+    protected function executeFixtures(array $names) : void
+    {
+        $this->getService(DatabaseToolCollection::class)->get()->loadFixtures($names);
+    }
 
     /**
      * Retourne le service correspondant à la classe en paramètre
