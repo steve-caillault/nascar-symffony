@@ -2,9 +2,9 @@
 
 namespace App\Repository;
 
-use App\Entity\Season;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+/***/
+use App\Entity\Season;
 
 /**
  * @method Season|null find($id, $lockMode = null, $lockVersion = null)
@@ -12,7 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Season[]    findAll()
  * @method Season[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-final class SeasonRepository extends ServiceEntityRepository
+final class SeasonRepository extends AbstractRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

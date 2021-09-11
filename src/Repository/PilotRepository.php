@@ -2,11 +2,10 @@
 
 namespace App\Repository;
 
-use App\Entity\Pilot;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-
 use Doctrine\ORM\QueryBuilder;
+/***/
+use App\Entity\Pilot;
 
 /**
  * @method Pilot|null find($id, $lockMode = null, $lockVersion = null)
@@ -14,7 +13,7 @@ use Doctrine\ORM\QueryBuilder;
  * @method Pilot[]    findAll()
  * @method Pilot[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PilotRepository extends ServiceEntityRepository
+class PilotRepository extends AbstractRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -37,7 +36,7 @@ class PilotRepository extends ServiceEntityRepository
         ]);
 
         $query->addSelect($fullNameField . ' AS HIDDEN fullname');
-
+        
         if($searching !== null)
         {
             $query->andWhere($query->expr()->orX(

@@ -2,9 +2,9 @@
 
 namespace App\Repository;
 
-use App\Entity\Country;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+/***/
+use App\Entity\Country;
 
 /**
  * @method Country|null find($id, $lockMode = null, $lockVersion = null)
@@ -12,7 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Country[]    findAll()
  * @method Country[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CountryRepository extends ServiceEntityRepository
+class CountryRepository extends AbstractRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
