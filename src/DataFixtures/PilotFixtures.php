@@ -19,12 +19,26 @@ use App\Entity\Pilot;
 
 final class PilotFixtures extends Fixture implements FixtureGroupInterface, DependentFixtureInterface
 {
+    /**
+     * Données à créer issue d'un fichier CSV
+     * @var array
+     */
+    private array $dataFromCSV = [];
+
+    /**
+     * Constructeur
+     * @param Kernel $kernel
+     */
     public function __construct(private Kernel $kernel)
     {
-
+        $this->initDataFromCSV();
     }
 
-    public function load(ObjectManager $manager)
+    /**
+     * Retourne les données à créer
+     * @return void
+     */
+    private function initDataFromCSV() : void
     {
         $path = $this->kernel->getProjectDir() . '/data/pilots.csv';
         $file = @ fopen($path, 'r');
@@ -36,18 +50,50 @@ final class PilotFixtures extends Fixture implements FixtureGroupInterface, Depe
 
         while($dataString = fgetcsv($file))
         {
-            list($id, $publicId, $firstName, $lastName, $birthDateStr, $birthCityName, $birthCityStateCode) 
+            list($id, $publicId, $firstName, $lastName, $birthDate, $birthCity, $birthState) 
                 = explode('|', $dataString[0]);
 
-            $birthCityKey = 'CITY_' . $birthCityStateCode . '_' . $birthCityName;
+            $fullName = trim(implode(' ', [ $firstName, $lastName, ]));
+
+            $this->dataFromCSV[] = [
+                'id' => (int) $id,
+                'publicId' => $publicId,
+                'firstName' => $firstName,
+                'lastName' => $lastName, 
+                'fullName' => $fullName,
+                'birthDate' => $birthDate,
+                'birthCity' => $birthCity,
+                'birthState' => $birthState,
+            ];
+        }
+
+        fclose($file);
+    }
+
+    /**
+     * Retourne les données du CSV
+     * @return array
+     */
+    public function getDataFromCSV() : array
+    {
+        return $this->dataFromCSV;
+    }
+
+    public function load(ObjectManager $manager)
+    {
+        $dataFromCSV = $this->dataFromCSV;
+
+        foreach($dataFromCSV as $data)
+        {
+            $birthCityKey = 'CITY_' . $data['birthState'] . '_' . $data['birthCity'];
             $birthCity = $this->getReference($birthCityKey);
 
-            $birthDate = new \DateTimeImmutable($birthDateStr);
+            $birthDate = new \DateTimeImmutable($data['birthDate']);
 
             $pilot = (new Pilot())
-                ->setPublicId($publicId)
-                ->setFirstName($firstName)
-                ->setLastName($lastName)
+                ->setPublicId($data['publicId'])
+                ->setFirstName($data['firstName'])
+                ->setLastName($data['lastName'])
                 ->setBirthDate($birthDate)
                 ->setBirthCity($birthCity);
             
@@ -56,7 +102,7 @@ final class PilotFixtures extends Fixture implements FixtureGroupInterface, Depe
             $pilotKey = 'PILOT_' . $pilot->getPublicId();
             $this->addReference($pilotKey, $pilot);
         }
-        fclose($file);
+        
 
         $manager->flush();
     }
