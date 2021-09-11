@@ -53,7 +53,7 @@ final class ListController extends AbstractPilotController {
         }
 
         // Récupération des pilotes
-        $pilots = $pilotRepository->findBySearching($searching, $pageNumber, $offset);
+        $pilots = $pilotRepository->findBySearching($searching, $itemsPerPage, $offset);
         $total = $pilotRepository->getTotalBySearching($searching);
         $pagination = new Pagination($itemsPerPage, $total);
 

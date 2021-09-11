@@ -11,7 +11,9 @@
 {% endblock %}
 
 {% block body %}
+    {# Formulaire de recherche #}
     {% set searchingSubmitLabel = 'searching.submit.label' | trans([], 'form') %}
+    
     {% include 'forms/default.html.twig' with {
         form: searchingForm,
         attributes: { 
@@ -20,43 +22,42 @@
         },
         submitLabel: searchingSubmitLabel
     } only %}
+
     {% if pilots | length > 0 %}
 
-    {# Nombre de résultats #}
-    {% include 'ui/pagination/details.html.twig' with {
-        pagination: pagination
-    } %}
+        {# Nombre de résultats #}
+        {% include 'ui/pagination/details.html.twig' with {
+            pagination: pagination
+        } only %}
 
-    <table>
-        <thead>
-            <tr class="head">
-                <td>{{ 'admin.pilots.list.fields.name' | trans }}</td>
-                <td>{{ 'admin.pilots.list.fields.birth_city' | trans }}</td>
-                <td>{{ 'admin.pilots.list.fields.birthdate' | trans }}</td>
-            </tr>
-
-        </thead>
-        <tbody>
-            {% for pilot in pilots %}
-                {% set edit_path = path('app_admin_pilots_edit_index', { 
-                    pilotPublicId: pilot.publicId | lower
-                }) %}
-                {% set edit_alt_label = 'admin.pilots.list.edit.alt_label' | trans({ 
-                    name: pilot.fullName
-                }) %}
-
-            <tr class="line">
-                <td>{{ anchor(pilot.fullName, edit_alt_label, edit_path) }}</td>
-                <td>{{ pilot.birthCity.name }}</td>
-                <td>{{ pilot.birthDate | date('d/m/Y') }}</td>
-            </tr>
-                
-            {% endfor %}
-        </tbody>
-    </table>
-    {{ pagination(pagination) }}
+        {# Liste des pilotes #}
+        <table>
+            <thead>
+                <tr class="head">
+                    <td>{{ 'admin.pilots.list.fields.name' | trans }}</td>
+                    <td>{{ 'admin.pilots.list.fields.birth_city' | trans }}</td>
+                    <td>{{ 'admin.pilots.list.fields.birthdate' | trans }}</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pilot in pilots %}
+                    {% set edit_path = path('app_admin_pilots_edit_index', { 
+                        pilotPublicId: pilot.publicId | lower
+                    }) %}
+                    {% set edit_alt_label = 'admin.pilots.list.edit.alt_label' | trans({ 
+                        name: pilot.fullName
+                    }) %}
+                    <tr class="line">
+                        <td>{{ anchor(pilot.fullName, edit_alt_label, edit_path) }}</td>
+                        <td>{{ pilot.birthCity.name }}</td>
+                        <td>{{ pilot.birthDate | date('d/m/Y') }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {{ pagination(pagination) }}
     {% else %}
-
+        {# Cas vide #}
         {% set empty_anchor_label = 'admin.pilots.empty_anchor_label' | trans %}
         {% set empty_anchor_alt = 'admin.pilots.empty_anchor_alt' | trans %}
         {% set empty_anchor_url = path('app_admin_pilots_add_index') %}
