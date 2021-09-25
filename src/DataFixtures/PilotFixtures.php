@@ -19,11 +19,8 @@ use App\Entity\Pilot;
 
 final class PilotFixtures extends Fixture implements FixtureGroupInterface, DependentFixtureInterface
 {
-    /**
-     * Données à créer issue d'un fichier CSV
-     * @var array
-     */
-    private array $dataFromCSV = [];
+
+    use WithDataFromCSV;
 
     /**
      * Constructeur
@@ -70,14 +67,7 @@ final class PilotFixtures extends Fixture implements FixtureGroupInterface, Depe
         fclose($file);
     }
 
-    /**
-     * Retourne les données du CSV
-     * @return array
-     */
-    public function getDataFromCSV() : array
-    {
-        return $this->dataFromCSV;
-    }
+    
 
     public function load(ObjectManager $manager)
     {
