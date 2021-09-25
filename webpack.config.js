@@ -23,6 +23,11 @@ Encore
     .addEntry('site', './assets/site.js')
     .addEntry('admin', './assets/admin.js')
 
+    // Alias pour le répetoire racine du JavaScript
+    .addAliases({
+        'App': `${__dirname}/assets/js`,
+    })
+
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     // .enableStimulusBridge('./assets/controllers.json')
 
