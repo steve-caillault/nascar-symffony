@@ -35,3 +35,14 @@
     {% endif %}
     {{ form_widget(form) }}
 {% endblock %}
+
+{% block autocomplete_widget %}
+    <div 
+        class="autocomplete-search" 
+        data-url="{{ form.vars.autocomplete_route_name }}" 
+        data-autocomplete-type="{{ form.vars.autocomplete_type }}"
+    >
+        {{ form_widget(form.searching) }}
+        {{ form_widget(form.id) }}
+    </div>
+{% endblock %}
