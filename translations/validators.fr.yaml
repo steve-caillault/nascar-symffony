@@ -1,5 +1,7 @@
 # Messages de validation
 
+class_exists: La classe {{ value }} n'existe pas.
+
 # Entité User
 user:
   public_id:
