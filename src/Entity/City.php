@@ -16,7 +16,7 @@ use App\Repository\CityRepository;
     ORM\Table('cities'),
     ORM\Index(name: 'fk_state', columns: [ 'state' ]),
 ]
-/*final*/ class City implements EntityInterface
+/*final*/ class City implements EntityInterface, AutocompleteEntityInterface
 {
 
     /**
@@ -165,5 +165,26 @@ use App\Repository\CityRepository;
     {
         $this->longitude = $longitude;
         return $this;
+    }
+
+    /**
+     * Retourne le texte à afficher dans un champs de formulaire
+     * @return string
+     */
+    public function getAutocompleteDisplayValue() : string
+    {
+        return implode(' - ', [ 
+            $this->getName(),
+            $this->getState()->getName(),
+        ]);
+    }
+
+    /**
+     * Retourne l'identifiant
+     * @return int
+     */
+    public function getAutocompleteId() : int
+    {
+        return $this->getId();
     }
 }

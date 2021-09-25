@@ -19,12 +19,18 @@ use App\Entity\City;
 
 final class CityFixtures extends Fixture implements FixtureGroupInterface, DependentFixtureInterface
 {
+    use WithDataFromCSV;
+
     public function __construct(private Kernel $kernel)
     {
-
+        $this->initDataFromCSV();
     }
 
-    public function load(ObjectManager $manager)
+    /**
+     * Retourne les données à créer
+     * @return void
+     */
+    private function initDataFromCSV() : void
     {
         $path = $this->kernel->getProjectDir() . '/data/cities.csv';
         $file = @ fopen($path, 'r');
@@ -36,23 +42,41 @@ final class CityFixtures extends Fixture implements FixtureGroupInterface, Depen
 
         while($dataString = fgetcsv($file))
         {
-            list($id, $name, $countryStateCode, $latitude, $longitude) = explode('|', $dataString[0]);
+            list($id, $name, $stateCode, $stateName, $latitude, $longitude) = explode('|', $dataString[0]);
 
-            $countryStateKey = 'COUNTRY_STATE_' . $countryStateCode;
-            $countryState = $this->getReference($countryStateKey);
-            
+            $this->dataFromCSV[] = [
+                'id' => (int) $id,
+                'name' => $name,
+                'stateCode' => $stateCode, 
+                'stateName' => $stateName,
+                'latitude' => $latitude,
+                'longitude' => $longitude,
+            ];
+        }
+
+        fclose($file);
+    }
+
+    public function load(ObjectManager $manager)
+    {
+        $dataFromCSV = $this->dataFromCSV;
+
+        foreach($dataFromCSV as $data)
+        {
+            $stateKey = 'COUNTRY_STATE_' . $data['stateCode'];
+            $state = $this->getReference($stateKey);
+
             $city = (new City())
-                ->setName($name)
-                ->setState($countryState)
-                ->setLatitude($latitude)
-                ->setLongitude($longitude);
+                ->setName($data['name'])
+                ->setState($state)
+                ->setLatitude($data['latitude'])
+                ->setLongitude($data['longitude']);
             
             $manager->persist($city);
 
-            $cityKey = 'CITY_' . $countryState->getCode() . '_' . $city->getName();
+            $cityKey = 'CITY_' . $state->getCode() . '_' . $city->getName();
             $this->addReference($cityKey, $city);
         }
-        fclose($file);
 
         $manager->flush();
     }
