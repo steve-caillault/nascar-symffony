@@ -42,7 +42,7 @@ class Pilot implements EntityInterface, AutocompleteEntityInterface
         /***/
         Constraints\NotBlank(message: 'pilots.edit.public_id.not_blank'),
         Constraints\Length(
-            min:5,
+            min: 5,
             max: 100,
             minMessage: 'pilots.edit.public_id.min',
             maxMessage: 'pilots.edit.public_id.max'

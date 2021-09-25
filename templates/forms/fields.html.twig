@@ -2,8 +2,7 @@
 
 {% block form_row %}
     {% set form_input_classes = [ 'form-input' ] %}
-    {% set invalid = (not compound or force_error | default(false)) and not valid %}
-    {% if invalid %} {% set form_input_classes = form_input_classes | merge([ 'error' ]) %} {% endif %}
+    {% if not valid %} {% set form_input_classes = form_input_classes | merge([ 'error' ]) %} {% endif %}
     {% set classes = (row_attr.class | default('') ~ ' ' ~ form_input_classes | join(' ')) | trim %}
     {% set attributes = { attr: row_attr | merge({
         class: classes

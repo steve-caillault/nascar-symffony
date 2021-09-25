@@ -7,7 +7,6 @@
 
 namespace App\Command;
 
-use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Validator\{
     Validation,

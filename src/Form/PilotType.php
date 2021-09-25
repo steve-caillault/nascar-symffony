@@ -31,7 +31,6 @@ final class PilotType extends AbstractEntityType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder
             ->add('public_id')
             ->add('first_name')
@@ -39,6 +38,7 @@ final class PilotType extends AbstractEntityType
             ->add('birthdate', DateType::class, [
                 'widget' => 'single_text',
                 'input' => 'datetime_immutable',
+                'invalid_message' => 'pilots.edit.birthdate.date',
             ])
             ->add('birth_city', AutocompleteType::class, [
                 'entity_class' => City::class,

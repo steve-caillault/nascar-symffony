@@ -50,6 +50,8 @@ admin:
   pilots:
     label: Pilotes
     alt_label: Consulter la liste des pilotes.
+    add: 
+      label: Création
     edit:
       alt_label: Édition du pilote {name}.
   # Saisons
