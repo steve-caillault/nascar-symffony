@@ -102,7 +102,7 @@ final class PilotRepositoryTest extends BaseTestCase {
     }
 
     /**
-     * Retourne les liste des pilotes qu'on devrait obtenir après la recherche et le tri
+     * Retourne la liste des pilotes qu'on devrait obtenir après la recherche et le tri
      * @param ?string $searching Terme de la recherche
      */
     private function getPilotListExpected(?string $searching)

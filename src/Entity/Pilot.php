@@ -20,7 +20,7 @@ use App\Repository\PilotRepository;
     /***/
     UniqueEntity('public_id', message: 'pilots.edit.public_id.not_exists')
 ]
-class Pilot implements EntityInterface
+class Pilot implements EntityInterface, AutocompleteEntityInterface
 {
     /**
      * Identifiant
@@ -45,7 +45,7 @@ class Pilot implements EntityInterface
             min:5,
             max: 100,
             minMessage: 'pilots.edit.public_id.min',
-            maxmessage: 'pilots.edit.public_id.max'
+            maxMessage: 'pilots.edit.public_id.max'
         )
     ]
     private ?string $public_id = null;
@@ -228,5 +228,23 @@ class Pilot implements EntityInterface
         ], fn($value) => $value !== null);
         
         return trim(implode(' ', $values));
+    }
+
+     /**
+     * Retourne le texte à afficher dans un champs de formulaire
+     * @return string
+     */
+    public function getAutocompleteDisplayValue() : string
+    {
+        return $this->getFullName();
+    }
+
+    /**
+     * Retourne l'identifiant
+     * @return int
+     */
+    public function getAutocompleteId() : int
+    {
+        return $this->getId();
     }
 }

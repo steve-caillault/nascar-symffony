@@ -60,6 +60,22 @@ admin:
             label: Latitude
           longitude:
             label: Longitude
+  pilots:
+    # Edition d'un pilote
+    edit:
+      fields:
+        public_id:
+          label: Identifiant public
+        first_name:
+          label: Prénom
+        last_name:
+          label: Nom
+        birthdate:
+          label: Date de naissance
+        birth_city:
+          label: Ville de naissance
+          placeholder: Rechercher une ville
+
   seasons:
     # Edition d'une saison
     edit:

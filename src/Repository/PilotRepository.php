@@ -13,11 +13,26 @@ use App\Entity\Pilot;
  * @method Pilot[]    findAll()
  * @method Pilot[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PilotRepository extends AbstractRepository
+class PilotRepository extends AbstractRepository implements SearchingRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Pilot::class);
+    }
+
+    /**
+     * Retourne le champs du nom complet
+     * @param string $tableAlias
+     * @return string
+     */
+    private function getFullNameField(string $tableAlias = 'p') : string
+    {
+        $fields = [ 'first_name', 'last_name', ];
+        $fullNameField = strtr('CONCAT_WS(\' \', :fields)', [
+            ':fields' => implode(', ', array_map(fn($field) => $tableAlias . '.' . $field, $fields))
+        ]);
+
+        return $fullNameField;
     }
 
     /**
@@ -27,13 +42,9 @@ class PilotRepository extends AbstractRepository
      */
     private function getQueryBuilderForSearching(?string $searching) : QueryBuilder
     {
-        $alias = 'p';
-        $fields = [ 'first_name', 'last_name', ];
         $query = $this->createQueryBuilder('p', 'p.id');
 
-        $fullNameField = strtr('CONCAT_WS(\' \', :fields)', [
-            ':fields' => implode(', ', array_map(fn($field) => $alias . '.' . $field, $fields))
-        ]);
+        $fullNameField = $this->getFullNameField();
 
         $query->addSelect($fullNameField . ' AS HIDDEN fullname');
         
@@ -49,6 +60,24 @@ class PilotRepository extends AbstractRepository
         }
 
         return $query;
+    }
+
+    /**
+     * Retourne un pilote en fonction de son nom complet
+     * @param string $fullName
+     * @return ?Pilot
+     */
+    public function findByFullName(string $fullName) : ?Pilot
+    {
+        $fullNameField = $this->getFullNameField();
+
+        return $this->createQueryBuilder('p', 'p.id')
+            ->addSelect($fullNameField . ' AS HIDDEN fullname')
+            ->where('fullname = :fullname')
+            ->setParameter('fullname', $fullName)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     /**

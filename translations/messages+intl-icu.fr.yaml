@@ -121,6 +121,11 @@ admin:
         birthdate: Date de naissance
       edit:
         alt_label: Modifier le pilote {name}.
+    # Ajout d'un pilote
+    add:
+      title: Création d'un pilote
+      success: Le pilote {name} a été créé.
+      failure: Une erreur s'est produite lors de la création du pilote {name}.
   seasons:
     # Liste des saisons
     title: Liste des saisons
