@@ -15,7 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Contracts\Translation\TranslatorInterface;
 /***/
 use App\Entity\Pilot;
-use App\Form\Country\PilotType;
+use App\Form\PilotType;
 
 final class EditController extends AbstractPilotController {
 
@@ -47,6 +47,28 @@ final class EditController extends AbstractPilotController {
 
         $form = $this->createForm(PilotType::class, $pilot);
         $form->handleRequest($request);
+
+        if($form->isSubmitted() and $form->isValid())
+        {
+            try {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->flush();
+                $success = true;
+            } catch(\Throwable) {
+                $success = false;
+            }
+
+            $flashKey = ($success) ? 'success' : 'error';
+            $flashMessage = ($success) ? 'admin.pilots.edit.success' : 'admin.pilots.edit.failure';
+            $this->addFlash($flashKey, $translator->trans($flashMessage, [
+                'name' => $pilot->getFullName(),
+            ]));
+
+            if($success)
+            {
+                return $this->redirectToRoute('app_admin_pilots_list_index');
+            }
+        }
 
         return $this->renderForm('admin/pilots/edit.html.twig', [
             'form' => $form,

@@ -126,6 +126,11 @@ admin:
       title: Création d'un pilote
       success: Le pilote {name} a été créé.
       failure: Une erreur s'est produite lors de la création du pilote {name}.
+    # Edition d'un pilote
+    edit:
+      title: Modification du pilote {name}
+      success: Le pilote {name} a été mis à jour.
+      failure: Une erreur s'est produite lors de la mise à jour du pilote {name}.
   seasons:
     # Liste des saisons
     title: Liste des saisons
