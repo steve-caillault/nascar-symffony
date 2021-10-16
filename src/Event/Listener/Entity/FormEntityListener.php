@@ -73,7 +73,11 @@ final class FormEntityListener implements EventSubscriberInterface {
 
         // Récupére les propriétés de l'entité pour pouvoir accéder aux getters et setters
         $metadata = $this->entityManager->getClassMetadata(get_class($formEntity));
-        $entityFields = $metadata->getFieldNames();
+        $entityFields = [ 
+            ...$metadata->getFieldNames(),
+            ...array_keys($metadata->getAssociationMappings()),
+        ];
+
         foreach($entityFields as $entityField)
         {
             $setterMethod = (new UnicodeString('set_' . $entityField))->camel()->toString();
