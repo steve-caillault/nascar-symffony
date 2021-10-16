@@ -129,7 +129,6 @@ abstract class AbstractManageEntity extends BaseTestCase {
 
         // Vérification des données
         $this->checkSuccessEntityData($params);
-
     }
 
     /**

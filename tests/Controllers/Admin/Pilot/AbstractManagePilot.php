@@ -29,7 +29,7 @@ abstract class AbstractManagePilot extends AbstractManageEntity {
      * @param string $publicId
      * @return ?Pilot
      */
-    private function getPilotByPublicId(string $publicId) : ?Pilot
+    protected function getPilotByPublicId(string $publicId) : ?Pilot
     {
         $dql = sprintf('SELECT pilots FROM %s pilots WHERE pilots.public_id = :public_id', Pilot::class);
 
@@ -100,7 +100,7 @@ abstract class AbstractManagePilot extends AbstractManageEntity {
     {
         return array(
             [
-                [ 
+                'success' => [ 
                     'public_id' => 'chase-elliott',
                     'first_name' => 'Chase',
                     'last_name' => 'Elliott',
