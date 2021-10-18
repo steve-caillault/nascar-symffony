@@ -97,6 +97,21 @@ pilots:
       date: La date de naissance est incorrecte.
     birth_city:
       not_blank: La ville de naissance du pilote est nécessaire.
+
+# Entité Circuit
+circuits:
+  edit:
+    name:
+      not_blank: Le nom du circuit est nécessaire.
+      min: Le nom du circuit doit avoir au moins {{ limit }} caractères.
+      max: Le nom du circuit doit avoir au plus {{ limit }} caractères.
+    city:
+      not_blank: La ville du circuit est nécessaire.
+    distance:
+      not_blank: La distance du circuit est nécessaire.
+      integer: La distance du circuit doit être un entier.
+      min: La distance du circuit doit avoir au moins {{ limit }} mètres.
+      max: La distance du circuit doit avoir au plus {{ limit }} mètres.
        
 # Entité Season
 seasons:
