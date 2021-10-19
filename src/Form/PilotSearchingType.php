@@ -6,49 +6,25 @@
 
 namespace App\Form;
 
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Validator\Constraints;
-use Symfony\Contracts\Translation\TranslatorInterface;
-
-final class PilotSearchingType extends AbstractFormType
+final class PilotSearchingType extends AbstractSearchingFormType
 {
 
     /**
-     * Constructeur
-     * @param TranslatorInterface $translator
-     * @param UrlGeneratorInterface $urlGenerator
+     * Retourne l'url de l'action du formulaire
+     * @return string
      */
-    public function __construct(
-        private TranslatorInterface $translator,
-        private UrlGeneratorInterface $urlGenerator
-    )
+    protected function getAction() : string
     {
-
+        return $this->urlGenerator->generate('app_admin_pilots_list_index');
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    /**
+     * Retourne le texte du label du champs de recherche
+     * @return ?string
+     */
+    protected function getSearchingLabel() : ?string
     {
-        $action = $this->urlGenerator->generate('app_admin_pilots_list_index');
-
-        $builder
-            ->setAction($action)
-            ->add('searching', options: [
-                'label' => false,
-                'attr' => [
-                    'placeholder' => $this->translator->trans('admin.searching.pilots.placeholders.searching', domain: 'form')
-                ],
-                'constraints' => [
-                    new Constraints\NotBlank(message: 'searching.searching.not_blank'),
-                    new Constraints\Length(
-                        min: 3, 
-                        max: 50, 
-                        minMessage: 'searching.searching.min',
-                        maxMessage: 'searching.searching.max',
-                    )
-                ],
-            ])
-        ;
+        return 'admin.searching.pilots.searching.label';
     }
 
 }
