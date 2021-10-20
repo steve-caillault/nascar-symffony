@@ -104,8 +104,9 @@ final class PilotRepositoryTest extends BaseTestCase {
     /**
      * Retourne la liste des pilotes qu'on devrait obtenir après la recherche et le tri
      * @param ?string $searching Terme de la recherche
+     * @return array
      */
-    private function getPilotListExpected(?string $searching)
+    private function getPilotListExpected(?string $searching) : array
     {
         $pilotFixtures = $this->getService(PilotFixtures::class);
         $data = $pilotFixtures->getDataFromCSV();

@@ -68,6 +68,7 @@ final class AdminMenu extends HeaderMenu {
         $this->addMessagesItem();
         $this->addCountriesItem();
         $this->addPilotsItem();
+        $this->addCircuitsItem();
         $this->addSeasonsItem();
     }
 
@@ -137,6 +138,31 @@ final class AdminMenu extends HeaderMenu {
             ->setRouteName('app_admin_pilots_list_index')
         ;
         if(str_contains($currentUri, $pilotsUri))
+        {
+            $messageItem->addClass('selected');
+        }
+
+        return $this->addItem($messageItem);
+    }
+
+    /**
+     * Ajout l'élément des circuits
+     * @return self
+     */
+    private function addCircuitsItem() : self
+    {
+        $translator = $this->translator;
+
+        $currentRequest = $this->requestStack->getCurrentRequest();
+        $currentUri = $currentRequest?->getRequestUri();
+        $circuitsUri = $this->urlGenerator->generate('app_admin_circuits_list_index');
+
+        $messageItem = (new HeaderItemMenu())
+            ->setLabel($translator->trans('header.admin.modules.circuits.label', [], domain: 'menus'))
+            ->setAltLabel($translator->trans('header.admin.modules.circuits.alt_label', [], domain: 'menus'))
+            ->setRouteName('app_admin_circuits_list_index')
+        ;
+        if(str_contains($currentUri, $circuitsUri))
         {
             $messageItem->addClass('selected');
         }

@@ -54,6 +54,14 @@ admin:
       label: Création
     edit:
       alt_label: Édition du pilote {name}.
+  # Circuits
+  circuits:
+    label: Circuits
+    alt_label: Consulter la liste des circuits
+    add: 
+      label: Création
+    edit: 
+      alt_label: Édition du circuit {name}.
   # Saisons
   seasons: 
     label: Saisons

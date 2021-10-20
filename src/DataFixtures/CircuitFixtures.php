@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Fixtures pour la création initiale des pilotes
- * bin/console doctrine:fixtures:load --group=pilots
+ * Fixtures pour la création initiale des circuits
+ * bin/console doctrine:fixtures:load --group=circuits
  */
 
 namespace App\DataFixtures;
@@ -16,11 +16,10 @@ use Doctrine\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 /***/
 use App\Kernel;
-use App\Entity\Pilot;
+use App\Entity\Circuit;
 
-final class PilotFixtures extends Fixture implements FixtureGroupInterface, DependentFixtureInterface
+final class CircuitFixtures extends Fixture implements FixtureGroupInterface, DependentFixtureInterface
 {
-
     use WithDataFromCSV;
 
     /**
@@ -39,7 +38,7 @@ final class PilotFixtures extends Fixture implements FixtureGroupInterface, Depe
      */
     private function initDataFromCSV() : void
     {
-        $path = $this->kernel->getProjectDir() . '/data/pilots.csv';
+        $path = $this->kernel->getProjectDir() . '/data/circuits.csv';
         $file = @ fopen($path, 'r');
 
         if($file === false)
@@ -49,27 +48,19 @@ final class PilotFixtures extends Fixture implements FixtureGroupInterface, Depe
 
         while($dataString = fgetcsv($file))
         {
-            list($id, $publicId, $firstName, $lastName, $birthDate, $birthCity, $birthState) 
-                = explode('|', $dataString[0]);
-
-            $fullName = trim(implode(' ', [ $firstName, $lastName, ]));
+            list($id, $name, $distance, $cityName, $stateCode) = explode('|', $dataString[0]);
 
             $this->dataFromCSV[] = [
                 'id' => (int) $id,
-                'publicId' => $publicId,
-                'firstName' => $firstName,
-                'lastName' => $lastName, 
-                'fullName' => $fullName,
-                'birthDate' => $birthDate,
-                'birthCity' => $birthCity,
-                'birthState' => $birthState,
+                'name' => $name,
+                'distance' => (int) $distance,
+                'city' => $cityName, 
+                'state' => $stateCode,
             ];
         }
 
         fclose($file);
     }
-
-    
 
     public function load(ObjectManager $manager)
     {
@@ -77,28 +68,25 @@ final class PilotFixtures extends Fixture implements FixtureGroupInterface, Depe
 
         foreach($dataFromCSV as $data)
         {
-            $birthCityName = $data['birthCity'];
-            $birthCitySlug = $this->slugger->slug($birthCityName);
+            $circuitName = $data['name'];
+            $cityName = $data['city'];
+            $circuitSlug = $this->slugger->slug($circuitName);
+            $citySlug = $this->slugger->slug($cityName);
 
-            $birthCityKey = 'CITY_' . $data['birthState'] . '_' . $birthCitySlug;
-            $birthCity = $this->getReference($birthCityKey);
+            $cityKey = 'CITY_' . $data['state'] . '_' . $citySlug;
+            $city = $this->getReference($cityKey);
 
-            $birthDate = new \DateTimeImmutable($data['birthDate']);
-
-            $pilot = (new Pilot())
-                ->setPublicId($data['publicId'])
-                ->setFirstName($data['firstName'])
-                ->setLastName($data['lastName'])
-                ->setBirthDate($birthDate)
-                ->setBirthCity($birthCity);
+            $circuit = (new Circuit())
+                ->setName($circuitName)
+                ->setDistance($data['distance'])
+                ->setCity($city);
             
-            $manager->persist($pilot);
-;
-            $pilotKey = 'PILOT_' . $pilot->getPublicId();
-            $this->addReference($pilotKey, $pilot);
+            $manager->persist($circuit);
+
+            $circuitKey = 'CIRCUIT_' . $circuitSlug;
+            $this->addReference($circuitKey, $circuit);
         }
         
-
         $manager->flush();
     }
 
@@ -121,6 +109,6 @@ final class PilotFixtures extends Fixture implements FixtureGroupInterface, Depe
      */
     public static function getGroups() : array
     {
-        return [ 'pilots' ];
+        return [ 'circuits' ];
     }
 }

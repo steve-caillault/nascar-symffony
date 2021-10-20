@@ -32,8 +32,13 @@ admin:
   searching:
     # Recherche de pilotes
     pilots:
-      placeholders:
-        searching: Rechercher un pilote
+      searching: 
+        label: Rechercher un pilote
+        
+    # Recherche de circuits
+    circuits:
+        searching: 
+          label: Rechercher un circuit
   states:
     # Edition d'un pays ou d'un état
     edit:
@@ -75,6 +80,16 @@ admin:
         birth_city:
           label: Ville de naissance
           placeholder: Rechercher une ville
+
+  circuits:
+    # Edition d'un circuit
+      fields:
+        name: 
+          label: Nom du circuit
+        city:
+          label: Ville du circuit
+        distance:
+          label: Distance en mètre
 
   seasons:
     # Edition d'une saison

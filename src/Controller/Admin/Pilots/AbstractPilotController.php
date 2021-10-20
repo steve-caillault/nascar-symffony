@@ -48,7 +48,7 @@ abstract class AbstractPilotController extends AdminAbstractController {
     }
 
     /**
-     * Retourne le pilot à gérer
+     * Retourne le pilote à gérer
      * @return ?Pilot
      */
     protected function getPilot() : ?Pilot

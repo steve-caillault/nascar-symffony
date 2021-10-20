@@ -7,6 +7,7 @@
 
 namespace App\DataFixtures;
 
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Doctrine\Bundle\FixturesBundle\{
     Fixture,
     FixtureGroupInterface
@@ -21,7 +22,12 @@ final class CityFixtures extends Fixture implements FixtureGroupInterface, Depen
 {
     use WithDataFromCSV;
 
-    public function __construct(private Kernel $kernel)
+    /**
+     * Constructeur
+     * @param Kernel $kernel
+     * @param SluggerInterface $slugger
+     */
+    public function __construct(private Kernel $kernel, private SluggerInterface $slugger)
     {
         $this->initDataFromCSV();
     }
@@ -74,7 +80,9 @@ final class CityFixtures extends Fixture implements FixtureGroupInterface, Depen
             
             $manager->persist($city);
 
-            $cityKey = 'CITY_' . $state->getCode() . '_' . $city->getName();
+            $citySlug = $this->slugger->slug($city->getName());
+            $cityKey = 'CITY_' . $state->getCode() . '_' . $citySlug;
+
             $this->addReference($cityKey, $city);
         }
 

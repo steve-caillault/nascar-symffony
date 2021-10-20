@@ -1,0 +1,71 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% set title = 'admin.circuits.title' | trans %}
+
+{% block head_title %}
+{{ title }}
+{% endblock %}
+
+{% block page_title %}
+{{ title }}
+{% endblock %}
+
+{% block body %}
+    {# Formulaire de recherche #}
+    {% set searchingSubmitLabel = 'searching.submit.label' | trans([], 'form') %}
+    
+    {% include 'forms/default.html.twig' with {
+        form: searchingForm,
+        attributes: { 
+            id: 'admin-circuits-searching',
+            class: 'inline search-form'
+        },
+        submitLabel: searchingSubmitLabel
+    } only %}
+
+    {% if circuits | length > 0 %}
+
+        {# Nombre de résultats #}
+        {% include 'ui/pagination/details.html.twig' with {
+            pagination: pagination
+        } only %}
+
+        {# Liste des circuits #}
+        <table>
+            <thead>
+                <tr class="head">
+                    <td>{{ 'admin.circuits.list.fields.name' | trans }}</td>
+                    <td>{{ 'admin.circuits.list.fields.city' | trans }}</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for circuit in circuits %}
+                    {% set edit_path = path('app_admin_circuits_edit_index', { 
+                        circuitId: circuit.id
+                    }) %}
+                    {% set edit_alt_label = 'admin.circuits.list.edit.alt_label' | trans({ 
+                        name: circuit.name
+                    }) %}
+                    <tr class="line">
+                        <td>{{ anchor(circuit.name, edit_alt_label, edit_path) }}</td>
+                        <td>{{ circuit.city.name }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {{ pagination(pagination) }}
+    {% else %}
+        {# Cas vide #}
+        {% set empty_anchor_label = 'admin.circuits.empty_anchor_label' | trans %}
+        {% set empty_anchor_alt = 'admin.circuits.empty_anchor_alt' | trans %}
+        {% set empty_anchor_url = path('app_admin_circuits_add_index') %}
+        {% set add_anchor = anchor(empty_anchor_label, empty_anchor_alt, empty_anchor_url) %}
+        {% set with_searching = searching is not null ? 1 : 0 %}
+
+        <p>{{ 'admin.circuits.empty' | trans({ 
+            anchor: add_anchor,
+            with_searching: with_searching
+        }) | raw }}</p>
+        
+    {% endif %}
+{% endblock %}

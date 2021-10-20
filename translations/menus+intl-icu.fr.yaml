@@ -26,6 +26,9 @@ header:
       pilots:
         label: Pilotes
         alt_label: Gestion des pilotes.
+      circuits: 
+        label: Circuits
+        alt_label: Gestion des circuits.
       seasons:
         label: Saisons
         alt_label: Gestion des saisons.
@@ -84,6 +87,17 @@ header:
       edit:
         label: Modifier le pilote
         alt_label: Modifier le pilote {name}.
+    # Menu des circuits
+    circuits:
+      list:
+        label: Liste des circuits
+        alt_label: Consulter la liste des circuits.
+      add:
+        label: Ajouter un circuit
+        alt_label: Ajouter un circuit.
+      edit: 
+        label: Modifier le circuit
+        alt_label: Modifier le circuit {name}.
     # Menu de l'utilisateur connecté
     user:
       logout:

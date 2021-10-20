@@ -85,6 +85,7 @@ class PilotRepository extends AbstractRepository implements SearchingRepositoryI
      * @param ?string $searching
      * @param int $limit
      * @param int $offset
+     * @return mixed
      */
     public function findBySearching(?string $searching = null, int $limit = 20, int $offset = 0)
     {

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
 /***/
 use App\Entity\City;
 
@@ -32,37 +33,57 @@ final class CityRepository extends AbstractRepository implements SearchingReposi
     }
 
     /**
+     * Retourne le query builder pour la recherche d'un pilote
+     * @param ?string $searching
+     * @return QueryBuilder
+     */
+    private function getQueryBuilderForSearching(?string $searching) : QueryBuilder
+    {
+        $query = $this->createQueryBuilder('cities', 'cities.id')
+            ->orderBy('cities.name', 'ASC')
+        ;
+
+        if($searching !== null)
+        {
+            $query
+                ->where('cities.name LIKE :name')
+                ->setParameter('name', '%' . $searching . '%')   
+            ;
+        }
+
+        return $query;
+    }
+
+    /**
      * Requête de recherche
      * @param ?string $searching
      * @param int $limit
      * @param int $offset
+     * @return mixed
      */
     public function findBySearching(?string $searching = null, int $limit = 20, int $offset = 0)
     {
-        $dql = strtr('SELECT cities FROM :object cities', [
-            ':object' => City::class,
-        ]);
-
-        if($searching !== null)
-        {
-            $dql .= ' WHERE cities.name LIKE :name';
-        }
-
-        $dql .= ' ORDER BY cities.name ASC';
-
-        $query = $this->getEntityManager()->createQuery($dql);
-
-        if($searching !== null)
-        {
-            $query->setParameter('name', '%' . $searching . '%');
-        }
-
-        
+        $query = $this->getQueryBuilderForSearching($searching);
 
         return $query
             ->setMaxResults($limit)
             ->setFirstResult($offset)
+            ->getQuery()
             ->getResult()
+        ;
+    }
+
+    /**
+     * Compte le nombre d'élément d'une recherche
+     * @param ?string $searching
+     * @return int
+     */
+    public function getTotalBySearching(?string $searching) : int
+    {
+        return $this->getQueryBuilderForSearching($searching)
+            ->select('COUNT(cities.id)')
+            ->getQuery()
+            ->getSingleScalarResult()
         ;
     }
 
