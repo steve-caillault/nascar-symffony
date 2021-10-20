@@ -57,7 +57,7 @@ admin:
   # Circuits
   circuits:
     label: Circuits
-    alt_label: Consulter la liste des circuits
+    alt_label: Consulter la liste des circuits.
     add: 
       label: Création
     edit: 

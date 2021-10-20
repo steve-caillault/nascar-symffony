@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Création d'un circuit
+ * Edition d'un circuit
  */
 
 namespace App\Controller\Admin\Circuits;
@@ -11,32 +11,39 @@ use Symfony\Component\HttpFoundation\{
     Response
 };
 use Symfony\Component\Routing\Annotation\Route as RouteAnnotation;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Contracts\Translation\TranslatorInterface;
 /***/
 use App\Entity\Circuit;
-use App\UI\Menus\Breadcrumb\BreadcrumbItem;
 use App\Form\CircuitType;
 
-final class AddController extends AbstractCircuitController {
+final class EditController extends AbstractCircuitController {
 
     /**
-     * Ajout d'un circuit
+     * Edition d'un circuit
      * @param Request $request
      * @param TranslatorInterface $translator
+     * @param Circuit $circuit
      * @return Response
      */
     #[
         RouteAnnotation(
-            path: '/circuits/add',
-            methods: [ 'GET', 'POST', ]
-        )
+            path: '/circuits/{circuitId}/edit',
+            methods: [ 'GET', 'POST', ],
+            requirements: [
+                'circuitId' => '[0-9]+',
+            ]
+        ),
+        ParamConverter('circuit', options: [ 'mapping' => [ 'circuitId' => 'id' ] ])
     ]
     public function index(
         Request $request, 
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        Circuit $circuit,
     ) : Response
     {
-        $circuit = new Circuit();
+        $originalCircuit = clone $circuit;
+        $this->setCircuit($originalCircuit);
 
         $form = $this->createForm(CircuitType::class, $circuit);
         $form->handleRequest($request);
@@ -45,15 +52,14 @@ final class AddController extends AbstractCircuitController {
         {
             try {
                 $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($circuit);
                 $entityManager->flush();
+                $success = true;
             } catch(\Throwable) {
-                
+                $success = false;
             }
 
-            $success = ($circuit->getId() !== null);
             $flashKey = ($success) ? 'success' : 'error';
-            $flashMessage = ($success) ? 'admin.circuits.add.success' : 'admin.circuits.add.failure';
+            $flashMessage = ($success) ? 'admin.circuits.edit.success' : 'admin.circuits.edit.failure';
             $this->addFlash($flashKey, $translator->trans($flashMessage, [
                 'name' => $circuit->getName(),
             ]));
@@ -62,24 +68,12 @@ final class AddController extends AbstractCircuitController {
             {
                 return $this->redirectToRoute('app_admin_circuits_list_index');
             }
-
         }
 
-        return $this->renderForm('admin/circuits/add.html.twig', [
+        return $this->renderForm('admin/circuits/edit.html.twig', [
             'form' => $form,
+            'circuit' => $originalCircuit,
         ]);
-    }
-
-    /**
-     * Alimente le fil d'Ariane
-     * @return void
-     */
-    protected function fillBreadcrumb() : void
-    {
-        parent::fillBreadcrumb();
-        $this->getBreadcrumb()->addItem(new BreadcrumbItem(
-            label: $this->translator->trans('admin.circuits.add.label', domain: 'breadcrumb')
-        ));
     }
 
 }

@@ -127,6 +127,29 @@ abstract class AbstractManagePilot extends AbstractManageEntity {
     }
 
     /**
+     * Vérification des données de l'entité après l'échec
+     * @param array $params Paramètres du formulaires
+     */
+    protected function checkFailureEntityData(array $params) : void
+    {
+        // On vérifie ici qu'il n'y a pas eu de nouveau pilote créé
+        $pilotsData = $this->getService(PilotFixtures::class)->getDataFromCSV();
+        $lastPilotExpectedData = $pilotsData[count($pilotsData) - 1];
+        $lastPilotCreated = $this->getLastPilotCreated();
+
+        $this->assertEquals($lastPilotExpectedData, [
+            'id' => $lastPilotCreated?->getId(),
+            'publicId' => $lastPilotCreated?->getPublicId(),
+            'firstName' => $lastPilotCreated?->getFirstName(),
+            'lastName' => $lastPilotCreated?->getLastName(),
+            'fullName' => $lastPilotCreated?->getFullName(),
+            'birthDate' => $lastPilotCreated?->getBirthDate()->format('Y-m-d'),
+            'birthCity' => $lastPilotCreated?->getBirthCity()->getName(),
+            'birthState' => $lastPilotCreated?->getBirthCity()->getState()->getCode(),
+        ]);
+    }
+
+    /**
      * Provider pour les tests d'échec de la validation
      * @return array
      */

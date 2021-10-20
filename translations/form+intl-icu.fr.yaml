@@ -83,11 +83,13 @@ admin:
 
   circuits:
     # Edition d'un circuit
+    edit:
       fields:
         name: 
           label: Nom du circuit
         city:
           label: Ville du circuit
+          placeholder: Rechercher une ville
         distance:
           label: Distance en mètre
 

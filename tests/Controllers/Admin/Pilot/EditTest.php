@@ -143,7 +143,9 @@ final class EditTest extends AbstractManagePilot {
      */
     protected function checkFailureEntityData(array $params) : void
     {
-        // On vérifie ici qu'il n'y a pas eu de nouveau pilote créé
+        parent::checkFailureEntityData($params);
+
+        // On vérifie ici que le pilote n'a pas été mis à jour
         $pilotsData = $this->getService(PilotFixtures::class)->getDataFromCSV();
         $pilotDataExpected = current($pilotsData);
         $pilotInDatabase = $this->getRepository(Pilot::class)->find($pilotDataExpected['id']);

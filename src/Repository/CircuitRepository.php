@@ -53,9 +53,9 @@ final class CircuitRepository extends AbstractRepository implements SearchingRep
      */
     public function findBySearching(?string $searching = null, int $limit = 20, int $offset = 0)
     {
-        $query = $this->getQueryBuilderForSearching($searching);
-        
-        return $query
+        return $this->getQueryBuilderForSearching($searching)
+            ->join('circuits.city', 'cities')
+            ->addSelect('cities')
             ->setMaxResults($limit)
             ->setFirstResult($offset)
             ->getQuery()

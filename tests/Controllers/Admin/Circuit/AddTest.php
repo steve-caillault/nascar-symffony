@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Tests du contrôleur de création d'un pilote
+ * Tests du contrôleur de création d'un circuit
  */
 
-namespace App\Tests\Controllers\Admin\Pilot;
+namespace App\Tests\Controllers\Admin\Circuit;
 
 use App\DataFixtures\{
     CityFixtures,
-    PilotFixtures
+    CircuitFixtures
 };
 
-final class AddTest extends AbstractManagePilot {
+final class AddTest extends AbstractManageCircuit {
 
     /**
      * Retourne l'URI de la page de gestion de l'entité
@@ -19,7 +19,7 @@ final class AddTest extends AbstractManagePilot {
      */
     protected function manageUri() : string
     {
-        return '/admin/pilots/add';
+        return '/admin/circuits/add';
     }
 
     /**
@@ -28,20 +28,9 @@ final class AddTest extends AbstractManagePilot {
      */
     protected function getSuccessFlashMessageExpected(array $params) : string
     {
-        $fullName = trim(implode(' ', [
-            $params['first_name'], $params['last_name'],
-        ]));
+        $name = $params['name'];
 
-        return sprintf('Le pilote %s a été créé.', $fullName);
-    }
-
-    /**
-     * Retourne le titre de la page attendu en cas de succès
-     * @return string
-     */
-    protected function getSuccessPageTitleExpected() : string
-    {
-        return 'Liste des pilotes';
+        return sprintf('Le circuit %s a été créé.', $name);
     }
 
     /**
@@ -50,7 +39,7 @@ final class AddTest extends AbstractManagePilot {
      */
     protected function getFailurePageTitleExpected() : string
     {
-        return 'Création d\'un pilote';
+        return 'Création d\'un circuit';
     }
 
     /**

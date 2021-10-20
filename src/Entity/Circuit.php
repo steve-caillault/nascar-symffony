@@ -62,12 +62,11 @@ use App\Repository\CircuitRepository;
         ORM\Column(type: 'smallint', options: [ 'unsigned' => true ]),
         /***/
         Constraints\NotBlank(message: 'circuits.edit.distance.not_blank'),
-        Constraints\Type('integer', 'circuits.edit.distance.integer'),
+        Constraints\Type('int', 'circuits.edit.distance.integer'),
         Constraints\Range(
             min: 200, 
             max: 10000, 
-            minMessage: 'circuits.edit.distance.min', 
-            maxMessage: 'circuits.edit.distance.max'
+            notInRangeMessage: 'circuits.edit.distance.range'
         ),
     ]
     private ?int $distance = null;

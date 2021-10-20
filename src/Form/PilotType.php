@@ -5,7 +5,6 @@ namespace App\Form;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 /***/
 use App\Entity\{
@@ -18,11 +17,9 @@ final class PilotType extends AbstractEntityType
 {
     /**
      * Constructeur
-     * @param TranslatorInterface $translator
      * @param UrlGeneratorInterface $urlGenerator
      */
     public function __construct(
-        private TranslatorInterface $translator,
         private UrlGeneratorInterface $urlGenerator
     )
     {
@@ -46,7 +43,7 @@ final class PilotType extends AbstractEntityType
                 'entity_class' => City::class,
                 'route_name' => $this->urlGenerator->generate('app_admin_autocompletesearching_searching'),
                 'attr' => [
-                    'placeholder' => $this->translator->trans('admin.pilots.edit.fields.birth_city.placeholder', domain: 'form')
+                    'placeholder' => 'admin.pilots.edit.fields.birth_city.placeholder'
                 ],
             ])
         ;

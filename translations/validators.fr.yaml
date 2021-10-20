@@ -110,8 +110,7 @@ circuits:
     distance:
       not_blank: La distance du circuit est nécessaire.
       integer: La distance du circuit doit être un entier.
-      min: La distance du circuit doit avoir au moins {{ limit }} mètres.
-      max: La distance du circuit doit avoir au plus {{ limit }} mètres.
+      range: La distance du circuit doit avoir entre {{ min }} et {{ max }} mètres.
        
 # Entité Season
 seasons:
