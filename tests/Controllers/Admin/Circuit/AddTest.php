@@ -6,10 +6,7 @@
 
 namespace App\Tests\Controllers\Admin\Circuit;
 
-use App\DataFixtures\{
-    CityFixtures,
-    CircuitFixtures
-};
+use App\DataFixtures\CircuitFixtures;
 
 final class AddTest extends AbstractManageCircuit {
 
@@ -50,7 +47,7 @@ final class AddTest extends AbstractManageCircuit {
      */
     public function testSuccess(array $params) : void
     {
-        $this->executeFixtures([ CityFixtures::class, ]);
+        $this->executeFixtures([ CircuitFixtures::class, ]);
         parent::testSuccess($params);
     }
 

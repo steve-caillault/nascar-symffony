@@ -6,13 +6,18 @@
 
 namespace App\Tests\Controllers\Admin\Pilot;
 
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+/***/
 use App\DataFixtures\PilotFixtures;
 use App\Entity\{
     Pilot,
     PilotPublicIdHistory
 };
+use App\Tests\WithPilotManagingTrait;
 
 final class EditTest extends AbstractManagePilot {
+
+    use WithPilotManagingTrait;
 
     /**
      * Retourne si l'identifiant public existe pour le pilote en paramètre dans la table des identifiants
@@ -66,12 +71,21 @@ final class EditTest extends AbstractManagePilot {
     }
 
     /**
+     * Retourne le titre de la page d'édition
+     * @return string
+     */
+    private function getEditPageTitle() : string
+    {
+        return sprintf('Modification du pilote %s', 'Jeffrey Earnhardt');
+    }
+
+    /**
      * Retourne le titre de la page attendu en cas d'échec
      * @return string
      */
     protected function getFailurePageTitleExpected() : string
     {
-        return sprintf('Modification du pilote %s', 'Jeffrey Earnhardt');
+        return $this->getEditPageTitle();
     }
 
     /**
@@ -88,6 +102,65 @@ final class EditTest extends AbstractManagePilot {
         $this->assertSelectorTextContains('h1', $expectedTitle);
         $this->assertPageTitleSame($expectedTitle);
     }
+
+    /**
+     * Vérification de la redirection lors de l'utilisation d'un ancien identifiant public 
+     * @param string $publicId
+     * @param bool $addHistory Vrai s'il faut ajouter l'identifiant public à l'historique
+     * @param bool $mustFound Vrai si la page doit être accessible
+     * @dataProvider publidIdsProvider
+     * @return void
+     */
+    public function testPublicIds(string $publicId, bool $addHistory, bool $mustFound) : void
+    {
+        $this->executeFixtures([ PilotFixtures::class, ]);
+
+        $pilot = $this->getRepository(Pilot::class)->find(1);
+
+        if($addHistory)
+        {
+            $this->addPilotPublicId($pilot, $publicId);
+        }
+
+        // URI finale attendu
+        $uri = sprintf('/admin/pilots/%s/edit', $publicId);
+        $finalPublicId = ($mustFound) ? $pilot->getPublicId() : $publicId;
+        $expectedUri = $this->getService(UrlGeneratorInterface::class)->generate('app_admin_pilots_edit_index', [
+            'pilotPublicId' => $finalPublicId,
+        ]);
+
+        $client = $this->getHttpClient();
+        $client->loginUser($this->userToLogged(), 'admin');
+        $client->followRedirects();
+        $crawler = $client->request('GET', $uri);
+
+        $statusExpected = ($mustFound) ? 200 : 404;
+        $titleExpected = ($mustFound) ? $this->getEditPageTitle() : 'Erreur 404';
+        $this->assertResponseStatusCodeSame($statusExpected);
+        $this->assertSelectorTextContains('h1', $titleExpected);
+        $this->assertPageTitleSame($titleExpected);
+        $this->assertTrue(str_contains($crawler->getUri(), $expectedUri));
+    }
+
+     /**
+     * Provider pour la recherche de pilote par identifiant public
+     * @return array
+     */
+    public function publidIdsProvider() : array
+    {
+        return [
+            'without-history' => [
+                'jeffrey-earnhardt', false, true,
+            ],
+            'with-history' => [
+                'jeffrey-earnhardt-2', true, true
+            ],
+            'not-found' => [
+                'jeffrey-earnhardt-2', false, false,
+            ]
+        ];
+    }
+
 
     /**
      * Vérification du succès de la gestion d'une entité

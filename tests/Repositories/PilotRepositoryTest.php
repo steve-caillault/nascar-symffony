@@ -7,11 +7,63 @@
 namespace App\Tests\Repositories;
 
 use App\DataFixtures\PilotFixtures;
-use App\Tests\BaseTestCase;
-use App\Entity\Pilot;
+use App\Tests\{
+    BaseTestCase,
+    WithPilotManagingTrait
+};
+use App\Entity\{
+    Pilot,
+    PilotPublicIdHistory
+};
 
 final class PilotRepositoryTest extends BaseTestCase {
     
+    use WithPilotManagingTrait;
+
+    /**
+     * Test de récupération d'un pilot par son identifiant
+     * @param string $publicId
+     * @param bool $mustFound Vrai si la recherche par identifiant public doit fonctionner
+     * @dataProvider publidIdsProvider
+     * @return void
+     */
+    public function testRetrieveByPublicId(string $publicId, bool $mustFound) : void
+    {
+        $this->executeFixtures([ PilotFixtures::class, ]);
+
+        $pilotIdToFind = 17; // Denny Hamlin
+
+        $pilotRepository = $this->getRepository(Pilot::class);
+
+        // Création d'un ancien identifiant public
+        $dennyHamlinPilot = $pilotRepository->find($pilotIdToFind);
+        $this->addPilotPublicId($dennyHamlinPilot, 'denny-hamlin-2');
+
+        // Vérification du pilote
+        $pilotIdExpected = ($mustFound) ? $pilotIdToFind : null;
+        $pilot = $pilotRepository->findByPublicId($publicId);
+        $this->assertEquals($pilotIdExpected, $pilot?->getId());
+    }
+
+    /**
+     * Provider pour la recherche de pilote par identifiant public
+     * @return array
+     */
+    public function publidIdsProvider() : array
+    {
+        return [
+            'without-history' => [
+                'denny-hamlin', true,
+            ],
+            'with-history' => [
+                'denny-hamlin-2', true,
+            ],
+            'not-found' => [
+                'richard-lee-petty', false,
+            ]
+        ];
+    }
+
     /**
      * Test sans pilote
      * @return void

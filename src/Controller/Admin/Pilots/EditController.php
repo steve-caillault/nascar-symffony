@@ -7,11 +7,12 @@
 namespace App\Controller\Admin\Pilots;
 
 use Symfony\Component\HttpFoundation\{
+    RedirectResponse,
     Request,
     Response
 };
 use Symfony\Component\Routing\Annotation\Route as RouteAnnotation;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Contracts\Translation\TranslatorInterface;
 /***/
 use App\Entity\Pilot;
@@ -34,7 +35,7 @@ final class EditController extends AbstractPilotController {
                 'pilotPublicId' => '[^\/]+',
             ]
         ),
-        ParamConverter('pilot', options: [ 'mapping' => [ 'pilotPublicId' => 'public_id' ] ])
+        Entity('pilot', expr: 'repository.findByPublicId(pilotPublicId)')
     ]
     public function index(
         Request $request, 
@@ -42,6 +43,16 @@ final class EditController extends AbstractPilotController {
         Pilot $pilot,
     ) : Response
     {
+        // Si l'identifiant public est ancien, on redirige vers le plus récent
+        $requestPublicId = $request->attributes->get('pilotPublicId');
+        $pilotPublicId = $pilot->getPublicId();
+        if($requestPublicId !== $pilotPublicId)
+        {
+            return $this->redirectToRoute('app_admin_pilots_edit_index', [
+                'pilotPublicId' => $pilotPublicId,
+            ]);
+        }
+
         $originalPilot = clone $pilot;
         $this->setPilot($originalPilot);
 

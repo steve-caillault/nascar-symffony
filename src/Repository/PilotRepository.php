@@ -4,8 +4,12 @@ namespace App\Repository;
 
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Query\Expr\Join;
 /***/
-use App\Entity\Pilot;
+use App\Entity\{
+    Pilot,
+    PilotPublicIdHistory
+};
 
 /**
  * @method Pilot|null find($id, $lockMode = null, $lockVersion = null)
@@ -18,6 +22,23 @@ class PilotRepository extends AbstractRepository implements SearchingRepositoryI
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Pilot::class);
+    }
+
+    /**
+     * Retourne un pilote à partir de son identifiant public
+     * @param string $publicId
+     * @return ?Pilot
+     */
+    public function findByPublicId(string $publicId) : ?Pilot
+    {
+        return $this->createQueryBuilder('pilots', 'pilots.id')
+            ->leftJoin(PilotPublicIdHistory::class, 'public_ids', Join::WITH, 'public_ids.pilot = pilots.id')
+            ->where('pilots.public_id = :publicId')
+            ->orWhere('public_ids.public_id = :publicId')
+            ->setParameter('publicId', $publicId)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     /**
