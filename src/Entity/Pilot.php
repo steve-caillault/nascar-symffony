@@ -20,7 +20,7 @@ use App\Repository\PilotRepository;
     /***/
     UniqueEntity('public_id', message: 'pilots.edit.public_id.not_exists')
 ]
-class Pilot implements EntityInterface, AutocompleteEntityInterface
+class Pilot implements EntityInterface, AutocompleteEntityInterface, PublicIdEntityInterface
 {
     /**
      * Identifiant

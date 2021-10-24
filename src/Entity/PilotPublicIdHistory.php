@@ -8,14 +8,14 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 /***/
-use App\Repository\PilotPublicIdRepository;
+use App\Repository\PilotPublicIdHistoryRepository;
 
 
 #[
-    ORM\Entity(PilotPublicIdRepository::class),
+    ORM\Entity(PilotPublicIdHistoryRepository::class),
     ORM\Table('pilots_public_ids')
 ]
-final class PilotPublicIdHistory implements EntityInterface
+final class PilotPublicIdHistory implements EntityInterface, PublicIdHistoryEntityInterface
 {
     /**
      * Pilote

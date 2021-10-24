@@ -4,10 +4,7 @@ namespace App\Repository;
 
 use Doctrine\Persistence\ManagerRegistry;
 /***/
-use App\Entity\{
-    Pilot,
-    PilotPublicIdHistory
-};
+use App\Entity\PilotPublicIdHistory;
 
 /**
  * @method PilotPublicId|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,60 +14,20 @@ use App\Entity\{
  */
 final class PilotPublicIdHistoryRepository extends AbstractRepository
 {
+    use PublicIdHistoryRepositoryTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, PilotPublicIdHistory::class);
     }
 
     /**
-     * Vérifie si l'identifiant public existe pour le pilote
-     * @param Pilot $pilot
-     * @param string $publicId
-     * @return bool
+     * Retourne le champs de l'entité ou se trouve la référence de l'objet
+     * @return string
      */
-    public function exists(Pilot $pilot, string $publicId) : bool
+    private function getTargetFieldName() : string
     {
-        $dql = strtr('SELECT COUNT(t.public_id) FROM :object t WHERE t.pilot = :pilot AND t.public_id = :public_id', [
-            ':object' => PilotPublicIdHistory::class,
-        ]);
-
-        $count = $this->getEntityManager()
-            ->createQuery($dql)
-            ->setParameters([
-                'pilot' => $pilot,
-                'public_id' => $publicId
-            ])
-            ->getSingleScalarResult();
-
-        return ($count > 0);
+        return 'pilot';
     }
 
-    // /**
-    //  * @return PilotPublicId[] Returns an array of PilotPublicId objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?PilotPublicId
-    {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
