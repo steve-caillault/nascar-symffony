@@ -16,7 +16,7 @@ use App\Repository\MotorRepository;
     UniqueEntity('public_id', message: 'motors.edit.public_id.not_exists'),
     UniqueEntity('name', message: 'motors.edit.name.not_exists')
 ]
-final class Motor
+final class Motor implements EntityInterface, AutocompleteEntityInterface, PublicIdEntityInterface
 {
 
     /**
@@ -112,5 +112,21 @@ final class Motor
         return $this;
     }
 
-    
+    /**
+     * Retourne le texte à afficher dans un champs de formulaire
+     * @return string
+     */
+    public function getAutocompleteDisplayValue() : string
+    {
+        return $this->getName();
+    }
+
+    /**
+     * Retourne l'identifiant
+     * @return int|string
+     */
+    public function getAutocompleteId() : int|string
+    {
+        return $this->getId();
+    }
 }

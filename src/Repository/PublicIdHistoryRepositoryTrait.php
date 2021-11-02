@@ -14,7 +14,7 @@ trait PublicIdHistoryRepositoryTrait {
      * Retourne le champs de l'entité ou se trouve la référence de l'objet
      * @return string
      */
-    abstract private function getTargetFieldName() : string;
+    abstract public function getTargetFieldName() : string;
 
     /**
      * Vérifie si l'identifiant public existe pour l'entité

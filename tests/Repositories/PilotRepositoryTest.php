@@ -11,17 +11,14 @@ use App\Tests\{
     BaseTestCase,
     WithPilotManagingTrait
 };
-use App\Entity\{
-    Pilot,
-    PilotPublicIdHistory
-};
+use App\Entity\Pilot;
 
 final class PilotRepositoryTest extends BaseTestCase {
     
-    use WithPilotManagingTrait;
+    use PublicIdRepositoryTrait, WithPilotManagingTrait;
 
     /**
-     * Test de récupération d'un pilot par son identifiant
+     * Test de récupération d'un pilote par son identifiant
      * @param string $publicId
      * @param bool $mustFound Vrai si la recherche par identifiant public doit fonctionner
      * @dataProvider publidIdsProvider

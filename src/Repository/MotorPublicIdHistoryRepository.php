@@ -4,7 +4,9 @@ namespace App\Repository;
 
 use Doctrine\Persistence\ManagerRegistry;
 /***/
-use App\Entity\PilotPublicIdHistory;
+use App\Entity\MotorPublicIdHistory;
+
+
 
 /**
  * @method PilotPublicId|null find($id, $lockMode = null, $lockVersion = null)
@@ -12,13 +14,13 @@ use App\Entity\PilotPublicIdHistory;
  * @method PilotPublicId[]    findAll()
  * @method PilotPublicId[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-final class PilotPublicIdHistoryRepository extends AbstractRepository
+final class MotorPublicIdHistoryRepository extends AbstractRepository
 {
     use PublicIdHistoryRepositoryTrait;
 
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, PilotPublicIdHistory::class);
+        parent::__construct($registry, MotorPublicIdHistory::class);
     }
 
     /**
@@ -27,7 +29,7 @@ final class PilotPublicIdHistoryRepository extends AbstractRepository
      */
     public function getTargetFieldName() : string
     {
-        return 'pilot';
+        return 'motor';
     }
 
 }

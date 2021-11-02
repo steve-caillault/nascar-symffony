@@ -10,6 +10,7 @@ use App\Entity\{
     Pilot,
     PilotPublicIdHistory
 };
+use App\Repository\PublicIdRepositoryTrait;
 
 /**
  * @method Pilot|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,26 +20,20 @@ use App\Entity\{
  */
 class PilotRepository extends AbstractRepository implements SearchingRepositoryInterface
 {
+    use PublicIdRepositoryTrait;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Pilot::class);
     }
 
     /**
-     * Retourne un pilote à partir de son identifiant public
-     * @param string $publicId
-     * @return ?Pilot
+     * Retourne le nom de la classe de l'entité de l'historique à utiliser
+     * @return string
      */
-    public function findByPublicId(string $publicId) : ?Pilot
+    private function getPublicIdHistoryEntityClassName() : string
     {
-        return $this->createQueryBuilder('pilots', 'pilots.id')
-            ->leftJoin(PilotPublicIdHistory::class, 'public_ids', Join::WITH, 'public_ids.pilot = pilots.id')
-            ->where('pilots.public_id = :publicId')
-            ->orWhere('public_ids.public_id = :publicId')
-            ->setParameter('publicId', $publicId)
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult();
+        return PilotPublicIdHistory::class;
     }
 
     /**
