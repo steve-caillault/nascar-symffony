@@ -13,7 +13,8 @@ use App\Repository\PilotPublicIdHistoryRepository;
 
 #[
     ORM\Entity(PilotPublicIdHistoryRepository::class),
-    ORM\Table('pilots_public_ids')
+    ORM\Table('pilots_public_ids'),
+    ORM\Index(name: 'fk_pilot', columns: [ 'pilot' ]),
 ]
 final class PilotPublicIdHistory implements EntityInterface, PublicIdHistoryEntityInterface
 {
