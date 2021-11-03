@@ -1,37 +1,37 @@
 <?php
 
 /**
- * Tests du contrôleur d'édition d'un pilote
+ * Tests du contrôleur d'édition d'un moteur
  */
 
-namespace App\Tests\Controllers\Admin\Pilot;
+namespace App\Tests\Controllers\Admin\Motor;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 /***/
-use App\DataFixtures\PilotFixtures;
+use App\DataFixtures\MotorFixtures;
 use App\Entity\{
-    Pilot,
-    PilotPublicIdHistory
+    Motor,
+    MotorPublicIdHistory
 };
-use App\Tests\WithPilotManagingTrait;
+use App\Tests\WithMotorManagingTrait;
 
-final class EditTest extends AbstractManagePilot {
+final class EditTest extends AbstractManageMotor {
 
-    use WithPilotManagingTrait;
+    use WithMotorManagingTrait;
 
     /**
-     * Retourne si l'identifiant public existe pour le pilote en paramètre dans la table des identifiants
-     * @param Pilot $pilot
+     * Retourne si l'identifiant public existe pour le moteur en paramètre dans la table des identifiants
+     * @param Motor $motor
      * @param string $publicId
      * @return bool
      */
-    private function existsInPublicIdsTable(Pilot $pilot, string $publicId) : bool
+    private function existsInPublicIdsTable(Motor $motor, string $publicId) : bool
     {
-        $dql = sprintf('SELECT COUNT(pilots_public_ids.public_id) FROM %s pilots_public_ids WHERE pilots_public_ids.pilot = :pilot AND pilots_public_ids.public_id = :public_id', PilotPublicIdHistory::class);
+        $dql = sprintf('SELECT COUNT(motors_public_ids.public_id) FROM %s motors_public_ids WHERE motors_public_ids.motor = :motor AND motors_public_ids.public_id = :public_id', MotorPublicIdHistory::class);
 
         $count = (int) $this->getEntityManager()
             ->createQuery($dql)
-            ->setParameter('pilot', $pilot)
+            ->setParameter('motor', $motor)
             ->setParameter('public_id', $publicId)
             ->getSingleScalarResult()
         ;
@@ -45,7 +45,7 @@ final class EditTest extends AbstractManagePilot {
      */
     protected function manageUri() : string
     {
-        return '/admin/pilots/jeffrey-earnhardt/edit';
+        return '/admin/motors/chevrolet/edit';
     }
 
     /**
@@ -54,11 +54,7 @@ final class EditTest extends AbstractManagePilot {
      */
     protected function getSuccessFlashMessageExpected(array $params) : string
     {
-        $fullName = trim(implode(' ', [
-            $params['first_name'], $params['last_name'],
-        ]));
-
-        return sprintf('Le pilote %s a été mis à jour.', $fullName);
+        return sprintf('Le moteur %s a été mis à jour.', $params['name']);
     }
 
     /**
@@ -67,7 +63,7 @@ final class EditTest extends AbstractManagePilot {
      */
     protected function getSuccessPageTitleExpected() : string
     {
-        return 'Liste des pilotes';
+        return 'Liste des moteurs';
     }
 
     /**
@@ -76,7 +72,7 @@ final class EditTest extends AbstractManagePilot {
      */
     private function getEditPageTitle() : string
     {
-        return sprintf('Modification du pilote %s', 'Jeffrey Earnhardt');
+        return sprintf('Modification du moteur %s', 'Chevrolet');
     }
 
     /**
@@ -89,7 +85,7 @@ final class EditTest extends AbstractManagePilot {
     }
 
     /**
-     * Test lorsque le pilote n'existe pas
+     * Test lorsque le moteur n'existe pas
      * @return void
      */
     public function testNotExists() : void
@@ -113,20 +109,20 @@ final class EditTest extends AbstractManagePilot {
      */
     public function testPublicIds(string $publicId, bool $addHistory, bool $mustFound) : void
     {
-        $this->executeFixtures([ PilotFixtures::class, ]);
+        $this->executeFixtures([ MotorFixtures::class, ]);
 
-        $pilot = $this->getRepository(Pilot::class)->find(1);
+        $motor = $this->getRepository(Motor::class)->find(1);
 
         if($addHistory)
         {
-            $this->addPilotPublicId($pilot, $publicId);
+            $this->addMotorPublicId($motor, $publicId);
         }
 
         // URI finale attendu
-        $uri = sprintf('/admin/pilots/%s/edit', $publicId);
-        $finalPublicId = ($mustFound) ? $pilot->getPublicId() : $publicId;
-        $expectedUri = $this->getService(UrlGeneratorInterface::class)->generate('app_admin_pilots_edit_index', [
-            'pilotPublicId' => $finalPublicId,
+        $uri = sprintf('/admin/motors/%s/edit', $publicId);
+        $finalPublicId = ($mustFound) ? $motor->getPublicId() : $publicId;
+        $expectedUri = $this->getService(UrlGeneratorInterface::class)->generate('app_admin_motors_edit_index', [
+            'motorPublicId' => $finalPublicId,
         ]);
 
         $client = $this->getHttpClient();
@@ -143,20 +139,20 @@ final class EditTest extends AbstractManagePilot {
     }
 
      /**
-     * Provider pour la recherche de pilote par identifiant public
+     * Provider pour la recherche de moteur par identifiant public
      * @return array
      */
     public function publidIdsProvider() : array
     {
         return [
             'without-history' => [
-                'jeffrey-earnhardt', false, true,
+                'chevrolet', false, true,
             ],
             'with-history' => [
-                'jeffrey-earnhardt-2', true, true
+                'chevrolet-2022', true, true
             ],
             'not-found' => [
-                'jeffrey-earnhardt-2', false, false,
+                'chevrolet-2022', false, false,
             ]
         ];
     }
@@ -170,23 +166,23 @@ final class EditTest extends AbstractManagePilot {
      */
     public function testSuccess(array $params) : void
     {
-        $this->executeFixtures([ PilotFixtures::class, ]);
+        $this->executeFixtures([ MotorFixtures::class, ]);
 
         parent::testSuccess($params);
 
-        $pilotsData = $this->getService(PilotFixtures::class)->getDataFromCSV();
+        $motorsData = $this->getService(MotorFixtures::class)->getMotorsData();
 
         // Récupére l'ancien et le nouvel identifiant public
-        $oldPilotData = current($pilotsData);
-        $oldPublicId = $oldPilotData['publicId'];
+        $oldMotorData = current($motorsData);
+        $oldPublicId = $oldMotorData['publicId'];
         $expectedPublicId = $params['public_id'];
 
-        // Recherche le pilote édité par son identifiant public
-        $pilotInDatabase = $this->getPilotByPublicId($expectedPublicId);
-        $this->assertNotNull($pilotInDatabase);
+        // Recherche le moteur édité par son identifiant public
+        $motorInDatabase = $this->getMotorByPublicId($expectedPublicId);
+        $this->assertNotNull($motorInDatabase);
 
          // Vérifie que l'ancien id est présent dans la table des anciens identifiants, s'il a changé
-        $oldPublicIdSaved = $this->existsInPublicIdsTable($pilotInDatabase, $oldPilotData['publicId']);
+        $oldPublicIdSaved = $this->existsInPublicIdsTable($motorInDatabase, $oldMotorData['publicId']);
         $expectedAdded = ($oldPublicId !== $expectedPublicId);
         $this->assertEquals($expectedAdded, $oldPublicIdSaved);
     }
@@ -200,11 +196,16 @@ final class EditTest extends AbstractManagePilot {
         return array(
             [
                 'success' => [ 
-                    'public_id' => 'nouveau-pilot',
-                    'first_name' => 'Nouveau',
-                    'last_name' => 'Pilote',
-                    'birthdate' => '1979-03-10',
-                    'birth_city[id]' => 54,
+                    'public_id' => 'dodge',
+                    'name' => 'Dodge',
+                ],
+                'name-only' => [
+                    'public_id' => 'chevrolet',
+                    'name' => 'Chevy',
+                ],
+                'public-id-only' => [
+                    'public_id' => 'chevy',
+                    'name' => 'Chevrolet',
                 ],
             ],
         );
@@ -218,24 +219,19 @@ final class EditTest extends AbstractManagePilot {
     {
         parent::checkFailureEntityData($params);
 
-        // On vérifie ici que le pilote n'a pas été mis à jour
-        $pilotsData = $this->getService(PilotFixtures::class)->getDataFromCSV();
-        $pilotDataExpected = current($pilotsData);
-        $pilotInDatabase = $this->getRepository(Pilot::class)->find($pilotDataExpected['id']);
+        // On vérifie ici que le moteur n'a pas été mis à jour
+        $motorsData = $this->getService(MotorFixtures::class)->getMotorsData();
+        $motorDataExpected = current($motorsData);
+        $motorInDatabase = $this->getRepository(Motor::class)->find($motorDataExpected['id']);
 
-        $this->assertEquals($pilotDataExpected, [
-            'id' => $pilotInDatabase?->getId(),
-            'publicId' => $pilotInDatabase?->getPublicId(),
-            'firstName' => $pilotInDatabase?->getFirstName(),
-            'lastName' => $pilotInDatabase?->getLastName(),
-            'fullName' => $pilotInDatabase?->getFullName(),
-            'birthDate' => $pilotInDatabase?->getBirthDate()->format('Y-m-d'),
-            'birthCity' => $pilotInDatabase?->getBirthCity()->getName(),
-            'birthState' => $pilotInDatabase?->getBirthCity()->getState()->getCode(),
+        $this->assertEquals($motorDataExpected, [
+            'id' => $motorInDatabase?->getId(),
+            'publicId' => $motorInDatabase?->getPublicId(),
+            'name' => $motorInDatabase?->getName(),
         ]);
 
-        // On vérifie qu'il n'y a pas eu d'enregistrement dans la table des identifiants des pilotes
-        $oldPublicIdSaved = $this->existsInPublicIdsTable($pilotInDatabase, $pilotInDatabase?->getPublicId());
+        // On vérifie qu'il n'y a pas eu d'enregistrement dans la table des identifiants des moteurs
+        $oldPublicIdSaved = $this->existsInPublicIdsTable($motorInDatabase, $motorInDatabase?->getPublicId());
         $this->assertEquals(false, $oldPublicIdSaved);
     }
 

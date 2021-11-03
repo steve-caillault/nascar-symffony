@@ -153,7 +153,7 @@ abstract class AbstractManageMotor extends AbstractManageEntity {
             'public_id_already_exists' => [
                 // Test avec un identifiant public qui existe déjà
                 [  
-                    'public_id' => 'chevrolet',
+                    'public_id' => 'ford',
                     'name' => $faker->name(),
                 ], [
                     'public_id' => 'Un moteur utilise déjà cet identifiant.',
