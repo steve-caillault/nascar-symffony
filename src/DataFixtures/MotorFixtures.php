@@ -21,22 +21,22 @@ final class MotorFixtures extends Fixture implements FixtureGroupInterface
      * Retourne les données des moteurs à créer
      * @return array
      */
-    private function getMotorsData() : array
+    public function getMotorsData() : array
     {
         return [
             [
                 'id' => 1,
-                'public_id' => 'chevrolet',
+                'publicId' => 'chevrolet',
                 'name' => 'Chevrolet'
             ],
             [
                 'id' => 2,
-                'public_id' => 'toyota',
+                'publicId' => 'toyota',
                 'name' => 'Toyota',
             ],
             [
                 'id' => 3,
-                'public_id' => 'ford',
+                'publicId' => 'ford',
                 'name' => 'Ford',
             ],
         ];
@@ -48,7 +48,7 @@ final class MotorFixtures extends Fixture implements FixtureGroupInterface
         foreach($motorsData as $motorData)
         {
             $motor = (new Motor())
-                ->setPublicId($motorData['public_id'])
+                ->setPublicId($motorData['publicId'])
                 ->setName($motorData['name'])
             ;
 

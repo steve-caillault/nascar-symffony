@@ -158,6 +158,27 @@ admin:
       title: Modification du circuit {name}
       success: Le circuit {name} a été mis à jour.
       failure: Une erreur s'est produite lors de la mise à jour du circuit {name}.
+  motors:
+    # Liste des moteurs
+    title: Liste des moteurs
+    empty: Aucun moteur n'a été trouvé. Cliquez {anchor} pour en ajouter un.
+    empty_anchor_label: ici
+    empty_anchor_alt: Ajouter un moteur.
+    list:
+      fields:
+        name: Nom
+      edit:
+        alt_label: Modifier le moteur {name}.
+    # Ajout d'un moteur
+    add:
+      title: Création d'un moteur
+      success: Le moteur {name} a été créé.
+      failure: Une erreur s'est produite lors de la création du moteur {name}.
+    # Edition d'un moteur
+    edit:
+      title: Modification du moteur {name}
+      success: Le moteur {name} a été mis à jour.
+      failure: Une erreur s'est produite lors de la mise à jour du moteur {name}.
   seasons:
     # Liste des saisons
     title: Liste des saisons

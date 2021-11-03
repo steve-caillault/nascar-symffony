@@ -29,6 +29,9 @@ header:
       circuits: 
         label: Circuits
         alt_label: Gestion des circuits.
+      motors:
+        label: Moteurs
+        alt_label: Gestion des moteurs.
       seasons:
         label: Saisons
         alt_label: Gestion des saisons.
@@ -98,6 +101,17 @@ header:
       edit: 
         label: Modifier le circuit
         alt_label: Modifier le circuit {name}.
+    # Menus des moteurs
+    motors:
+      list:
+        label: Liste des moteurs
+        alt_label: Consulter la liste des moteurs.
+      add:
+        label: Ajouter un moteur
+        alt_label: Ajouter une moteur.
+      edit:
+        label: Modifier le moteur
+        alt_label: Modifier le moteur {name}.
     # Menu de l'utilisateur connecté
     user:
       logout:

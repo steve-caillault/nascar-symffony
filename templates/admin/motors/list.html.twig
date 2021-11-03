@@ -1,0 +1,49 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% set title = 'admin.motors.title' | trans %}
+
+{% block head_title %}
+{{ title }}
+{% endblock %}
+
+{% block page_title %}
+{{ title }}
+{% endblock %}
+
+{% block body %}
+    {% if motors | length > 0 %}
+
+        {# Liste des moteurs #}
+        <table>
+            <thead>
+                <tr class="head">
+                    <td>{{ 'admin.motors.list.fields.name' | trans }}</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for motor in motors %}
+                    {% set edit_path = path('app_admin_motors_edit_index', { 
+                        motorPublicId: motor.publicId | lower
+                    }) %}
+                    {% set edit_alt_label = 'admin.motors.list.edit.alt_label' | trans({ 
+                        name: motor.name
+                    }) %}
+                    <tr class="line">
+                        <td>{{ anchor(motor.name, edit_alt_label, edit_path) }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        {# Cas vide #}
+        {% set empty_anchor_label = 'admin.motors.empty_anchor_label' | trans %}
+        {% set empty_anchor_alt = 'admin.motors.empty_anchor_alt' | trans %}
+        {% set empty_anchor_url = path('app_admin_motors_add_index') %}
+        {% set add_anchor = anchor(empty_anchor_label, empty_anchor_alt, empty_anchor_url) %}
+
+        <p>{{ 'admin.motors.empty' | trans({ 
+            anchor: add_anchor
+        }) | raw }}</p>
+        
+    {% endif %}
+{% endblock %}

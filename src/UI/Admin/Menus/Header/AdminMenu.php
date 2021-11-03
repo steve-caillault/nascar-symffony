@@ -69,6 +69,7 @@ final class AdminMenu extends HeaderMenu {
         $this->addCountriesItem();
         $this->addPilotsItem();
         $this->addCircuitsItem();
+        $this->addMotorsItem();
         $this->addSeasonsItem();
     }
 
@@ -163,6 +164,31 @@ final class AdminMenu extends HeaderMenu {
             ->setRouteName('app_admin_circuits_list_index')
         ;
         if(str_contains($currentUri, $circuitsUri))
+        {
+            $messageItem->addClass('selected');
+        }
+
+        return $this->addItem($messageItem);
+    }
+
+    /**
+     * Ajout l'élément des moteurs
+     * @return self
+     */
+    private function addMotorsItem() : self
+    {
+        $translator = $this->translator;
+
+        $currentRequest = $this->requestStack->getCurrentRequest();
+        $currentUri = $currentRequest?->getRequestUri();
+        $motorsUri = $this->urlGenerator->generate('app_admin_motors_list_index');
+
+        $messageItem = (new HeaderItemMenu())
+            ->setLabel($translator->trans('header.admin.modules.motors.label', [], domain: 'menus'))
+            ->setAltLabel($translator->trans('header.admin.modules.motors.alt_label', [], domain: 'menus'))
+            ->setRouteName('app_admin_motors_list_index')
+        ;
+        if(str_contains($currentUri, $motorsUri))
         {
             $messageItem->addClass('selected');
         }

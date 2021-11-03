@@ -62,6 +62,14 @@ admin:
       label: Création
     edit: 
       alt_label: Édition du circuit {name}.
+  # Circuits
+  motors:
+    label: Moteurs
+    alt_label: Consulter la liste des moteurs.
+    add:
+      label: Création
+    edit:
+      alt_label: Édition du moteur {name}.
   # Saisons
   seasons: 
     label: Saisons
