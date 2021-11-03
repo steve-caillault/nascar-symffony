@@ -29,4 +29,9 @@ final class Version20210823095935 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('DROP TABLE countries_states');
     }
+
+    public function isTransactional(): bool
+    {
+        return false;
+    }
 }

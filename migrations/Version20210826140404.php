@@ -33,4 +33,9 @@ final class Version20210826140404 extends AbstractMigration
         $this->addSql('DROP TABLE pilots');
         $this->addSql('DROP TABLE pilots_public_ids');
     }
+
+    public function isTransactional(): bool
+    {
+        return false;
+    }
 }
