@@ -111,6 +111,20 @@ circuits:
       not_blank: La distance du circuit est nécessaire.
       integer: La distance du circuit doit être un entier.
       range: La distance du circuit doit avoir entre {{ min }} et {{ max }} mètres.
+
+# Entité Motor
+motors:
+  edit:
+    public_id:
+      not_blank: L'identifiant public du moteur est nécessaire.
+      not_exists: Un moteur utilise déjà cet identifiant.
+      min: L'identifiant public du moteur doit avoir au moins {{ limit }} caractères.
+      max: L'identifiant public du moteur ne doit pas avoir plus de {{ limit }} caractères.
+    name:
+      not_blank: Le nom du moteur est requis.
+      not_exists: Un moteur utilise déjà ce nom.
+      min: Le moteur doit avoir au moins {{ limit }} caractères.
+      max: Le moteur ne doit pas avoir plus de {{ limit }} caractères.
        
 # Entité Season
 seasons:

@@ -93,6 +93,15 @@ admin:
         distance:
           label: Distance en mètre
 
+  motors:
+    # Edition d'un moteur
+    edit:
+      fields:
+        public_id:
+          label: Identifiant public
+        name: 
+          label: Nom du moteur
+
   seasons:
     # Edition d'une saison
     edit:
