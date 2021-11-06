@@ -12,7 +12,6 @@ use App\Entity\{
     Motor,
     MotorPublicIdHistory
 };
-use App\Repository\PublicIdRepositoryTrait;
 
 /**
  * @method Motor|null find($id, $lockMode = null, $lockVersion = null)

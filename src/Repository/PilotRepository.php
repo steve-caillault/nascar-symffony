@@ -10,7 +10,6 @@ use App\Entity\{
     Pilot,
     PilotPublicIdHistory
 };
-use App\Repository\PublicIdRepositoryTrait;
 
 /**
  * @method Pilot|null find($id, $lockMode = null, $lockVersion = null)
