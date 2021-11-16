@@ -37,4 +37,18 @@ class OwnerRepository extends AbstractRepository
         return OwnerPublicIdHistory::class;
     }
 
+    /**
+     * Compte le nombre d'éléments
+     * @return int
+     */
+    public function getTotal() : int
+    {
+        $dql = sprintf('SELECT COUNT(owners.id) FROM %s owners', Owner::class);
+
+        return $this->getEntityManager()
+            ->createQuery($dql)
+            ->getSingleScalarResult()
+        ;
+    }
+
 }

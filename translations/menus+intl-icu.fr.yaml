@@ -32,6 +32,9 @@ header:
       motors:
         label: Moteurs
         alt_label: Gestion des moteurs.
+      owners:
+        label: Propriétaires
+        alt_label: Gestion des propriétaires.
       seasons:
         label: Saisons
         alt_label: Gestion des saisons.
@@ -108,10 +111,21 @@ header:
         alt_label: Consulter la liste des moteurs.
       add:
         label: Ajouter un moteur
-        alt_label: Ajouter une moteur.
+        alt_label: Ajouter un moteur.
       edit:
         label: Modifier le moteur
         alt_label: Modifier le moteur {name}.
+    # Menus des propriétaires
+    owners:
+      list:
+        label: Liste des propriétaires
+        alt_label: Consulter la liste des propriétaires.
+      add:
+        label: Ajouter un propriétaire
+        alt_label: Ajouter un propriétaire.
+      edit: 
+        label: Modifier le propriétaire
+        alt_label: Modifier le propriétaire {name}.
     # Menu de l'utilisateur connecté
     user:
       logout:

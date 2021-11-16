@@ -51,12 +51,12 @@ final class AdminMenu extends HeaderMenu {
     }
 
     /**
-     * 
+     * Retourne la requête courante
+     * @return ?Request
      */
-    private function getCurrentRequest()
+    private function getCurrentRequest() : ?Request
     {
-        $currentRequest = $this->requestStack->getCurrentRequest();
-        $currentRequestRoute = $currentRequest?->attributes->get('_route');
+        return $this->requestStack->getCurrentRequest();
     }
 
     /**
@@ -70,6 +70,7 @@ final class AdminMenu extends HeaderMenu {
         $this->addPilotsItem();
         $this->addCircuitsItem();
         $this->addMotorsItem();
+        $this->addOwnersItem();
         $this->addSeasonsItem();
     }
 
@@ -80,8 +81,7 @@ final class AdminMenu extends HeaderMenu {
     private function addMessagesItem() : self
     {
         $translator = $this->translator;
-        $currentRequest = $this->requestStack->getCurrentRequest();
-        $currentRequestRoute = $currentRequest?->attributes->get('_route');
+        $currentRequestRoute = $this->getCurrentRequest()?->attributes->get('_route');
 
         $messageItem = (new HeaderItemMenu())
             ->setLabel($translator->trans('header.admin.modules.messages.label', [], domain: 'menus'))
@@ -104,8 +104,7 @@ final class AdminMenu extends HeaderMenu {
     {
         $translator = $this->translator;
 
-        $currentRequest = $this->requestStack->getCurrentRequest();
-        $currentUri = $currentRequest?->getRequestUri();
+        $currentUri = $this->getCurrentRequest()?->getRequestUri();
         $countriesUri = $this->urlGenerator->generate('app_admin_countries_list_index');
 
         $messageItem = (new HeaderItemMenu())
@@ -129,8 +128,7 @@ final class AdminMenu extends HeaderMenu {
     {
         $translator = $this->translator;
 
-        $currentRequest = $this->requestStack->getCurrentRequest();
-        $currentUri = $currentRequest?->getRequestUri();
+        $currentUri = $this->getCurrentRequest()?->getRequestUri();
         $pilotsUri = $this->urlGenerator->generate('app_admin_pilots_list_index');
 
         $messageItem = (new HeaderItemMenu())
@@ -154,8 +152,7 @@ final class AdminMenu extends HeaderMenu {
     {
         $translator = $this->translator;
 
-        $currentRequest = $this->requestStack->getCurrentRequest();
-        $currentUri = $currentRequest?->getRequestUri();
+        $currentUri = $this->getCurrentRequest()?->getRequestUri();
         $circuitsUri = $this->urlGenerator->generate('app_admin_circuits_list_index');
 
         $messageItem = (new HeaderItemMenu())
@@ -179,8 +176,7 @@ final class AdminMenu extends HeaderMenu {
     {
         $translator = $this->translator;
 
-        $currentRequest = $this->requestStack->getCurrentRequest();
-        $currentUri = $currentRequest?->getRequestUri();
+        $currentUri = $this->getCurrentRequest()?->getRequestUri();
         $motorsUri = $this->urlGenerator->generate('app_admin_motors_list_index');
 
         $messageItem = (new HeaderItemMenu())
@@ -197,14 +193,37 @@ final class AdminMenu extends HeaderMenu {
     }
 
     /**
+     * Ajout l'élément des propriétaires
+     * @return self
+     */
+    private function addOwnersItem() : self
+    {
+        $translator = $this->translator;
+
+        $currentUri = $this->getCurrentRequest()?->getRequestUri();
+        $motorsUri = $this->urlGenerator->generate('app_admin_owners_list_index');
+
+        $messageItem = (new HeaderItemMenu())
+            ->setLabel($translator->trans('header.admin.modules.owners.label', [], domain: 'menus'))
+            ->setAltLabel($translator->trans('header.admin.modules.owners.alt_label', [], domain: 'menus'))
+            ->setRouteName('app_admin_owners_list_index')
+        ;
+        if(str_contains($currentUri, $motorsUri))
+        {
+            $messageItem->addClass('selected');
+        }
+
+        return $this->addItem($messageItem);
+    }
+
+    /**
      * Ajoute l'élément des saisons
      * @return self
      */
     private function addSeasonsItem() : self
     {
         $translator = $this->translator;
-        $currentRequest = $this->requestStack->getCurrentRequest();
-        $currentUri = $currentRequest?->getRequestUri();
+        $currentUri = $this->getCurrentRequest()?->getRequestUri();
 
         // Ancre des saisons
         $seasonsItem = (new HeaderItemMenu())

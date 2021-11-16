@@ -1,0 +1,56 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% set title = 'admin.owners.title' | trans %}
+
+{% block head_title %}
+{{ title }}
+{% endblock %}
+
+{% block page_title %}
+{{ title }}
+{% endblock %}
+
+{% block body %}
+
+    {% if owners | length > 0 %}
+
+        {# Nombre de résultats #}
+        {% include 'ui/pagination/details.html.twig' with {
+            pagination: pagination
+        } only %}
+
+        {# Liste des propriétaires #}
+        <table>
+            <thead>
+                <tr class="head">
+                    <td>{{ 'admin.owners.list.fields.name' | trans }}</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for owner in owners %}
+                    {% set edit_path = path('app_admin_owners_edit_index', { 
+                        ownerPublicId: owner.publicId | lower
+                    }) %}
+                    {% set edit_alt_label = 'admin.owners.list.edit.alt_label' | trans({ 
+                        name: owner.name
+                    }) %}
+                    <tr class="line">
+                        <td>{{ anchor(owner.name, edit_alt_label, edit_path) }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {{ pagination(pagination) }}
+    {% else %}
+        {# Cas vide #}
+        {% set empty_anchor_label = 'admin.owners.empty_anchor_label' | trans %}
+        {% set empty_anchor_alt = 'admin.owners.empty_anchor_alt' | trans %}
+        {% set empty_anchor_url = path('app_admin_owners_add_index') %}
+        {% set add_anchor = anchor(empty_anchor_label, empty_anchor_alt, empty_anchor_url) %}
+
+        <p>{{ 'admin.owners.empty' | trans({ 
+            anchor: add_anchor,
+        }) | raw }}</p>
+        
+    {% endif %}
+{% endblock %}
