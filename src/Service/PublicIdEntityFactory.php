@@ -11,8 +11,10 @@ use App\Entity\{
     PublicIdHistoryEntityInterface,
     PilotPublicIdHistory,
     MotorPublicIdHistory,
+    OwnerPublicIdHistory,
     Pilot,
     Motor,
+    Owner
 };
 
 final class PublicIdEntityFactory {
@@ -28,6 +30,7 @@ final class PublicIdEntityFactory {
 
             Pilot::class => (new PilotPublicIdHistory())->setPilot($entity),
             Motor::class => (new MotorPublicIdHistory())->setMotor($entity),
+            Owner::class => (new OwnerPublicIdHistory())->setOwner($entity),
             default => null
         };
 
