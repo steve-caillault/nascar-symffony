@@ -49,8 +49,8 @@ final class OwnerFixtures extends Fixture implements FixtureGroupInterface
 
             $this->dataFromCSV[] = [
                 'id' => (int) $id,
-                'name' => $name,
                 'publicId' => $publicId,
+                'name' => $name,
             ];
         }
 

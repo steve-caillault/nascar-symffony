@@ -125,6 +125,20 @@ motors:
       not_exists: Un moteur utilise déjà ce nom.
       min: Le moteur doit avoir au moins {{ limit }} caractères.
       max: Le moteur ne doit pas avoir plus de {{ limit }} caractères.
+
+# Entité Owner
+owners:
+  edit:
+    public_id:
+      not_blank: L'identifiant public du propriétaire est nécessaire.
+      not_exists: Un propriétaire utilise déjà cet identifiant.
+      min: L'identifiant public du propriétaire doit avoir au moins {{ limit }} caractères.
+      max: L'identifiant public du propriétaire ne doit pas avoir plus de {{ limit }} caractères.
+    name:
+      not_blank: Le nom du propriétaire est requis.
+      not_exists: Un propriétaire utilise déjà ce nom.
+      min: Le propriétaire doit avoir au moins {{ limit }} caractères.
+      max: Le propriétaire ne doit pas avoir plus de {{ limit }} caractères.
        
 # Entité Season
 seasons:

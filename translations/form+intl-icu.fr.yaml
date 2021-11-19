@@ -22,7 +22,7 @@ site:
         label: Adresse email
       subject:
         label: Sujet
-        placeholder: Sujet de votre message.
+        placeholder: Sujet de votre messagÉditione.
       message:
         label: Message
         placeholder: Message à transmettre.
@@ -101,6 +101,15 @@ admin:
           label: Identifiant public
         name: 
           label: Nom du moteur
+
+  owners:
+    # Edition d'un propriétaire
+    edit:
+      fields:
+        public_id:
+          label: Identifiant public
+        name: 
+          label: Nom du propriétaire
 
   seasons:
     # Edition d'une saison

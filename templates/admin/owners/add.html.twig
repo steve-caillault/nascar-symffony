@@ -1,0 +1,18 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% set title = 'admin.owners.add.title' | trans %}
+
+{% block head_title %}
+{{ title }}
+{% endblock %}
+
+{% block page_title %}
+{{ title }}
+{% endblock %}
+
+{% block body %}
+    {% include 'forms/default.html.twig' with {
+        form: form,
+        attributes: { id: 'admin-owners-add' }
+    } only %}
+{% endblock %}

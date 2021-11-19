@@ -43,7 +43,7 @@ final class DatabaseHandler extends AbstractProcessingHandler
      * @return void
      * @required
      */
-    public function setSIteName(string $siteName) : void
+    public function setSiteName(string $siteName) : void
     {
         $this->siteName = $siteName;
     }
