@@ -16,7 +16,7 @@ use App\Repository\MotorRepository;
     UniqueEntity('public_id', message: 'motors.edit.public_id.not_exists'),
     UniqueEntity('name', message: 'motors.edit.name.not_exists')
 ]
-final class Motor implements EntityInterface, AutocompleteEntityInterface, PublicIdEntityInterface
+/*final*/ class Motor implements EntityInterface, AutocompleteEntityInterface, PublicIdEntityInterface
 {
 
     /**
@@ -39,7 +39,7 @@ final class Motor implements EntityInterface, AutocompleteEntityInterface, Publi
         /***/
         Constraints\NotBlank(message: 'motors.edit.public_id.not_blank'),
         Constraints\Length(
-            min: 5,
+            min: 4,
             max: 100,
             minMessage: 'motors.edit.public_id.min',
             maxMessage: 'motors.edit.public_id.max'
