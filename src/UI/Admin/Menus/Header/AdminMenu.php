@@ -71,6 +71,7 @@ final class AdminMenu extends HeaderMenu {
         $this->addCircuitsItem();
         $this->addMotorsItem();
         $this->addOwnersItem();
+        $this->addCarsItem();
         $this->addSeasonsItem();
     }
 
@@ -209,6 +210,30 @@ final class AdminMenu extends HeaderMenu {
             ->setRouteName('app_admin_owners_list_index')
         ;
         if(str_contains($currentUri, $motorsUri))
+        {
+            $messageItem->addClass('selected');
+        }
+
+        return $this->addItem($messageItem);
+    }
+
+    /**
+     * Ajoute l'élément des voitures
+     * @return self
+     */
+    private function addCarsItem() : self
+    {
+        $translator = $this->translator;
+
+        $currentUri = $this->getCurrentRequest()?->getRequestUri();
+        $carsUri = $this->urlGenerator->generate('app_admin_cars_list_index');
+
+        $messageItem = (new HeaderItemMenu())
+            ->setLabel($translator->trans('header.admin.modules.cars.label', [], domain: 'menus'))
+            ->setAltLabel($translator->trans('header.admin.modules.cars.alt_label', [], domain: 'menus'))
+            ->setRouteName('app_admin_cars_list_index')
+        ;
+        if(str_contains($currentUri, $carsUri))
         {
             $messageItem->addClass('selected');
         }

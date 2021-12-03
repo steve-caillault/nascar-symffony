@@ -14,7 +14,7 @@ use App\Repository\CarModelRepository;
     ORM\Index(fields: [ 'motor' ], name: 'idx_motor'),
     UniqueEntity(fields: [ 'motor', 'name'], message: 'car_models.edit.name.not_exists')
 ]
-class CarModel
+final class CarModel implements EntityInterface
 {
     /**
      * Identifiant en base de données

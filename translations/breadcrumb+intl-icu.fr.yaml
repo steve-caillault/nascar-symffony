@@ -78,6 +78,14 @@ admin:
       label: Création
     edit:
       alt_label: Édition du propriétaire {name}.
+  # Modèles de voiture
+  cars:
+    label: Voitures
+    alt_label: Consulter la liste des voitures.
+    add:
+      label: Création
+    edit:
+      alt_label: Édition de la voiture {name}.
   # Saisons
   seasons: 
     label: Saisons

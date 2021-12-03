@@ -200,6 +200,28 @@ admin:
       title: Modification du propriétaire {name}
       success: Le propriétaire {name} a été mis à jour.
       failure: Une erreur s'est produite lors de la mise à jour du propriétaire {name}.
+  cars:
+    # Liste des modèles de voiture
+    title: Liste des modèles de voiture
+    empty: Aucun modèle n'a été trouvé. Cliquez {anchor} pour en ajouter un.
+    empty_anchor_label: ici
+    empty_anchor_alt: Ajouter un modèle de voiture.
+    list:
+      fields:
+        name: Nom
+        motor: Moteur
+      edit:
+        alt_label: Modifier le modèle {name}.
+    # Ajout d'un modèle de voiture
+    add: 
+      title: Création d'un modèle de voiture
+      success: Le modèle de voiture {name} a été créé.
+      failure: Une erreur s'est produite lors de la création du modèle de voiture {name}.
+    # Edition d'un modèle de voiture
+    edit:
+      title: Modification du modèle de voiture {name}
+      success: Le modèle de voiture {name} a été mis à jour.
+      failure: Une erreur s'est produite lors de la mise à jour du modèle de voiture {name}.
   seasons:
     # Liste des saisons
     title: Liste des saisons

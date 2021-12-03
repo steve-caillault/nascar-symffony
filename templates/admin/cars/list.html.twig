@@ -1,0 +1,58 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% set title = 'admin.cars.title' | trans %}
+
+{% block head_title %}
+{{ title }}
+{% endblock %}
+
+{% block page_title %}
+{{ title }}
+{% endblock %}
+
+{% block body %}
+
+    {% if cars | length > 0 %}
+
+        {# Nombre de résultats #}
+        {% include 'ui/pagination/details.html.twig' with {
+            pagination: pagination
+        } only %}
+
+        {# Liste des modèles de voiture #}
+        <table>
+            <thead>
+                <tr class="head">
+                    <td>{{ 'admin.cars.list.fields.name' | trans }}</td>
+                    <td>{{ 'admin.cars.list.fields.motor' | trans }}</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for car in cars %}
+                    {% set edit_path = path('app_admin_cars_edit_index', { 
+                        carModelId: car.id
+                    }) %}
+                    {% set edit_alt_label = 'admin.cars.list.edit.alt_label' | trans({ 
+                        name: car.name
+                    }) %}
+                    <tr class="line">
+                        <td>{{ anchor(car.name, edit_alt_label, edit_path) }}</td>
+                        <td>{{ car.motor.name }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {{ pagination(pagination) }}
+    {% else %}
+        {# Cas vide #}
+        {% set empty_anchor_label = 'admin.cars.empty_anchor_label' | trans %}
+        {% set empty_anchor_alt = 'admin.cars.empty_anchor_alt' | trans %}
+        {% set empty_anchor_url = path('app_admin_cars_add_index') %}
+        {% set add_anchor = anchor(empty_anchor_label, empty_anchor_alt, empty_anchor_url) %}
+
+        <p>{{ 'admin.cars.empty' | trans({ 
+            anchor: add_anchor,
+        }) | raw }}</p>
+        
+    {% endif %}
+{% endblock %}

@@ -22,7 +22,7 @@ site:
         label: Adresse email
       subject:
         label: Sujet
-        placeholder: Sujet de votre messagÉditione.
+        placeholder: Sujet de votre message.
       message:
         label: Message
         placeholder: Message à transmettre.
@@ -110,6 +110,16 @@ admin:
           label: Identifiant public
         name: 
           label: Nom du propriétaire
+
+  cars:
+    # Edition d'un modèle de voiture
+    edit:
+      fields:
+        name: 
+          label: Nom du modèle
+        motor:
+          label: Moteur
+          placeholder: Rechercher un moteur
 
   seasons:
     # Edition d'une saison

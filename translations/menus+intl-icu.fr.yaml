@@ -35,6 +35,9 @@ header:
       owners:
         label: Propriétaires
         alt_label: Gestion des propriétaires.
+      cars:
+        label: Voitures
+        alt_label: Gestion des modèles de voiture.
       seasons:
         label: Saisons
         alt_label: Gestion des saisons.
@@ -126,6 +129,17 @@ header:
       edit: 
         label: Modifier le propriétaire
         alt_label: Modifier le propriétaire {name}.
+    # Menus des modèles de voiture
+    cars:
+      list:
+        label: Liste des modèles
+        alt_label: Consulter la liste des modèles de voiture.
+      add:
+        label: Ajouter un modèle
+        alt_label: Ajouter un modèle de voiture.
+      edit:
+        label: Modifier le modèle
+        alt_label: Modifier le modèle {name}.
     # Menu de l'utilisateur connecté
     user:
       logout:
