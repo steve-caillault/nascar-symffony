@@ -76,7 +76,7 @@ final class AuthController extends AdminAbstractController {
 
         $breadcrumb->addItem(new BreadcrumbItem(
             $this->translator->trans('admin.login.label', domain: 'breadcrumb'),
-            $this->translator->trans('admin.login.alt', domain: 'breadcrumb'),
+            $this->translator->trans('admin.login.alt_label', domain: 'breadcrumb'),
             'app_admin_security_auth_login'
         ));
     }
