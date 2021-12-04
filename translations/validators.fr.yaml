@@ -140,6 +140,17 @@ owners:
       min: Le propriétaire doit avoir au moins {{ limit }} caractères.
       max: Le propriétaire ne doit pas avoir plus de {{ limit }} caractères.
        
+# Entité CarModel
+car_models:
+  edit:
+    motor:
+      not_blank: Le moteur est nécessaire.
+    name:
+      not_blank: Le nom du modèle est nécessaire.
+      not_exists: Ce nom est utilisé par un autre modèle.
+      min: Le nom du modèle doit avoir au moins {{ limit }} caractères.
+      max: Le nom du modèle ne doit pas avoir plus de {{ limit }} caractères.
+
 # Entité Season
 seasons:
   edit:

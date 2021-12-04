@@ -174,7 +174,7 @@ abstract class AbstractManageMotor extends AbstractManageEntity {
                     'public_id' => 'che',
                     'name' => $faker->name(),
                 ], [
-                    'public_id' => 'L\'identifiant public du moteur doit avoir au moins 5 caractères.',
+                    'public_id' => 'L\'identifiant public du moteur doit avoir au moins 4 caractères.',
                 ],
             ],
             'public_id_too_long' => [

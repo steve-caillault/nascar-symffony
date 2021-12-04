@@ -12,7 +12,7 @@ use App\Repository\CarModelRepository;
     ORM\Table('cars_models'),
     ORM\Entity(repositoryClass: CarModelRepository::class),
     ORM\Index(fields: [ 'motor' ], name: 'idx_motor'),
-    UniqueEntity(fields: [ 'motor', 'name'], message: 'car_models.edit.name.not_exists')
+    UniqueEntity(fields: [ 'motor', 'name'], message: 'car_models.edit.name.not_exists', errorPath: 'name')
 ]
 final class CarModel implements EntityInterface
 {
@@ -49,7 +49,7 @@ final class CarModel implements EntityInterface
         Constraints\NotBlank(message: 'car_models.edit.name.not_blank'),
         Constraints\Length(min: 4, max: 100, minMessage: 'car_models.edit.name.min', maxMessage: 'car_models.edit.name.max'),
     ]
-    private ?string $name;
+    private ?string $name = null;
 
     /**
      * Retourne l'identifiant
@@ -91,10 +91,10 @@ final class CarModel implements EntityInterface
 
     /**
      * Modifie le nom
-     * @param string $name
+     * @param ?string $name
      * @return self
      */
-    public function setName(string $name) : self
+    public function setName(?string $name) : self
     {
         $this->name = $name;
         return $this;
