@@ -29,15 +29,6 @@ final class AddTest extends AbstractManageMotor {
     }
 
     /**
-     * Retourne le titre de la page attendu en cas de succès
-     * @return string
-     */
-    protected function getSuccessPageTitleExpected() : string
-    {
-        return 'Liste des moteurs';
-    }
-
-    /**
      * Retourne le titre de la page attendu en cas d'échec
      * @return string
      */

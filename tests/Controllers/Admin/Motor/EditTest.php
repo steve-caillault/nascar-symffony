@@ -58,15 +58,6 @@ final class EditTest extends AbstractManageMotor {
     }
 
     /**
-     * Retourne le titre de la page attendu en cas de succès
-     * @return string
-     */
-    protected function getSuccessPageTitleExpected() : string
-    {
-        return 'Liste des moteurs';
-    }
-
-    /**
      * Retourne le titre de la page d'édition
      * @return string
      */

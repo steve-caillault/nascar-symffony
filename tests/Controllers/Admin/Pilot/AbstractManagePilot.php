@@ -58,6 +58,15 @@ abstract class AbstractManagePilot extends AbstractManageEntity {
     /*****************************************************************************/
 
     /**
+     * Retourne le titre de la page attendu en cas de succès
+     * @return string
+     */
+    protected function getSuccessPageTitleExpected() : string
+    {
+        return 'Liste des pilotes';
+    }
+    
+    /**
      * Vérification des données de l'entité après le succès
      * @param array $params Paramètres du formulaires
      * @return void

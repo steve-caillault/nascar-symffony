@@ -58,15 +58,6 @@ final class EditTest extends AbstractManageOwner {
     }
 
     /**
-     * Retourne le titre de la page attendu en cas de succès
-     * @return string
-     */
-    protected function getSuccessPageTitleExpected() : string
-    {
-        return 'Liste des propriétaires';
-    }
-
-    /**
      * Retourne le titre de la page d'édition
      * @return string
      */
